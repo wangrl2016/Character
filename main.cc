@@ -3,11 +3,11 @@
 //
 
 #include <QApplication>
-#include <QWidget>
+#include "view/widgets/character_window.h"
 
 int main(int argc, char* argv[]) {
     QApplication app(argc, argv);
-    QWidget window;
+    view::CharacterWindow window;
     window.show();
     return QApplication::exec();
 }

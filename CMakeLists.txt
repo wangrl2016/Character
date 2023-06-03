@@ -12,21 +12,45 @@ set(CMAKE_AUTORCC ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup(KEEP_RPATHS)
+
 include_directories(${CMAKE_SOURCE_DIR})
 
+add_library(BaseLibrary
+        base/config/build_config.h
+        base/memory/aligned_memory.cc
+        base/memory/aligned_memory.h
+        )
+
 add_library(MediaLibrary
+        media/base/audio_bus.cc
+        media/base/audio_bus.h
+        media/base/audio_constant.h
         media/base/audio_parameters.cc
         media/base/audio_parameters.h
         media/filters/ffmpeg_audio_decoder.cc
         media/filters/ffmpeg_audio_decoder.h
 )
+target_link_libraries(MediaLibrary
+        ${CONAN_LIBS}
+        )
+
+set(VIEW_SOURCES
+        view/widgets/character_window.cc
+        view/widgets/character_window.h
+        view/widgets/waveform_widget.cc
+        view/widgets/waveform_widget.h
+        )
 
 qt_add_executable(Character
         MANUAL_FINALIZATION
         main.cc
+        ${VIEW_SOURCES}
         )
 
 target_link_libraries(Character
+        ${BaseLibrary}
         ${MediaLibrary}
         PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets
