@@ -34,6 +34,15 @@ namespace media {
         CHECK_LE(channels, kMaxChannels);
     }
 
+    void AudioBus::CheckOverflow(int start_frame, int frames, int total_frames) {
+        CHECK_GE(start_frame, 0);
+        CHECK_GE(frames, 0);
+        CHECK_GT(total_frames, 0);
+        int sum = start_frame + frames;
+        CHECK_LE(sum, total_frames);
+        CHECK_GE(sum, 0);
+    }
+
     AudioBus::AudioBus(int channels, int frames) :
             frames_(frames) {
         int aligned_frames = 0;
@@ -75,6 +84,55 @@ namespace media {
         return std::unique_ptr<AudioBus>(
                 new AudioBus(params.channel_count(),
                              params.frames_per_buffer()));
+    }
+
+    void AudioBus::Zero() {
+        ZeroFrames(frames_);
+    }
+
+    void AudioBus::ZeroFrames(int frames) {
+        ZeroFramesPartial(0, frames);
+    }
+
+    void AudioBus::ZeroFramesPartial(int start_frame, int frames) {
+        CheckOverflow(start_frame, frames, frames_);
+
+        if (frames <= 0)
+            return;
+
+        for (auto& data: channel_data_) {
+            memset(data + start_frame, 0, frames * sizeof(*data));
+        }
+    }
+
+    void AudioBus::CopyConvertFromInterleavedSourceToAudioBus(
+            const float* source_buffer,
+            int write_offset_in_frames,
+            int num_frames_to_write,
+            AudioBus* dest) {
+        const int channels = dest->channels();
+        for (int ch = 0; ch < channels; ch++) {
+            float* channel_data = dest->channel(ch);
+            for (int target_frame_index = write_offset_in_frames,
+                         read_pos_in_source = ch;
+                 target_frame_index < write_offset_in_frames + num_frames_to_write;
+                 ++target_frame_index, read_pos_in_source += channels) {
+                channel_data[target_frame_index] = source_buffer[read_pos_in_source];
+            }
+        }
+    }
+
+    void AudioBus::FromInterleavedPartial(const float* source_buffer,
+                                          int write_offset_in_frames,
+                                          int num_frames_to_write) {
+        CheckOverflow(write_offset_in_frames,
+                      num_frames_to_write,
+                      frames_);
+        CopyConvertFromInterleavedSourceToAudioBus(
+                source_buffer,
+                write_offset_in_frames,
+                num_frames_to_write,
+                this);
     }
 
     void AudioBus::BuildChannelData(int channels, int aligned_frames, float* data) {

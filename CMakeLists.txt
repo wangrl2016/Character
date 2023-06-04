@@ -21,6 +21,8 @@ add_library(BaseLibrary
         base/config/build_config.h
         base/memory/aligned_memory.cc
         base/memory/aligned_memory.h
+        base/time/time_delta.cc
+        base/time/time_delta.h
         )
 
 add_library(MediaLibrary

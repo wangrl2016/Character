@@ -18,6 +18,8 @@ namespace media {
             kChannelAlignment = 16
         };
 
+        void CheckOverflow(int start_frame, int frames, int total_frames);
+
         // Creates a new AudioBus and allocates |channels| of length |frames|. Uses
         // channels() and frames_per_buffer() from AudioParameters if given.
         static std::unique_ptr<AudioBus> Create(int channels, int frames);
@@ -87,6 +89,17 @@ namespace media {
         // Swaps channels identified by |a| and |b|.  The caller needs to make sure
         // the channels are valid.
         void SwapChannels(int a, int b);
+
+        static void CopyConvertFromInterleavedSourceToAudioBus(
+                const float* source_buffer,
+                int write_offset_in_frames,
+                int num_frames_to_write,
+                AudioBus* dest);
+
+        void FromInterleavedPartial(
+                const float* source_buffer,
+                int write_offset_in_frames,
+                int num_frames_to_write);
 
     protected:
         AudioBus(int channels, int frames);
