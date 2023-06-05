@@ -16,6 +16,19 @@ namespace view {
 
         ~CharacterWindow() override;
 
+    public:
+        bool NewFile();
+
+        bool OpenFile();
+
+    private:
+        void CreateActions();
+
+        void CreateMenus();
+
+        QAction* file_new_action_;
+        QAction* file_open_action_;
+
     private:
         QMdiArea* mdi_area_;
     };

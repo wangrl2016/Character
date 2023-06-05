@@ -71,6 +71,7 @@ target_link_libraries(Character
         ${BaseLibrary}
         ${MediaLibrary}
         PRIVATE
+        ${CONAN_LIBS}
         Qt${QT_VERSION_MAJOR}::Widgets
         )
 
