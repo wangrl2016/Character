@@ -7,6 +7,7 @@
 
 #include <QMainWindow>
 #include <QMdiArea>
+#include "view/widgets/waveform_widget.h"
 
 namespace view {
     class CharacterWindow : public QMainWindow {
@@ -30,7 +31,7 @@ namespace view {
         QAction* file_open_action_;
 
     private:
-        QMdiArea* mdi_area_;
+        WaveformWidget* waveform_widget_;
     };
 }
 

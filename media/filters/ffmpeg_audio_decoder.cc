@@ -155,7 +155,7 @@ namespace media {
 
     base::TimeDelta FFmpegAudioDecoder::GetDuration() const {
         const AVRational av_time_base = {1, AV_TIME_BASE};
-        DCHECK_LE(format_context_->duration, AV_NOPTS_VALUE);
+        DCHECK_NE(format_context_->duration, AV_NOPTS_VALUE);
 
         int64_t estimated_duration_us = format_context_->duration;
 
@@ -183,15 +183,25 @@ namespace media {
     }
 
     int FFmpegAudioDecoder::GetNumberOfFrames() const {
-        return int(GetDuration().InSecondsF() * dest_params_.sample_rate());
+        if (dest_params_.IsValid()) {
+            return int(GetDuration().InSecondsF() * dest_params_.sample_rate());
+        } else {
+            return int(GetDuration().InSecondsF() * decoder_context_->sample_rate);
+        }
     }
 
     std::unique_ptr<AudioBus> FFmpegAudioDecoder::ReadFrames(int frames_to_read) {
         total_count_ = GetNumberOfFrames();
         if (total_count_ > frames_to_read)
             total_count_ = frames_to_read;
-        std::unique_ptr<AudioBus> audio_bus = AudioBus::Create(
-                dest_params_.channel_count(), total_count_);
+        std::unique_ptr<AudioBus> audio_bus;
+        if (dest_params_.IsValid()) {
+            audio_bus = AudioBus::Create(
+                    dest_params_.channel_count(), total_count_);
+        } else {
+            audio_bus = AudioBus::Create(
+                    decoder_context_->channels, total_count_);
+        }
 
 
         AVPacket* packet = av_packet_alloc();

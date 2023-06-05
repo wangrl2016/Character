@@ -5,7 +5,7 @@
 #include <glog/logging.h>
 #include "base/memory/aligned_memory.h"
 
-namespace media {
+namespace base {
     void* AlignedAlloc(size_t size, size_t alignment) {
         DCHECK_GT(size, 0U);
         DCHECK_EQ(alignment % sizeof(void*), 0U);

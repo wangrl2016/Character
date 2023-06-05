@@ -46,7 +46,7 @@ namespace media {
                        int channel_count,
                        AVSampleFormat sample_format);
 
-        bool IsValid();
+        bool IsValid() const;
 
     private:
         int sample_rate_ = -1;

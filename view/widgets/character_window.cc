@@ -4,16 +4,16 @@
 
 #include <QFileDialog>
 #include <QMenuBar>
+#include <QMdiSubWindow>
 #include <glog/logging.h>
+#include <QTextEdit>
 #include "view/widgets/character_window.h"
+#include "view/widgets/waveform_widget.h"
 
 namespace view {
-    CharacterWindow::CharacterWindow() : mdi_area_(new QMdiArea) {
-        mdi_area_->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-        mdi_area_->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-        setCentralWidget(mdi_area_);
-
-
+    CharacterWindow::CharacterWindow() {
+        waveform_widget_ = new WaveformWidget(this);
+        setCentralWidget(waveform_widget_);
         // setUnifiedTitleAndToolBarOnMac(true);
         CreateActions();
         CreateMenus();
@@ -36,6 +36,7 @@ namespace view {
             return false;
 
         LOG(INFO) << __FUNCTION__ << ", path " << file_path.toStdString();
+        waveform_widget_->LoadAudio(file_path);
         return true;
     }
 

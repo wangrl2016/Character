@@ -35,7 +35,8 @@ add_library(MediaLibrary
         media/filters/ffmpeg_audio_decoder.h
         )
 target_link_libraries(MediaLibrary
-        ${BaseLibrary}
+        PRIVATE
+        BaseLibrary
         ${CONAN_LIBS}
         )
 
@@ -47,7 +48,7 @@ add_executable(MediaLibraryTest
         )
 target_link_libraries(MediaLibraryTest
         PRIVATE
-        ${MediaLibrary}
+        MediaLibrary
         ${CONAN_LIBS}
         )
 
@@ -68,9 +69,9 @@ qt_add_executable(Character
         )
 
 target_link_libraries(Character
-        ${BaseLibrary}
-        ${MediaLibrary}
         PRIVATE
+        BaseLibrary
+        MediaLibrary
         ${CONAN_LIBS}
         Qt${QT_VERSION_MAJOR}::Widgets
         )

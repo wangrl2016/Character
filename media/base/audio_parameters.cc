@@ -20,7 +20,7 @@ namespace media {
         sample_format_ = sample_format;
     }
 
-    bool AudioParameters::IsValid() {
+    bool AudioParameters::IsValid() const {
         return sample_rate_ > 0 &&
                channel_count_ > 0 &&
                sample_format_ != AV_SAMPLE_FMT_NONE;
