@@ -123,6 +123,20 @@ namespace media {
             }
         }
 
+        const AVDictionaryEntry* tag = nullptr;
+        while ((tag = av_dict_get(format_context_->metadata,
+                                  "",
+                                  tag,
+                                  AV_DICT_IGNORE_SUFFIX))) {
+            metadata_.push_back({tag->key, tag->value});
+        }
+
+        // Dump input information.
+        av_dump_format(format_context_,
+                       audio_stream_index_,
+                       file_path.c_str(),
+                       0);
+
         return true;
     }
 

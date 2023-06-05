@@ -33,10 +33,26 @@ add_library(MediaLibrary
         media/base/audio_parameters.h
         media/filters/ffmpeg_audio_decoder.cc
         media/filters/ffmpeg_audio_decoder.h
-)
+        )
 target_link_libraries(MediaLibrary
+        ${BaseLibrary}
         ${CONAN_LIBS}
         )
+
+# Media library unit test
+enable_testing()
+
+add_executable(MediaLibraryTest
+        media/filters/ffmpeg_audio_decoder_test.cc
+        )
+target_link_libraries(MediaLibraryTest
+        PRIVATE
+        ${MediaLibrary}
+        ${CONAN_LIBS}
+        )
+
+include(GoogleTest)
+gtest_discover_tests(MediaLibraryTest)
 
 set(VIEW_SOURCES
         view/widgets/character_window.cc

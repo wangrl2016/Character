@@ -5,11 +5,13 @@
 #ifndef CHARACTER_FFMPEG_AUDIO_DECODER_H
 #define CHARACTER_FFMPEG_AUDIO_DECODER_H
 
+#include <vector>
 #include <string>
 extern "C" {
 #include <libavformat/avformat.h>
 #include <libavcodec/avcodec.h>
 #include <libswresample/swresample.h>
+#include <libavutil/dict.h>
 }
 #include "media/base/audio_bus.h"
 #include "media/base/audio_parameters.h"
@@ -80,6 +82,9 @@ namespace media {
         // Read frames from the audio.
         int decoded_count_ = 0;
         int total_count_ = 0;
+
+        // metadata
+        std::vector<AVDictionaryEntry> metadata_;
     };
 }
 
