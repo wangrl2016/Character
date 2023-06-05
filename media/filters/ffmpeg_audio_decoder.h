@@ -85,6 +85,7 @@ namespace media {
 
         // metadata
         std::vector<AVDictionaryEntry> metadata_;
+        std::unique_ptr<AVPacket> attached_pic_ = nullptr;
     };
 }
 

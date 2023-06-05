@@ -52,6 +52,10 @@ namespace media {
         } else {
             AVStream* stream = format_context_->streams[audio_stream_index_];
 
+            if (stream->disposition & AV_DISPOSITION_ATTACHED_PIC) {
+                attached_pic_ = std::make_unique<AVPacket>(stream->attached_pic);
+            }
+
             // Find decoder for the stream.
             const AVCodec* decoder = avcodec_find_decoder(stream->codecpar->codec_id);
             if (!decoder) {
