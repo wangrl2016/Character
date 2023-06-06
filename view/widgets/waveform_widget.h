@@ -7,6 +7,7 @@
 
 #include <QWidget>
 #include "media/base/audio_bus.h"
+#include "media/filters/ffmpeg_audio_decoder.h"
 
 namespace view {
     class WaveformWidget : public QWidget {
@@ -19,6 +20,7 @@ namespace view {
 
     private:
         std::unique_ptr<media::AudioBus> audio_bus_;
+        std::shared_ptr<media::FFmpegAudioDecoder> decoder_;
     };
 }
 

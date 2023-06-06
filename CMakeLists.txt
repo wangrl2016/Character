@@ -60,6 +60,7 @@ set(VIEW_SOURCES
         view/widgets/character_window.h
         view/widgets/waveform_widget.cc
         view/widgets/waveform_widget.h
+        view/widgets/widget_constant.h
         )
 
 qt_add_executable(Character
