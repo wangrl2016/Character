@@ -21,6 +21,10 @@ namespace view {
     private:
         std::unique_ptr<media::AudioBus> audio_bus_;
         std::shared_ptr<media::FFmpegAudioDecoder> decoder_;
+
+        QRect current_rect_;
+        std::unique_ptr<QImage> current_image_;
+        std::unique_ptr<QImage> new_image_;
     };
 }
 
