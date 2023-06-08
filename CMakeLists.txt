@@ -44,6 +44,7 @@ target_link_libraries(MediaLibrary
 enable_testing()
 
 add_executable(MediaLibraryTest
+        media/base/audio_bus_test.cc
         media/filters/ffmpeg_audio_decoder_test.cc
         )
 target_link_libraries(MediaLibraryTest
