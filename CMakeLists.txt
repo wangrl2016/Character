@@ -83,8 +83,8 @@ target_link_libraries(AudioGraphModule
         )
 
 set(VIEW_SOURCES
-        view/widgets/character_window.cc
-        view/widgets/character_window.h
+        view/widgets/main_window.cc
+        view/widgets/main_window.h
         view/widgets/waveform_widget.cc
         view/widgets/waveform_widget.h
         view/widgets/widget_constant.h
@@ -93,6 +93,7 @@ set(VIEW_SOURCES
 qt_add_executable(Character
         MANUAL_FINALIZATION
         main.cc
+        res/application.qrc
         ${VIEW_SOURCES}
         )
 
