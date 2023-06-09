@@ -32,16 +32,7 @@ namespace audio_graph {
 
         void Clear();
 
-        std::string GetCurrentDefaultAudioDeviceName(bool is_input) {
-            auto* device_type = audio_device_manager_->getCurrentDeviceTypeObject();
-
-            if (device_type != nullptr) {
-                auto device_names = device_type->getDeviceNames();
-                return device_names[device_type->getDefaultDeviceIndex(is_input)].toStdString();
-            }
-
-            return {};
-        }
+        std::string GetCurrentDefaultAudioDeviceName(bool is_input);
 
     private:
         AudioContext() = default;
@@ -51,6 +42,8 @@ namespace audio_graph {
         // JUCE/examples/DemoRunner/Source/Demos/JUCEDemos.cpp
         bool InitAudioDeviceManager(int num_input_channels,
                                     int num_output_channels);
+
+        bool InitAudioGraph();
 
         // https://docs.juce.com/master/tutorial_audio_processor_graph.html
         std::unique_ptr<juce::AudioDeviceManager> audio_device_manager_;

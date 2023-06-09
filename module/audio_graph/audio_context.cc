@@ -6,6 +6,9 @@
 #include "module/audio_graph/audio_context.h"
 
 namespace audio_graph {
+    using AudioGraphIOProcessor = juce::AudioProcessorGraph::AudioGraphIOProcessor;
+    using Node = juce::AudioProcessorGraph::Node;
+
     AudioContext& AudioContext::Instance() {
         static AudioContext instance; // instantiated on first use
         return instance;
@@ -16,7 +19,7 @@ namespace audio_graph {
         audio_processor_graph_ = std::make_unique<juce::AudioProcessorGraph>();
         audio_processor_player_ = std::make_unique<juce::AudioProcessorPlayer>();
 
-        return true;
+        return InitAudioDeviceManager(0, 2);
     }
 
     bool AudioContext::Start() {
@@ -49,6 +52,17 @@ namespace audio_graph {
 
     void AudioContext::Clear() {
 
+    }
+
+    std::string AudioContext::GetCurrentDefaultAudioDeviceName(bool is_input) {
+        auto* device_type = audio_device_manager_->getCurrentDeviceTypeObject();
+
+        if (device_type != nullptr) {
+            auto device_names = device_type->getDeviceNames();
+            return device_names[device_type->getDefaultDeviceIndex(is_input)].toStdString();
+        }
+
+        return {};
     }
 
     bool AudioContext::InitAudioDeviceManager(int num_input_channels, int num_output_channels) {
@@ -131,4 +145,10 @@ namespace audio_graph {
         }
     }
 
+    bool AudioContext::InitAudioGraph() {
+        audio_processor_graph_->clear();
+
+        audio_processor_graph_->addNode(
+                std::make_unique<AudioGraphIOProcessor>(AudioGraphIOProcessor::audioOutputNode));
+    }
 }

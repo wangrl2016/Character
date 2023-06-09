@@ -32,6 +32,12 @@ namespace audio_graph {
         static bool Clear();
 
         TrackID AddTrack(Track::TrackType type);
+
+        bool RemoveTrack(TrackID id);
+
+        void ClearTrack(TrackID id);
+
+        void SetTrackVolume(TrackID id, float volume);
     };
 }
 

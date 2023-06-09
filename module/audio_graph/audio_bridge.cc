@@ -44,4 +44,16 @@ namespace audio_graph {
     TrackID AudioBridge::AddTrack(Track::TrackType type) {
 
     }
+
+    bool AudioBridge::RemoveTrack(TrackID id) {
+
+    }
+
+    void AudioBridge::ClearTrack(TrackID id) {
+
+    }
+
+    void AudioBridge::SetTrackVolume(TrackID id, float volume) {
+
+    }
 }

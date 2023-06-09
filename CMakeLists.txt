@@ -71,6 +71,9 @@ add_library(AudioGraphModule
         module/audio_graph/audio_bridge.h
         module/audio_graph/audio_context.cc
         module/audio_graph/audio_context.h
+        module/audio_graph/metronome_node.cc
+        module/audio_graph/metronome_node.h
+        module/audio_graph/processor_base.h
         module/audio_graph/track.cc
         module/audio_graph/track.h
         )

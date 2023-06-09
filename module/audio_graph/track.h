@@ -22,6 +22,8 @@ namespace audio_graph {
 
     private:
         TrackID id_;
+        bool mute_;
+        bool volume_;
     };
 }
 
