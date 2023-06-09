@@ -56,6 +56,29 @@ target_link_libraries(MediaLibraryTest
 include(GoogleTest)
 gtest_discover_tests(MediaLibraryTest)
 
+add_subdirectory(third_party/JUCE)
+
+set(JUCE_LIBRARY
+        juce::juce_audio_basics
+        juce::juce_audio_devices
+        juce::juce_audio_processors
+        juce::juce_audio_utils
+        juce::juce_core
+        )
+
+add_library(AudioGraphModule
+        module/audio_graph/audio_bridge.cc
+        module/audio_graph/audio_bridge.h
+        module/audio_graph/audio_context.cc
+        module/audio_graph/audio_context.h
+        module/audio_graph/track.cc
+        module/audio_graph/track.h
+        )
+
+target_link_libraries(AudioGraphModule
+        ${JUCE_LIBRARY}
+        )
+
 set(VIEW_SOURCES
         view/widgets/character_window.cc
         view/widgets/character_window.h
@@ -75,6 +98,7 @@ target_link_libraries(Character
         BaseLibrary
         MediaLibrary
         ${CONAN_LIBS}
+        ${JUCE_LIBRARY}
         Qt${QT_VERSION_MAJOR}::Widgets
         )
 
