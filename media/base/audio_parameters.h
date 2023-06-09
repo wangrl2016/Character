@@ -16,7 +16,8 @@ namespace media {
 
         AudioParameters(int sample_rate,
                         int channel_count,
-                        AVSampleFormat sample_format);
+                        AVSampleFormat sample_format,
+                        int frames_per_buffer);
 
         [[nodiscard]] int sample_rate() const { return sample_rate_; }
 
@@ -46,13 +47,13 @@ namespace media {
                        int channel_count,
                        AVSampleFormat sample_format);
 
-        bool IsValid() const;
+        [[nodiscard]] bool IsValid() const;
 
     private:
         int sample_rate_ = -1;
         int channel_count_ = -1;
         AVSampleFormat sample_format_ = AV_SAMPLE_FMT_NONE;
-        int frames_per_buffer_;
+        int frames_per_buffer_ = 0;
     };
 }
 

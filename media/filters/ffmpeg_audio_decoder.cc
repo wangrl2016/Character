@@ -203,7 +203,6 @@ namespace media {
                     decoder_context_->channels, total_count_);
         }
 
-
         AVPacket* packet = av_packet_alloc();
         if (!packet) {
             LOG(ERROR) << "Error allocating an audio packet";

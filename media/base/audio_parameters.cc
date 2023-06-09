@@ -7,10 +7,12 @@
 namespace media {
     AudioParameters::AudioParameters(int sample_rate,
                                      int channel_count,
-                                     AVSampleFormat sample_format)
+                                     AVSampleFormat sample_format,
+                                     int frames_per_buffer)
             : sample_rate_(sample_rate),
               channel_count_(channel_count),
-              sample_format_(sample_format) {}
+              sample_format_(sample_format),
+              frames_per_buffer_(frames_per_buffer) {}
 
     void AudioParameters::SetParams(int sample_rate,
                                     int channel_count,

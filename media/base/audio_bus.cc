@@ -86,6 +86,12 @@ namespace media {
                              params.frames_per_buffer()));
     }
 
+    std::unique_ptr<AudioBus> AudioBus::WrapVector(int frames,
+                                                   const std::vector<float*>& channel_data) {
+        return std::unique_ptr<AudioBus>(
+                new AudioBus(frames, channel_data));
+    }
+
     void AudioBus::Zero() {
         ZeroFrames(frames_);
     }
@@ -133,6 +139,27 @@ namespace media {
                 write_offset_in_frames,
                 num_frames_to_write,
                 this);
+    }
+
+    void AudioBus::CopyTo(AudioBus* dest) const {
+        CopyPartialFramesTo(0, frames(), 0, dest);
+    }
+
+    void AudioBus::CopyPartialFramesTo(int source_start_frame,
+                                       int frame_count,
+                                       int dest_start_frame,
+                                       AudioBus* dest) const {
+        CHECK_EQ(channels(), dest->channels());
+        CHECK_LE(source_start_frame + frame_count, frames());
+        CHECK_LE(dest_start_frame + frame_count, dest->frames());
+
+        // Since we don't know if the other AudioBus is wrapped or not (and we don't
+        // want to care), just copy using the public channel() accessors.
+        for (int i = 0; i < channels(); i++) {
+            memcpy(dest->channel(i) + dest_start_frame,
+                   channel(i) + source_start_frame,
+                   sizeof(*channel(i)) * frame_count);
+        }
     }
 
     void AudioBus::BuildChannelData(int channels, int aligned_frames, float* data) {

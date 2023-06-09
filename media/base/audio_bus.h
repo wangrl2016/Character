@@ -101,6 +101,19 @@ namespace media {
                 int write_offset_in_frames,
                 int num_frames_to_write);
 
+        // Helper method for copying channel data from one AudioBus to another. Both
+        // AudioBus object must have the same frames() and channels().
+        void CopyTo(AudioBus* dest) const;
+
+        // Helper method to copy frames from one AudioBus to another. Both AudioBus
+        // objects must have the same number of channels(). |source_start_frame| is
+        // the starting offset. |dest_start_frame| is the starting offset in |dest|.
+        // |frame_count| is the number of frames to copy.
+        void CopyPartialFramesTo(int source_start_frame,
+                                 int frame_count,
+                                 int dest_start_frame,
+                                 AudioBus* dest) const;
+
     protected:
         AudioBus(int channels, int frames);
 
