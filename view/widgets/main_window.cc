@@ -70,8 +70,10 @@ namespace view {
         LOG(INFO) << __FUNCTION__ << " " << is_playing_;
         if (is_playing_) {
             play_or_pause_button_->setIcon(QIcon(":toolbar/pause"));
+            audio_graph::AudioBridge::StartBeat();
         } else {
             play_or_pause_button_->setIcon(QIcon(":toolbar/play_arrow"));
+            audio_graph::AudioBridge::StopBeat();
         }
     }
 

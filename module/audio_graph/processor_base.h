@@ -10,9 +10,10 @@
 namespace audio_graph {
     class ProcessorBase : public juce::AudioProcessor {
     public:
-        ProcessorBase() :
-                AudioProcessor(BusesProperties().withInput("Input", juce::AudioChannelSet::stereo())
-                                       .withOutput("Output", juce::AudioChannelSet::stereo())) {
+        ProcessorBase() : AudioProcessor(
+                BusesProperties()
+                        .withInput("Input", juce::AudioChannelSet::stereo())
+                        .withOutput("Output", juce::AudioChannelSet::stereo())) {
 
         }
 
@@ -47,6 +48,13 @@ namespace audio_graph {
         void getStateInformation(juce::MemoryBlock&) override {}
 
         void setStateInformation(const void*, int) override {}
+
+        void StartBeat() { beat_ = true; }
+
+        void StopBeat() { beat_ = false; }
+
+    protected:
+        bool beat_ = false;
 
     private:
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ProcessorBase)

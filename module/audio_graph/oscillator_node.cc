@@ -22,9 +22,11 @@ namespace audio_graph {
 
     void OscillatorNode::processBlock(juce::AudioSampleBuffer& buffer,
                                       juce::MidiBuffer&) {
-        juce::dsp::AudioBlock<float> block(buffer);
-        juce::dsp::ProcessContextReplacing<float> context(block);
-        oscillator_.process(context);
+        if (beat_) {
+            juce::dsp::AudioBlock<float> block(buffer);
+            juce::dsp::ProcessContextReplacing<float> context(block);
+            oscillator_.process(context);
+        }
     }
 
     void OscillatorNode::reset() {

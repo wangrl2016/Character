@@ -6,35 +6,35 @@
 
 namespace audio_graph {
     bool AudioBridge::Create() {
-        return AudioContext::Instance().Create();
+        return AudioContext::Instance()->Create();
     }
 
     bool AudioBridge::Start() {
-        return AudioContext::Instance().Start();
+        return AudioContext::Instance()->Start();
     }
 
     bool AudioBridge::Stop() {
-        return AudioContext::Instance().Stop();
+        return AudioContext::Instance()->Stop();
     }
 
     bool AudioBridge::Destroy() {
-        return AudioContext::Instance().Destroy();
+        return AudioContext::Instance()->Destroy();
     }
 
     bool AudioBridge::Exist() {
-        return AudioContext::Instance().Exist();
+        return AudioContext::Instance()->Exist();
     }
 
     bool AudioBridge::Seek() {
-        return AudioContext::Instance().Seek();
+        return AudioContext::Instance()->Seek();
     }
 
     void AudioBridge::StartBeat() {
-
+        AudioContext::Instance()->StartBeat();
     }
 
     void AudioBridge::StopBeat() {
-
+        AudioContext::Instance()->StopBeat();
     }
 
     bool AudioBridge::Clear() {

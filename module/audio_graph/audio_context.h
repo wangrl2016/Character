@@ -15,7 +15,9 @@ namespace audio_graph {
 
     class AudioContext {
     public:
-        static AudioContext& Instance();
+        static AudioContext* Instance();
+
+        void DeleteInstance();
 
         bool Create();
 
