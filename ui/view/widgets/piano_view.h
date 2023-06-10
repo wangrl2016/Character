@@ -5,10 +5,10 @@
 #ifndef CHARACTER_PIANO_VIEW_H
 #define CHARACTER_PIANO_VIEW_H
 
-#include <QWidget>
+#include <QDockWidget>
 
 namespace ui {
-    class PianoView: public QWidget {
+    class PianoView: public QDockWidget {
         Q_OBJECT
     public:
         PianoView(QWidget* parent = nullptr);
@@ -34,6 +34,12 @@ namespace ui {
         void focusOutEvent(QFocusEvent* event) override;
 
         void resizeEvent(QResizeEvent* event) override;
+
+    private:
+        int start_key_;
+
+        static QPixmap* white_key_pixmap_;
+        static QPixmap* black_key_pixmap_;
     };
 }
 

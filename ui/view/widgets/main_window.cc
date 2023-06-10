@@ -136,7 +136,10 @@ namespace ui {
         auto* dock = new QDockWidget(tr("Customers"), this);
         dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
 
-        addDockWidget(Qt::RightDockWidgetArea, dock);
+        piano_view_ = new PianoView(this);
+        dock->setAllowedAreas(Qt::BottomDockWidgetArea);
 
+        addDockWidget(Qt::RightDockWidgetArea, dock);
+        addDockWidget(Qt::BottomDockWidgetArea, piano_view_);
     }
 }

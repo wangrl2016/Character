@@ -8,7 +8,8 @@
 #include <QMainWindow>
 #include <QMdiArea>
 #include <QPushButton>
-#include "waveform_widget.h"
+#include "ui/view/widgets/waveform_widget.h"
+#include "ui/view/widgets/piano_view.h"
 
 namespace ui {
     class MainWindow : public QMainWindow {
@@ -49,6 +50,8 @@ namespace ui {
         QAction* stop_action_;
 
     private:
+        PianoView* piano_view_;
+
         WaveformWidget* waveform_widget_;
         QToolBar* tool_bar_;
 
