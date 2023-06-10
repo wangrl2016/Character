@@ -64,6 +64,7 @@ set(JUCE_LIBRARY
         juce::juce_audio_processors
         juce::juce_audio_utils
         juce::juce_core
+        juce::juce_dsp
         )
 
 add_library(AudioGraphModule
@@ -71,8 +72,13 @@ add_library(AudioGraphModule
         module/audio_graph/audio_bridge.h
         module/audio_graph/audio_context.cc
         module/audio_graph/audio_context.h
+        module/audio_graph/constant.h
+        module/audio_graph/gain_node.cc
+        module/audio_graph/gain_node.h
         module/audio_graph/metronome_node.cc
         module/audio_graph/metronome_node.h
+        module/audio_graph/oscillator_node.cc
+        module/audio_graph/oscillator_node.h
         module/audio_graph/processor_base.h
         module/audio_graph/track.cc
         module/audio_graph/track.h
@@ -99,6 +105,7 @@ qt_add_executable(Character
 
 target_link_libraries(Character
         PRIVATE
+        AudioGraphModule
         BaseLibrary
         MediaLibrary
         ${CONAN_LIBS}

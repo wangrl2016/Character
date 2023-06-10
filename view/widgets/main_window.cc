@@ -8,6 +8,7 @@
 #include <QTextEdit>
 #include <QToolBar>
 #include <glog/logging.h>
+#include "module/audio_graph/audio_bridge.h"
 #include "view/widgets/main_window.h"
 #include "view/widgets/waveform_widget.h"
 
@@ -22,10 +23,15 @@ namespace view {
         CreateToolBar();
 
         CreateDockWindows();
+
+        audio_graph::AudioBridge::Create();
+
+        audio_graph::AudioBridge::Start();
     }
 
     MainWindow::~MainWindow() {
-
+        audio_graph::AudioBridge::Stop();
+        audio_graph::AudioBridge::Destroy();
     }
 
     bool MainWindow::NewFile() {

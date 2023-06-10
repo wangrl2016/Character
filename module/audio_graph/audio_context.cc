@@ -3,34 +3,54 @@
 //
 
 #include <memory>
+#include <glog/logging.h>
 #include "module/audio_graph/audio_context.h"
+#include "module/audio_graph/constant.h"
+#include "gain_node.h"
+#include "oscillator_node.h"
 
 namespace audio_graph {
-    using AudioGraphIOProcessor = juce::AudioProcessorGraph::AudioGraphIOProcessor;
-    using Node = juce::AudioProcessorGraph::Node;
-
     AudioContext& AudioContext::Instance() {
         static AudioContext instance; // instantiated on first use
         return instance;
     }
 
     bool AudioContext::Create() {
+        LOG(INFO) << __FUNCTION__;
+        juce::MessageManager::getInstance();
+
         audio_device_manager_ = std::make_unique<juce::AudioDeviceManager>();
         audio_processor_graph_ = std::make_unique<juce::AudioProcessorGraph>();
         audio_processor_player_ = std::make_unique<juce::AudioProcessorPlayer>();
 
-        return InitAudioDeviceManager(0, 2);
+        return InitAudioDeviceManager(kDefaultInputChannelCount,
+                                      kDefaultOutputChannelCount);
     }
 
     bool AudioContext::Start() {
-        return true;
+        LOG(INFO) << __FUNCTION__;
+        audio_device_manager_->addAudioCallback(audio_processor_player_.get());
+        audio_processor_player_->setProcessor(audio_processor_graph_.get());
+
+        return InitAudioGraph();
     }
 
     bool AudioContext::Stop() {
+        LOG(INFO) << __FUNCTION__;
+        audio_device_manager_->removeAudioCallback(audio_processor_player_.get());
+        audio_processor_player_->setProcessor(nullptr);
         return true;
     }
 
     bool AudioContext::Destroy() {
+        LOG(INFO) << __FUNCTION__;
+        audio_device_manager_.reset();
+        audio_processor_graph_.reset();
+        audio_processor_player_.reset();
+
+        juce::MessageManager::getInstance()->stopDispatchLoop();
+        juce::DeletedAtShutdown::deleteAll();
+        juce::MessageManager::deleteInstance();
         return true;
     }
 
@@ -43,11 +63,11 @@ namespace audio_graph {
     }
 
     void AudioContext::StartBeat() {
-
+        LOG(INFO) << __FUNCTION__;
     }
 
     void AudioContext::StopBeat() {
-
+        LOG(INFO) << __FUNCTION__;
     }
 
     void AudioContext::Clear() {
@@ -139,16 +159,93 @@ namespace audio_graph {
         }
 
         if (ret.isEmpty()) {
+            DumpDeviceInfo();
+
             return true;
         } else {
             return false;
         }
     }
 
+    static juce::String GetListOfActiveBits(const juce::BigInteger& b) {
+        juce::StringArray bits;
+        for (auto i = 0; i <= b.getHighestBit(); i++) {
+            if (b[i]) {
+                bits.add(juce::String(i));
+            }
+        }
+        return bits.joinIntoString(", ");
+    }
+
+    void AudioContext::DumpDeviceInfo() {
+        LOG(INFO) << "Current audio device type: " <<
+                  ((audio_device_manager_->getCurrentDeviceTypeObject() != nullptr) ?
+                   audio_device_manager_->getCurrentDeviceTypeObject()->getTypeName() : "<none>");
+
+        if (auto* device = audio_device_manager_->getCurrentAudioDevice()) {
+            LOG(INFO) << "Current audio device: " << device->getName().quoted();
+            LOG(INFO) << "Sample rate:  " << device->getCurrentSampleRate() << " Hz";
+            LOG(INFO) << "Block size: " << device->getCurrentBufferSizeSamples() << " samples";
+            LOG(INFO) << "Bit depth: " << device->getCurrentBitDepth();
+            LOG(INFO) << "Input channel names: " << device->getInputChannelNames()
+                    .joinIntoString(", ").toStdString();
+            LOG(INFO) << "Active input channels: " <<
+                      GetListOfActiveBits(device->getActiveInputChannels()).toStdString();
+            LOG(INFO) << "Output channel names: " <<
+                      device->getOutputChannelNames().joinIntoString(", ").toStdString();
+            LOG(INFO) << "Active output channels: " <<
+                      GetListOfActiveBits(device->getActiveOutputChannels());
+        }
+    }
+
     bool AudioContext::InitAudioGraph() {
+        audio_processor_graph_->enableAllBuses();
         audio_processor_graph_->clear();
 
-        audio_processor_graph_->addNode(
-                std::make_unique<AudioGraphIOProcessor>(AudioGraphIOProcessor::audioOutputNode));
+        audio_input_node_ = audio_processor_graph_->addNode(
+                std::make_unique<AudioGraphIOProcessor>(
+                        AudioGraphIOProcessor::audioInputNode));
+        audio_output_node_ = audio_processor_graph_->addNode(
+                std::make_unique<AudioGraphIOProcessor>(
+                        AudioGraphIOProcessor::audioOutputNode));
+
+        midi_input_node_ = audio_processor_graph_->addNode(
+                std::make_unique<AudioGraphIOProcessor>(
+                        AudioGraphIOProcessor::midiInputNode));
+        midi_output_node_ = audio_processor_graph_->addNode(
+                std::make_unique<AudioGraphIOProcessor>(
+                        AudioGraphIOProcessor::midiOutputNode));
+
+        ConnectAudioNodes();
+
+        ConnectMidiNodes();
+    }
+
+    void AudioContext::ConnectAudioNodes() {
+        int channel_count = audio_device_manager_->getCurrentAudioDevice()
+                ->getActiveOutputChannels().toInteger();
+
+        gain_node_ = audio_processor_graph_->addNode(std::make_unique<GainNode>());
+        oscillator_node_ = audio_processor_graph_->addNode(std::make_unique<OscillatorNode>());
+
+        for (int channel = 0; channel < channel_count; channel++) {
+            audio_processor_graph_->addConnection(
+                    {{oscillator_node_->nodeID, channel},
+                     {gain_node_->nodeID, channel}});
+
+            audio_processor_graph_->addConnection(
+                    {{gain_node_->nodeID, channel},
+                     {audio_output_node_->nodeID, channel}});
+
+            // audio_processor_graph_->addConnection(
+            //         {{audio_input_node_->nodeID,  channel},
+            //          {audio_output_node_->nodeID, channel}});
+        }
+    }
+
+    void AudioContext::ConnectMidiNodes() {
+        audio_processor_graph_->addConnection(
+                {{midi_input_node_->nodeID,  juce::AudioProcessorGraph::midiChannelIndex},
+                 {midi_output_node_->nodeID, juce::AudioProcessorGraph::midiChannelIndex}});
     }
 }
