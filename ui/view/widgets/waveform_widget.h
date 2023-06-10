@@ -9,7 +9,7 @@
 #include "media/base/audio_bus.h"
 #include "media/filters/ffmpeg_audio_decoder.h"
 
-namespace view {
+namespace ui {
     class WaveformWidget : public QWidget {
     public:
         explicit WaveformWidget(QWidget* parent);

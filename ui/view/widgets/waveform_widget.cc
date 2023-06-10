@@ -4,9 +4,9 @@
 
 #include <QPainter>
 #include <glog/logging.h>
-#include "view/widgets/waveform_widget.h"
+#include "waveform_widget.h"
 
-namespace view {
+namespace ui {
     WaveformWidget::WaveformWidget(QWidget* parent) : QWidget(parent) {
 
     }

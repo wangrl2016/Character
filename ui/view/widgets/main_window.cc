@@ -9,10 +9,10 @@
 #include <QToolBar>
 #include <glog/logging.h>
 #include "module/audio_graph/audio_bridge.h"
-#include "view/widgets/main_window.h"
-#include "view/widgets/waveform_widget.h"
+#include "main_window.h"
+#include "waveform_widget.h"
 
-namespace view {
+namespace ui {
     MainWindow::MainWindow() {
         waveform_widget_ = new WaveformWidget(this);
         setCentralWidget(waveform_widget_);

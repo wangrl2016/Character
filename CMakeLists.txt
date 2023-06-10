@@ -89,11 +89,17 @@ target_link_libraries(AudioGraphModule
         )
 
 set(VIEW_SOURCES
-        view/widgets/main_window.cc
-        view/widgets/main_window.h
-        view/widgets/waveform_widget.cc
-        view/widgets/waveform_widget.h
-        view/widgets/widget_constant.h
+        ui/model/note.cc
+        ui/model/note.h
+        ui/model/piano.cc
+        ui/model/piano.h
+        ui/view/widgets/main_window.cc
+        ui/view/widgets/main_window.h
+        ui/view/widgets/piano_view.cc
+        ui/view/widgets/piano_view.h
+        ui/view/widgets/waveform_widget.cc
+        ui/view/widgets/waveform_widget.h
+        ui/view/widgets/widget_constant.h
         )
 
 qt_add_executable(Character
