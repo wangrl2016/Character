@@ -3,7 +3,9 @@
 //
 
 #include <array>
+#include <glog/logging.h>
 #include <QPainter>
+#include "base/config/build_config.h"
 #include "ui/view/widgets/piano_view.h"
 #include "ui/model/note.h"
 #include "ui/model/piano.h"
@@ -26,16 +28,40 @@ namespace ui {
     // @param parent the parent instrument plugin window
     PianoView::PianoView(QWidget* parent) :
             QWidget(parent),
-            start_key_(kKeyC) /* the first key displayed? */ {
+            start_key_(kKeyC), /* the first key displayed? */
+            last_key_(kInvalidKey) {
+        piano_ = new Piano;
 
+        // listen keyboard is pressed
+        setFocusPolicy(Qt::StrongFocus);
+    }
+
+    PianoView::~PianoView() noexcept {
+        delete piano_;
     }
 
     void PianoView::keyPressEvent(QKeyEvent* key) {
-
+        int key_num = GetKeyFromKeyEvent(key);
+        // LOG(INFO) << "Key num " << key_num;
+        if (piano_) {
+            piano_->SetKeyState(key_num, true);
+            // key->accept();
+            update();
+        }
     }
 
     void PianoView::keyReleaseEvent(QKeyEvent* key) {
+        int key_num = GetKeyFromKeyEvent(key);
+        // LOG(INFO) << "Key num " << key_num;
+        if (piano_) {
+            piano_->SetKeyState(key_num, false);
+            // key->accept();
+            update();
+        }
+    }
 
+    int PianoView::GetKeyFromKeyEvent(QKeyEvent* event) {
+        return event->key();
     }
 
     // Paint the piano display view in response to an event.
@@ -59,8 +85,7 @@ namespace ui {
         int cur_key = start_key_;
 
         // Draw all white keys...
-        painter.setPen(Qt::black);
-        painter.setBrush(QBrush(Qt::white));
+
         for (int x = 0; x < width();) {
             while (Piano::IsBlackKey(cur_key)) {
                 cur_key++;
@@ -68,11 +93,18 @@ namespace ui {
 
             // Draw normal, pressed or disabled key, depending on
             // state and position of current key.
+            if (piano_ && piano_->IsKeyPressed(cur_key)) {
+                painter.setPen(Qt::red);
+                painter.setBrush(Qt::red);
+            } else {
+                painter.setPen(Qt::black);
+                painter.setBrush(Qt::white);
+            }
             painter.drawRect(x, kPianoBase, kWhiteKeyWidth, kWhiteKeyHeight);
 
             x += kWhiteKeyWidth;
 
-            if ((Keys)(cur_key % kKeysPerOctave) == kKeyC) {
+            if ((Keys) (cur_key % kKeysPerOctave) == kKeyC) {
                 // Label key of note C with "C" and number of current octave.
                 painter.drawText(x - kWhiteKeyWidth,
                                  kLabelTextSize + 2,
@@ -85,16 +117,22 @@ namespace ui {
         cur_key = start_key_;
         int white_cnt = 0;
         int start_key = start_key_;
-        if (start_key > 0 &&Piano::IsBlackKey(static_cast<Keys>(--start_key))) {
+        if (start_key > 0 && Piano::IsBlackKey(static_cast<Keys>(--start_key))) {
 
         }
 
         // now draw all black keys...
-        painter.setPen(QColor(Qt::black));
-        painter.setBrush(QBrush(Qt::black));
+
         for (int x = 0; x < width();) {
-            if(Piano::IsBlackKey(cur_key)) {
+            if (Piano::IsBlackKey(cur_key)) {
                 // Draw normal, pressed or disabled key, depending on state and position of current key.
+                if (piano_ && piano_->IsKeyPressed(cur_key)) {
+                    painter.setPen(Qt::red);
+                    painter.setBrush(Qt::red);
+                } else {
+                    painter.setPen(QColor(Qt::black));
+                    painter.setBrush(QBrush(Qt::black));
+                }
                 painter.drawRect(x + kWhiteKeyWidth / 2, kPianoBase, kBlackKeyWidth, kBlackKeyHeight);
 
                 x += kWhiteKeyWidth;
@@ -116,15 +154,48 @@ namespace ui {
     }
 
     void PianoView::mousePressEvent(QMouseEvent* event) {
+        if (event->button() == Qt::LeftButton) {
+            // get pressed key
+            int key_num = GetKeyFromMouse(event->pos());
+            piano_->SetKeyState(key_num, true);
+            last_key_ = key_num;
 
+            emit KeyPressed(key_num);
+
+            update();
+        }
     }
 
     void PianoView::mouseMoveEvent(QMouseEvent* event) {
+        int key_num = GetKeyFromMouse(event->pos());
+        int y_diff = event->pos().y() - kPianoBase;
 
+        if (key_num != last_key_) {
+            if (last_key_ != kInvalidKey) {
+                piano_->SetKeyState(last_key_, false);
+                last_key_ = kInvalidKey;
+            }
+            if (event->buttons() & Qt::LeftButton) {
+                if (event->pos().y() > kPianoBase) {
+                    piano_->SetKeyState(key_num, true);
+                    last_key_ = key_num;
+                }
+            }
+
+            update();
+        }
     }
 
     void PianoView::mouseReleaseEvent(QMouseEvent* event) {
+        if (last_key_ != kInvalidKey) {
+            if (piano_) {
+                piano_->SetKeyState(last_key_, false);
+            }
 
+            update();
+
+            last_key_ = kInvalidKey;
+        }
     }
 
     void PianoView::focusInEvent(QFocusEvent* event) {
@@ -137,5 +208,47 @@ namespace ui {
 
     void PianoView::resizeEvent(QResizeEvent* event) {
 
+    }
+
+    // Get the key from the mouse position in the piano display.
+    //
+    //
+    int PianoView::GetKeyFromMouse(const QPoint& point) const {
+        int offset = point.x() % kWhiteKeyWidth;
+
+        if (offset < 0)
+            offset += kWhiteKeyWidth;
+
+        int key_num = (point.x() - offset) / kWhiteKeyWidth;
+
+        for (int i = 0; i <= key_num; i++) {
+            if (Piano::IsBlackKey(start_key_ + i)) {
+                key_num++;
+            }
+        }
+
+        for (int i = 0; i >= key_num; i--) {
+            if (Piano::IsBlackKey(start_key_ + i)) {
+                key_num--;
+            }
+        }
+
+        key_num += start_key_;
+
+        // Is it a black key?
+        if (point.y() < kPianoBase + kBlackKeyHeight) {
+            // then do extra checking whether the mouse-cursor is over
+            // a black key
+            if (key_num > 0 && Piano::IsBlackKey(key_num - 1) &&
+                offset <= (kWhiteKeyWidth / 2) - (kBlackKeyWidth / 2)) {
+                key_num--;
+            }
+            if (key_num < kNumKeys - 1 && Piano::IsBlackKey(key_num + 1) &&
+                offset >= (kWhiteKeyWidth - kBlackKeyWidth / 2)) {
+                key_num++;
+            }
+        }
+
+        return qBound(0, key_num, kNumKeys - 1);
     }
 }

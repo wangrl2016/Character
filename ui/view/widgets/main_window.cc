@@ -55,7 +55,6 @@ namespace ui {
 
 
         h_layout->addWidget(left_tab_widget_);
-        // h_layout->addWidget(waveform_widget_);
         h_layout->addWidget(central_widget_);
         h_layout->addWidget(right_tab_widget_);
 

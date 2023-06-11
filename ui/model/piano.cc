@@ -15,6 +15,14 @@ namespace ui {
         Piano::kBlackKey,   Piano::kWhiteKey,   Piano::kBlackKey,   Piano::kWhiteKey,
     };
 
+    void Piano::SetKeyState(int key, bool state) {
+        if (IsValidKey(key)) {
+            pressed_keys_[key] = state;
+
+            emit DataChanged();
+        }
+    }
+
     bool Piano::IsWhiteKey(int key) {
         return !IsBlackKey(key);
     }
