@@ -10,6 +10,7 @@
 #include <QPushButton>
 #include "ui/view/widgets/waveform_widget.h"
 #include "ui/view/widgets/piano_view.h"
+#include "resource_view.h"
 
 namespace ui {
     class MainWindow : public QMainWindow {
@@ -49,8 +50,11 @@ namespace ui {
         QAction* pause_action_;
         QAction* stop_action_;
 
-    private:
+        QIcon play_icon_;
+        QIcon pause_icon_;
+
         PianoView* piano_view_;
+        ResourceView* resource_view_;
 
         WaveformWidget* waveform_widget_;
         QToolBar* tool_bar_;

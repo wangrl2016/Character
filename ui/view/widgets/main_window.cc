@@ -69,10 +69,10 @@ namespace ui {
         is_playing_ = !is_playing_;
         LOG(INFO) << __FUNCTION__ << " " << is_playing_;
         if (is_playing_) {
-            play_or_pause_button_->setIcon(QIcon(":toolbar/pause"));
+            play_or_pause_button_->setIcon(pause_icon_);
             audio_graph::AudioBridge::StartBeat();
         } else {
-            play_or_pause_button_->setIcon(QIcon(":toolbar/play_arrow"));
+            play_or_pause_button_->setIcon(play_icon_);
             audio_graph::AudioBridge::StopBeat();
         }
     }
@@ -105,11 +105,13 @@ namespace ui {
     void MainWindow::CreateToolBar() {
         tool_bar_ = new QToolBar(this);
 
+        play_icon_ = QIcon(":toolbar/play_arrow");
+        pause_icon_ = QIcon(":toolbar/pause");
+
         play_or_pause_button_ = new QPushButton;
-        play_or_pause_button_->setIcon(QIcon(":toolbar/play_arrow"));
+        play_or_pause_button_->setIcon(play_icon_);
         connect(play_or_pause_button_, &QPushButton::clicked,
                 this, &MainWindow::PlayOrPause);
-
 
         play_action_ = new QAction(QIcon(":toolbar/play_arrow"), tr("Play"), this);
         connect(play_action_, &QAction::triggered, this, &MainWindow::Play);
@@ -139,7 +141,11 @@ namespace ui {
         piano_view_ = new PianoView(this);
         dock->setAllowedAreas(Qt::BottomDockWidgetArea);
 
+        resource_view_ = new ResourceView(this);
+        dock->setAllowedAreas(Qt::LeftDockWidgetArea);
+
         addDockWidget(Qt::RightDockWidgetArea, dock);
         addDockWidget(Qt::BottomDockWidgetArea, piano_view_);
+        addDockWidget(Qt::LeftDockWidgetArea, resource_view_);
     }
 }

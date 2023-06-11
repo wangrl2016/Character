@@ -77,6 +77,8 @@ add_library(AudioGraphModule
         module/audio_graph/gain_node.h
         module/audio_graph/metronome_node.cc
         module/audio_graph/metronome_node.h
+        module/audio_graph/oscillator.cc
+        module/audio_graph/oscillator.h
         module/audio_graph/oscillator_node.cc
         module/audio_graph/oscillator_node.h
         module/audio_graph/processor_base.h
@@ -89,6 +91,7 @@ target_link_libraries(AudioGraphModule
         )
 
 set(VIEW_SOURCES
+        core/math/constant.h
         ui/model/note.cc
         ui/model/note.h
         ui/model/piano.cc
@@ -97,6 +100,8 @@ set(VIEW_SOURCES
         ui/view/widgets/main_window.h
         ui/view/widgets/piano_view.cc
         ui/view/widgets/piano_view.h
+        ui/view/widgets/resource_view.cc
+        ui/view/widgets/resource_view.h
         ui/view/widgets/waveform_widget.cc
         ui/view/widgets/waveform_widget.h
         ui/view/widgets/widget_constant.h

@@ -13,3 +13,4 @@ CMAKE_PREFIX_PATH=~/Qt/6.4.1/macos
 ### Reference
 
 [Google Material Design](https://m3.material.io/)
+[ADSR Envelope](https://en.wikipedia.org/wiki/Synthesizer#ADSR_envelope)
