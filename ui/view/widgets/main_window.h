@@ -53,10 +53,15 @@ namespace ui {
         QIcon play_icon_;
         QIcon pause_icon_;
 
+        QTabWidget* left_tab_widget_;
+        QTabWidget* right_tab_widget_;
+        QTabWidget* down_tab_widget_;
+
         PianoView* piano_view_;
         ResourceView* resource_view_;
 
         WaveformWidget* waveform_widget_;
+        QWidget* central_widget_;
         QToolBar* tool_bar_;
 
         bool is_playing_ = false;

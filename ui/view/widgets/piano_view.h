@@ -8,7 +8,7 @@
 #include <QDockWidget>
 
 namespace ui {
-    class PianoView: public QDockWidget {
+    class PianoView: public QWidget {
         Q_OBJECT
     public:
         PianoView(QWidget* parent = nullptr);

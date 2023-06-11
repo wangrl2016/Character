@@ -25,7 +25,7 @@ namespace ui {
     //
     // @param parent the parent instrument plugin window
     PianoView::PianoView(QWidget* parent) :
-            QDockWidget(parent),
+            QWidget(parent),
             start_key_(kKeyC) /* the first key displayed? */ {
 
     }

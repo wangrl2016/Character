@@ -8,21 +8,64 @@
 #include <QTextEdit>
 #include <QToolBar>
 #include <glog/logging.h>
+#include <QHBoxLayout>
 #include "module/audio_graph/audio_bridge.h"
 #include "main_window.h"
 #include "waveform_widget.h"
 
 namespace ui {
     MainWindow::MainWindow() {
-        waveform_widget_ = new WaveformWidget(this);
-        setCentralWidget(waveform_widget_);
+        //waveform_widget_ = new WaveformWidget(this);
+
+
+        QWidget* widget = new QWidget(this);
+        QVBoxLayout* v_layout = new QVBoxLayout(widget);
+        // widget->setLayout(v_layout);
+
+        QWidget* h_widget = new QWidget(widget);
+        QHBoxLayout* h_layout = new QHBoxLayout(h_widget);
+        // h_widget->setLayout(h_layout);
+        central_widget_ = new QWidget(h_widget);
+        central_widget_->setFixedSize(600, 400);
+
         // setUnifiedTitleAndToolBarOnMac(true);
         CreateActions();
         CreateMenus();
 
         CreateToolBar();
 
-        CreateDockWindows();
+        // CreateDockWindows();
+
+        left_tab_widget_ = new QTabWidget(h_widget);
+        right_tab_widget_ = new QTabWidget(h_widget);
+        down_tab_widget_ = new QTabWidget(widget);
+
+        left_tab_widget_->setTabPosition(QTabWidget::West);
+        right_tab_widget_->setTabPosition(QTabWidget::East);
+        down_tab_widget_->setTabPosition(QTabWidget::South);
+
+        left_tab_widget_->addTab(new QWidget(), "TAB 1");
+        left_tab_widget_->addTab(new QWidget(), "TAB 2");
+        right_tab_widget_->addTab(new QWidget(), "TAB 1");
+        right_tab_widget_->addTab(new QWidget(), "TAB 2");
+
+        piano_view_ = new PianoView(down_tab_widget_);
+        down_tab_widget_->addTab(piano_view_, tr("Piano"));
+        down_tab_widget_->addTab(new QWidget(), "TAB 2");
+
+
+        h_layout->addWidget(left_tab_widget_);
+        // h_layout->addWidget(waveform_widget_);
+        h_layout->addWidget(central_widget_);
+        h_layout->addWidget(right_tab_widget_);
+
+
+
+        v_layout->addWidget(h_widget);
+        v_layout->addWidget(down_tab_widget_);
+
+        setCentralWidget(widget);
+
 
         audio_graph::AudioBridge::Create();
 
@@ -135,17 +178,17 @@ namespace ui {
     }
 
     void MainWindow::CreateDockWindows() {
-        auto* dock = new QDockWidget(tr("Customers"), this);
-        dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
-
-        piano_view_ = new PianoView(this);
-        dock->setAllowedAreas(Qt::BottomDockWidgetArea);
-
-        resource_view_ = new ResourceView(this);
-        dock->setAllowedAreas(Qt::LeftDockWidgetArea);
-
-        addDockWidget(Qt::RightDockWidgetArea, dock);
-        addDockWidget(Qt::BottomDockWidgetArea, piano_view_);
-        addDockWidget(Qt::LeftDockWidgetArea, resource_view_);
+        // auto* dock = new QDockWidget(tr("Customers"), this);
+        // dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
+        //
+        // piano_view_ = new PianoView(this);
+        // dock->setAllowedAreas(Qt::BottomDockWidgetArea);
+        //
+        // resource_view_ = new ResourceView(this);
+        // dock->setAllowedAreas(Qt::LeftDockWidgetArea);
+        //
+        // addDockWidget(Qt::RightDockWidgetArea, dock);
+        // addDockWidget(Qt::BottomDockWidgetArea, piano_view_);
+        // addDockWidget(Qt::LeftDockWidgetArea, resource_view_);
     }
 }
