@@ -108,7 +108,7 @@ namespace ui {
         play_icon_ = QIcon(":toolbar/play_arrow");
         pause_icon_ = QIcon(":toolbar/pause");
 
-        play_or_pause_button_ = new QPushButton;
+        play_or_pause_button_ = new QPushButton(this);
         play_or_pause_button_->setIcon(play_icon_);
         connect(play_or_pause_button_, &QPushButton::clicked,
                 this, &MainWindow::PlayOrPause);

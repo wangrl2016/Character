@@ -92,6 +92,33 @@ namespace media {
                 new AudioBus(frames, channel_data));
     }
 
+    std::unique_ptr<AudioBus> AudioBus::WrapMemory(int channels, int frames, void* data) {
+        // |data| must be aligned by AudioBus::kChannelAlignment.
+        CHECK(IsAligned(data));
+        return std::unique_ptr<AudioBus>(
+                new AudioBus(channels, frames, static_cast<float*>(data)));
+    }
+
+    std::unique_ptr<AudioBus> AudioBus::WrapMemory(const AudioParameters& params,
+                                                   void* data) {
+        // |data| must be aligned by AudioBus::kChannelAlignment.
+        CHECK(IsAligned(data));
+        return std::unique_ptr<AudioBus>(
+                new AudioBus(params.channel_count(),
+                             params.frames_per_buffer(),
+                             static_cast<float*>(data)));
+    }
+
+    int AudioBus::CalculateMemorySize(int channels, int frames) {
+        return CalculateMemorySizeInternal(channels, frames, nullptr);
+    }
+
+    int AudioBus::CalculateMemorySize(const AudioParameters& params) {
+        return CalculateMemorySizeInternal(params.channel_count(),
+                                           params.frames_per_buffer(),
+                                           nullptr);
+    }
+
     void AudioBus::Zero() {
         ZeroFrames(frames_);
     }

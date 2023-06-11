@@ -134,4 +134,21 @@ namespace media {
         VerifyChannelAndFrameCount(bus.get());
         VerifyReadWriteAndAlignment(bus.get());
     }
+
+    // Verify an AudioBus created via wrapping a memory block works as advertised.
+    TEST_F(AudioBusTest, WrapMemory) {
+        AudioParameters params(
+                kSampleRate,
+                av_get_channel_layout_nb_channels(kChannelLayout),
+                AV_SAMPLE_FMT_FLTP,
+                kFrameCount);
+
+        int data_size = AudioBus::CalculateMemorySize(params);
+        std::unique_ptr<float, base::AlignedFreeDeleter> data(static_cast<float*>(
+                base::AlignedAlloc(data_size, AudioBus::kChannelAlignment)));
+
+        // Fill the memory with a test value we can check for after wrapping.
+        static const float kTestValue = 3;
+        std::fill(data.get(), data.get() + data_size / sizeof(*data), kTestValue);
+    }
 }

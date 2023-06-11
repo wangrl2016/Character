@@ -43,14 +43,6 @@ namespace media {
         static std::unique_ptr<AudioBus> WrapMemory(const AudioParameters& params,
                                                     void* data);
 
-        static std::unique_ptr<const AudioBus> WrapReadOnlyMemory(int channels,
-                                                                  int frames,
-                                                                  const void* data);
-
-        static std::unique_ptr<const AudioBus> WrapReadOnlyMemory(
-                const AudioParameters& params,
-                const void* data);
-
         // Based on the given number of channels and frames, calculates the minimum
         // required size in bytes of a contiguous block of memory to be passed to
         // AudioBus for storage of the audio data.
