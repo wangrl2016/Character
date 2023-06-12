@@ -8,6 +8,7 @@
 #include <QDockWidget>
 #include <QKeyEvent>
 #include <QMouseEvent>
+#include <QScrollBar>
 #include "ui/model/piano.h"
 
 namespace ui {
@@ -45,18 +46,22 @@ namespace ui {
     signals:
         void KeyPressed(int);
 
+        void BaseNoteChanged();
+
+    private slots:
+        void PianoScrolled(int new_pos);
+
     private:
         int GetKeyFromMouse(const QPoint& point) const;
 
         Piano* piano_;
 
+        QScrollBar* piano_scroll_;
+
         // record keystrokes starting at the leftmost
         int start_key_;
         // record the most recently pressed key
         int last_key_;
-
-        static QPixmap* white_key_pixmap_;
-        static QPixmap* black_key_pixmap_;
     };
 }
 

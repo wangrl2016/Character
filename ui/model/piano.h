@@ -5,8 +5,8 @@
 #ifndef CHARACTER_PIANO_H
 #define CHARACTER_PIANO_H
 
+#include "ui/model/model.h"
 #include "ui/model/note.h"
-#include "model.h"
 
 namespace ui {
     class Piano : public Model {

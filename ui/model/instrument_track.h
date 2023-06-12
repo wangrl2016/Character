@@ -8,6 +8,11 @@
 namespace ui {
     class InstrumentTrack {
 
+    private:
+        int base_note_;     // The "A4" or "440Hz" key (default 69)
+
+        float volume_;
+        float panning_;
     };
 }
 

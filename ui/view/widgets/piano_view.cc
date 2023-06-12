@@ -5,7 +5,7 @@
 #include <array>
 #include <glog/logging.h>
 #include <QPainter>
-#include "base/config/build_config.h"
+#include <QVBoxLayout>
 #include "ui/view/widgets/piano_view.h"
 #include "ui/model/note.h"
 #include "ui/model/piano.h"
@@ -32,8 +32,26 @@ namespace ui {
             last_key_(kInvalidKey) {
         piano_ = new Piano;
 
+        setAttribute(Qt::WA_OpaquePaintEvent, true);
         // listen keyboard is pressed
         setFocusPolicy(Qt::StrongFocus);
+
+        // create scrollbar at the bottom
+        piano_scroll_ = new QScrollBar(Qt::Horizontal, this);
+        piano_scroll_->setSingleStep(1);
+        piano_scroll_->setPageStep(20);
+        piano_scroll_->setValue(kOctave3 * Piano::kWhiteKeysPerOctave);
+
+        // and connect it to this widget
+        connect(piano_scroll_, SIGNAL(valueChanged(int)),
+                this, SLOT(PianoScrolled(int)));
+
+        // create a layout for ourselves
+        auto layout = new QVBoxLayout(this);
+        layout->setSpacing(0);
+        layout->setContentsMargins(0, 0, 0, 0);
+        layout->addSpacing(kPianoBase + kWhiteKeyHeight);
+        layout->addWidget(piano_scroll_);
     }
 
     PianoView::~PianoView() noexcept {
@@ -207,7 +225,17 @@ namespace ui {
     }
 
     void PianoView::resizeEvent(QResizeEvent* event) {
+        QWidget::resizeEvent(event);
+        piano_scroll_->setRange(0, Piano::kNumWhiteKeys -
+                                   static_cast<int>(floor(static_cast<float>(width()) / kWhiteKeyWidth)));
+    }
 
+    void PianoView::PianoScrolled(int new_pos) {
+        LOG(INFO) << __FUNCTION__ << ", new pos " << new_pos;
+        start_key_ = kWhiteKeys[new_pos % Piano::kWhiteKeysPerOctave] +
+                     (new_pos / Piano::kWhiteKeysPerOctave) * kKeysPerOctave;
+
+        update();
     }
 
     // Get the key from the mouse position in the piano display.
@@ -237,7 +265,7 @@ namespace ui {
 
         // Is it a black key?
         if (point.y() < kPianoBase + kBlackKeyHeight) {
-            // then do extra checking whether the mouse-cursor is over
+            // then do extra check whether the mouse-cursor is over
             // a black key
             if (key_num > 0 && Piano::IsBlackKey(key_num - 1) &&
                 offset <= (kWhiteKeyWidth / 2) - (kBlackKeyWidth / 2)) {

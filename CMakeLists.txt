@@ -92,6 +92,8 @@ target_link_libraries(AudioGraphModule
 
 set(VIEW_SOURCES
         core/math/constant.h
+        ui/model/clip.cc
+        ui/model/clip.h
         ui/model/instrument_track.cc
         ui/model/instrument_track.h
         ui/model/model.cc
