@@ -15,6 +15,11 @@ namespace ui {
         Piano::kBlackKey,   Piano::kWhiteKey,   Piano::kBlackKey,   Piano::kWhiteKey,
     };
 
+    Piano::Piano(InstrumentTrack* track) :
+            Model(nullptr) {
+
+    }
+
     void Piano::SetKeyState(int key, bool state) {
         if (IsValidKey(key)) {
             pressed_keys_[key] = state;

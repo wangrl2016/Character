@@ -30,7 +30,7 @@ namespace ui {
             QWidget(parent),
             start_key_(kKeyC), /* the first key displayed? */
             last_key_(kInvalidKey) {
-        piano_ = new Piano;
+        piano_ = new Piano(nullptr);
 
         setAttribute(Qt::WA_OpaquePaintEvent, true);
         // listen keyboard is pressed

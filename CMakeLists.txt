@@ -33,6 +33,8 @@ add_library(MediaLibrary
         media/base/audio_parameters.h
         media/filters/ffmpeg_audio_decoder.cc
         media/filters/ffmpeg_audio_decoder.h
+        media/filters/ffmpeg_audio_encoder.cc
+        media/filters/ffmpeg_audio_encoder.h
         )
 target_link_libraries(MediaLibrary
         PRIVATE
@@ -92,12 +94,15 @@ target_link_libraries(AudioGraphModule
 
 set(VIEW_SOURCES
         core/math/constant.h
+        core/util/utility_function.h
         ui/model/clip.cc
         ui/model/clip.h
         ui/model/instrument_track.cc
         ui/model/instrument_track.h
         ui/model/model.cc
         ui/model/model.h
+        ui/model/model_view.cc
+        ui/model/model_view.h
         ui/model/note.cc
         ui/model/note.h
         ui/model/piano.cc
@@ -106,12 +111,16 @@ set(VIEW_SOURCES
         ui/model/song.h
         ui/model/track.cc
         ui/model/track.h
+        ui/model/track_container.cc
+        ui/model/track_container.h
         ui/view/widgets/main_window.cc
         ui/view/widgets/main_window.h
         ui/view/widgets/piano_view.cc
         ui/view/widgets/piano_view.h
         ui/view/widgets/resource_view.cc
         ui/view/widgets/resource_view.h
+        ui/view/widgets/track_view.cc
+        ui/view/widgets/track_view.h
         ui/view/widgets/waveform_widget.cc
         ui/view/widgets/waveform_widget.h
         ui/view/widgets/widget_constant.h

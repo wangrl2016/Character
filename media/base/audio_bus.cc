@@ -138,6 +138,26 @@ namespace media {
         }
     }
 
+    bool AudioBus::AreFramesZero() const {
+        for (auto data : channel_data_) {
+            for (int j = 0; j < frames_; j++) {
+                if (std::abs(data[j]) > std::numeric_limits<float>::epsilon())
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    void AudioBus::Scale(float volume) {
+        if (volume > 0 && volume != 1) {
+            for (int i = 0; i < channels(); i++) {
+
+            }
+        } else if (volume == 0) {
+            Zero();
+        }
+    }
+
     void AudioBus::CopyConvertFromInterleavedSourceToAudioBus(
             const float* source_buffer,
             int write_offset_in_frames,

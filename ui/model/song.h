@@ -6,9 +6,10 @@
 #define CHARACTER_SONG_H
 
 #include <QString>
+#include "ui/model/track_container.h"
 
 namespace ui {
-    class Song {
+    class Song : public TrackContainer {
     public:
 
         // file management

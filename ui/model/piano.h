@@ -5,6 +5,7 @@
 #ifndef CHARACTER_PIANO_H
 #define CHARACTER_PIANO_H
 
+#include "ui/model/instrument_track.h"
 #include "ui/model/model.h"
 #include "ui/model/note.h"
 
@@ -16,6 +17,8 @@ namespace ui {
         // total 128
         static const int kNumWhiteKeys = 75;
         static const int kNumBlackKeys = 53;
+
+        explicit Piano(InstrumentTrack* track);
 
         enum KeyType {
             kWhiteKey,
