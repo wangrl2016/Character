@@ -8,9 +8,9 @@
 #include <QMainWindow>
 #include <QMdiArea>
 #include <QPushButton>
-#include "ui/view/widgets/waveform_widget.h"
-#include "ui/view/widgets/piano_view.h"
-#include "resource_view.h"
+#include "ui/view/widget/waveform_widget.h"
+#include "ui/view/widget/piano_view.h"
+#include "ui/view/widget/resource_view.h"
 
 namespace ui {
     class MainWindow : public QMainWindow {

@@ -73,31 +73,42 @@ namespace audio_graph {
 
     void AudioContext::StartBeat() {
         LOG(INFO) << __FUNCTION__;
-        dynamic_cast<OscillatorNode*>(audio_processor_graph_->getNodeForId(
-                oscillator_node_->nodeID)->getProcessor())->StartBeat();
-        dynamic_cast<GainNode*>(audio_processor_graph_->getNodeForId(
-                gain_node_->nodeID)->getProcessor())->StartBeat();
-
+        auto* oscillator_node = audio_processor_graph_->getNodeForId(
+                oscillator_node_->nodeID);
+        if (oscillator_node) {
+            dynamic_cast<OscillatorNode*>(oscillator_node->getProcessor())->StartBeat();
+        }
+        auto* gain_node = audio_processor_graph_->getNodeForId(
+                gain_node_->nodeID);
+        if (gain_node) {
+            dynamic_cast<GainNode*>(gain_node->getProcessor())->StartBeat();
+        }
     }
 
     void AudioContext::StopBeat() {
         LOG(INFO) << __FUNCTION__;
-        dynamic_cast<OscillatorNode*>(audio_processor_graph_->getNodeForId(
-                oscillator_node_->nodeID)->getProcessor())->StopBeat();
-        dynamic_cast<GainNode*>(audio_processor_graph_->getNodeForId(
-                gain_node_->nodeID)->getProcessor())->StopBeat();
+        auto* oscillator_node = audio_processor_graph_->getNodeForId(
+                oscillator_node_->nodeID);
+        if (oscillator_node) {
+            dynamic_cast<OscillatorNode*>(oscillator_node->getProcessor())->StopBeat();
+        }
+        auto* gain_node = audio_processor_graph_->getNodeForId(
+                gain_node_->nodeID);
+        if (gain_node) {
+            dynamic_cast<GainNode*>(gain_node->getProcessor())->StopBeat();
+        }
     }
 
     void AudioContext::Clear() {
 
     }
 
-    std::string AudioContext::GetCurrentDefaultAudioDeviceName(bool is_input) {
+    juce::String AudioContext::GetCurrentDefaultAudioDeviceName(bool is_input) {
         auto* device_type = audio_device_manager_->getCurrentDeviceTypeObject();
 
         if (device_type != nullptr) {
             auto device_names = device_type->getDeviceNames();
-            return device_names[device_type->getDefaultDeviceIndex(is_input)].toStdString();
+            return device_names[device_type->getDefaultDeviceIndex(is_input)];
         }
 
         return {};

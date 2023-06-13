@@ -6,7 +6,7 @@
 #include <glog/logging.h>
 #include <QPainter>
 #include <QVBoxLayout>
-#include "ui/view/widgets/piano_view.h"
+#include "ui/view/widget/piano_view.h"
 #include "ui/model/note.h"
 #include "ui/model/piano.h"
 

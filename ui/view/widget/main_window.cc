@@ -44,8 +44,14 @@ namespace ui {
         right_tab_widget_->setTabPosition(QTabWidget::East);
         down_tab_widget_->setTabPosition(QTabWidget::South);
 
-        left_tab_widget_->addTab(new QWidget(), "TAB 1");
-        left_tab_widget_->addTab(new QWidget(), "TAB 2");
+        left_tab_widget_->addTab(new QWidget(), tr("Draw"));
+        left_tab_widget_->addTab(new QWidget(), tr("Game"));
+        left_tab_widget_->addTab(new QWidget(), tr("Music"));
+        left_tab_widget_->addTab(new QWidget(), tr("Show"));
+        left_tab_widget_->addTab(new QWidget(), tr("Talk"));
+        left_tab_widget_->addTab(new QWidget(), tr("Text"));
+        left_tab_widget_->addTab(new QWidget(), tr("Video"));
+
         right_tab_widget_->addTab(new QWidget(), "TAB 1");
         right_tab_widget_->addTab(new QWidget(), "TAB 2");
 

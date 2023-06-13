@@ -7,7 +7,7 @@
 
 #include <QWidget>
 #include "ui/model/model.h"
-#include "ui/model/model_view.h"
+#include "ui/view/widget/model_view.h"
 
 namespace ui {
     class ModelView {

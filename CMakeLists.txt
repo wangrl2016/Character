@@ -101,8 +101,6 @@ set(VIEW_SOURCES
         ui/model/instrument_track.h
         ui/model/model.cc
         ui/model/model.h
-        ui/model/model_view.cc
-        ui/model/model_view.h
         ui/model/note.cc
         ui/model/note.h
         ui/model/piano.cc
@@ -113,17 +111,23 @@ set(VIEW_SOURCES
         ui/model/track.h
         ui/model/track_container.cc
         ui/model/track_container.h
-        ui/view/widgets/main_window.cc
-        ui/view/widgets/main_window.h
-        ui/view/widgets/piano_view.cc
-        ui/view/widgets/piano_view.h
-        ui/view/widgets/resource_view.cc
-        ui/view/widgets/resource_view.h
-        ui/view/widgets/track_view.cc
-        ui/view/widgets/track_view.h
-        ui/view/widgets/waveform_widget.cc
-        ui/view/widgets/waveform_widget.h
-        ui/view/widgets/widget_constant.h
+        ui/view/widget/main_window.cc
+        ui/view/widget/main_window.h
+        ui/view/widget/model_view.cc
+        ui/view/widget/model_view.h
+        ui/view/widget/piano_view.cc
+        ui/view/widget/piano_view.h
+        ui/view/widget/resource_view.cc
+        ui/view/widget/resource_view.h
+        ui/view/widget/track_view.cc
+        ui/view/widget/track_view.h
+        ui/view/widget/song_view.cc
+        ui/view/widget/song_view.h
+        ui/view/widget/track_container_view.cc
+        ui/view/widget/track_container_view.h
+        ui/view/widget/waveform_widget.cc
+        ui/view/widget/waveform_widget.h
+        ui/view/widget/widget_constant.h
         )
 
 qt_add_executable(Character

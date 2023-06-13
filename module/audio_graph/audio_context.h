@@ -37,7 +37,7 @@ namespace audio_graph {
 
         void Clear();
 
-        std::string GetCurrentDefaultAudioDeviceName(bool is_input);
+        juce::String GetCurrentDefaultAudioDeviceName(bool is_input);
 
     private:
         AudioContext() = default;
@@ -68,7 +68,6 @@ namespace audio_graph {
 
         Node::Ptr gain_node_;
         Node::Ptr oscillator_node_;
-
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AudioContext)
     };

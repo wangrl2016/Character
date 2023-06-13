@@ -3,8 +3,8 @@
 //
 
 #include <QApplication>
-#include "ui/view/widgets/main_window.h"
-#include "ui/view/widgets/widget_constant.h"
+#include "ui/view/widget/main_window.h"
+#include "ui/view/widget/widget_constant.h"
 
 int main(int argc, char* argv[]) {
     QApplication app(argc, argv);

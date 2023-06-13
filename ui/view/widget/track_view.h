@@ -6,7 +6,7 @@
 #define CHARACTER_TRACK_VIEW_H
 
 #include <QWidget>
-#include "ui/model/model_view.h"
+#include "ui/view/widget/model_view.h"
 
 namespace ui {
     class TrackView : public QWidget, public ModelView {
