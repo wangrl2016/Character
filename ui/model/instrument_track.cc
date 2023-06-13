@@ -5,5 +5,10 @@
 #include "ui/model/instrument_track.h"
 
 namespace ui {
+    InstrumentTrack::InstrumentTrack(TrackContainer* tc) :
+            Track(Track::kInstrumentTrack, tc) {
 
+    }
+
+    InstrumentTrack::~InstrumentTrack() = default;
 }

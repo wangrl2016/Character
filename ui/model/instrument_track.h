@@ -5,9 +5,16 @@
 #ifndef CHARACTER_INSTRUMENT_TRACK_H
 #define CHARACTER_INSTRUMENT_TRACK_H
 
-namespace ui {
-    class InstrumentTrack {
+#include "ui/model/track.h"
+#include "ui/model/track_container.h"
 
+namespace ui {
+
+    class InstrumentTrack : public Track {
+    public:
+        InstrumentTrack(TrackContainer* tc);
+
+        ~InstrumentTrack() override;
     private:
         int base_note_;     // The "A4" or "440Hz" key (default 69)
 

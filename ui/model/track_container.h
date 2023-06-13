@@ -7,9 +7,9 @@
 
 #include <QReadWriteLock>
 #include "ui/model/model.h"
-#include "ui/model/track.h"
 
 namespace ui {
+    class Track;
     // Base class for all track containers like song editor.
     class TrackContainer : public Model {
     Q_OBJECT

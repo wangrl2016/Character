@@ -15,8 +15,8 @@
 
 namespace ui {
     MainWindow::MainWindow() {
+        song_ = std::make_shared<Song>();
         //waveform_widget_ = new WaveformWidget(this);
-
 
         QWidget* widget = new QWidget(this);
         QVBoxLayout* v_layout = new QVBoxLayout(widget);

@@ -9,8 +9,15 @@
 #include "ui/model/track_container.h"
 
 namespace ui {
+    // Song -> Track -> Clip -> Fragment or Note -> Syllable -> Phone
     class Song : public TrackContainer {
+    Q_OBJECT
     public:
+        Song();
+
+        Song(const Song& song);
+
+        ~Song() override;
 
         // file management
         void CreateNewProject();
@@ -25,13 +32,21 @@ namespace ui {
 
         bool SaveProjectFile(const QString& filename, bool with_resource = false);
 
+        void ClearProject();
+
         [[nodiscard]] const QString& project_file_name() const {
             return project_file_name_;
         }
 
+        void set_project_file_name(const QString& project_file_name);
+
         [[nodiscard]] bool IsLoadingProject() const {
             return loading_project_;
         }
+    signals:
+        void ProjectLoaded();
+
+        void ProjectFileNameChanged();
 
     private slots:
         void MasterVolumeChanged();

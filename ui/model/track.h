@@ -11,6 +11,8 @@
 #include "ui/model/clip.h"
 
 namespace ui {
+    class TrackContainer;
+
     constexpr int kMinTrackHeight = 32;
     constexpr int kDefaultTrackHeight = 32;
 
@@ -24,35 +26,49 @@ namespace ui {
             kTrackCount,
         };
 
-        Track(TrackType type);
+        Track(TrackType type, TrackContainer* tc);
 
         ~Track() override;
 
-        static std::shared_ptr<Track> Create(TrackType type);
+        static Track* Create(TrackType type, TrackContainer* tc);
 
-        std::shared_ptr<Track> Clone();
+        Track* Clone();
 
         TrackType type() const {
             return type_;
         }
 
         void Lock() {
-            processing_lock.lock();
+            processing_lock_.lock();
         }
 
         void Unlock() {
-            processing_lock.unlock();
+            processing_lock_.unlock();
         }
 
         bool TryLock() {
-            return processing_lock.tryLock();
+            return processing_lock_.tryLock();
         }
 
+    signals:
+        void DestroyedTrack();
+
+        void NameChanged();
+
+        void ClipAdded(Clip* clip);
+
+        void ColorChanged();
+
     private:
+        TrackContainer* track_container_;
         TrackType type_;
+        QString name_;
+        bool mute_;
+        bool solo_;
+
         QColor color_;
 
-        QMutex processing_lock;
+        QMutex processing_lock_;
 
         QVector<std::shared_ptr<Clip>> clips;
     };

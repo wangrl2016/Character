@@ -5,11 +5,12 @@
 #ifndef CHARACTER_PIANO_H
 #define CHARACTER_PIANO_H
 
-#include "ui/model/instrument_track.h"
 #include "ui/model/model.h"
 #include "ui/model/note.h"
 
 namespace ui {
+    class InstrumentTrack;
+
     class Piano : public Model {
     public:
         static const int kWhiteKeysPerOctave = 7;

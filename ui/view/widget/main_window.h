@@ -8,9 +8,10 @@
 #include <QMainWindow>
 #include <QMdiArea>
 #include <QPushButton>
-#include "ui/view/widget/waveform_widget.h"
 #include "ui/view/widget/piano_view.h"
 #include "ui/view/widget/resource_view.h"
+#include "ui/view/widget/song_view.h"
+#include "ui/view/widget/waveform_widget.h"
 
 namespace ui {
     class MainWindow : public QMainWindow {
@@ -57,12 +58,15 @@ namespace ui {
         QTabWidget* right_tab_widget_;
         QTabWidget* down_tab_widget_;
 
+        SongView* song_view_;
         PianoView* piano_view_;
         ResourceView* resource_view_;
 
         WaveformWidget* waveform_widget_;
         QWidget* central_widget_;
         QToolBar* tool_bar_;
+
+        std::shared_ptr<Song> song_;
 
         bool is_playing_ = false;
     };

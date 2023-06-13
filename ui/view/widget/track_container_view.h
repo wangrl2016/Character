@@ -13,7 +13,7 @@ namespace ui {
     class TrackContainerView : public QWidget, public ModelView {
     Q_OBJECT
     public:
-        TrackContainerView(std::shared_ptr<TrackContainer> track_container);
+        TrackContainerView(TrackContainer* track_container);
 
         ~TrackContainerView() override;
 

@@ -3,3 +3,9 @@
 //
 
 #include "ui/view/widget/song_view.h"
+
+namespace ui {
+    SongView::SongView(Song* song) :
+            TrackContainerView(song),
+            song_(song) {}
+}

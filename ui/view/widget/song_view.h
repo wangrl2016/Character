@@ -14,7 +14,13 @@ namespace ui {
     public:
         SongView(Song* song);
 
+        ~SongView() override = default;
 
+
+
+
+    private:
+        Song* song_;
     };
 }
 
