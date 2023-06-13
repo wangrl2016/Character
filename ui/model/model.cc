@@ -7,9 +7,13 @@
 #include <utility>
 
 namespace ui {
-    Model::Model(Model* parent, QString display_name) :
-            QObject(parent), display_name_(std::move(display_name)) {
+    Model::Model(Model* parent, QString display_name, bool default_constructed) :
+            QObject(parent),
+            display_name_(std::move(display_name)),
+            default_constructed_(default_constructed) {}
 
+    Model* Model::ParentModel() const {
+        return dynamic_cast<Model*>(parent());
     }
 
     QString Model::display_name() const {

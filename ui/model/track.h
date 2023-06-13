@@ -6,6 +6,7 @@
 #define CHARACTER_TRACK_H
 
 #include <QColor>
+#include <QMutex>
 #include "ui/model/model.h"
 #include "ui/model/clip.h"
 
@@ -35,10 +36,23 @@ namespace ui {
             return type_;
         }
 
+        void Lock() {
+            processing_lock.lock();
+        }
+
+        void Unlock() {
+            processing_lock.unlock();
+        }
+
+        bool TryLock() {
+            return processing_lock.tryLock();
+        }
+
     private:
         TrackType type_;
-
         QColor color_;
+
+        QMutex processing_lock;
 
         QVector<std::shared_ptr<Clip>> clips;
     };

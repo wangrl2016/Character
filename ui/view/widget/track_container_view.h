@@ -6,8 +6,8 @@
 #define CHARACTER_TRACK_CONTAINER_VIEW_H
 
 #include <QWidget>
-#include "ui/view/widget/model_view.h"
 #include "ui/model/track_container.h"
+#include "ui/view/widget/model_view.h"
 
 namespace ui {
     class TrackContainerView : public QWidget, public ModelView {

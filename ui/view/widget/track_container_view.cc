@@ -8,7 +8,7 @@
 
 namespace ui {
     TrackContainerView::TrackContainerView(std::shared_ptr<TrackContainer> track_container)
-            : ModelView(nullptr, std::make_shared<QWidget>(this)),
+            : ModelView(nullptr, this),
               track_container_(std::move(track_container)) {
         // keeps the direction of the widget
         setLayoutDirection(Qt::LeftToRight);

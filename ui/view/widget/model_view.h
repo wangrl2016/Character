@@ -12,31 +12,32 @@
 namespace ui {
     class ModelView {
     public:
-        ModelView(std::shared_ptr<Model> model,
-                  std::shared_ptr<QWidget> widget);
+        ModelView(Model* model, QWidget* widget);
 
         virtual ~ModelView();
 
-        virtual void SetModel(std::shared_ptr<Model> model,
-                              bool is_old_model_valid = true);
+        virtual void SetModel(Model* model, bool is_old_model_valid = true);
 
         virtual void UnsetModel();
 
-        std::shared_ptr<Model> model() { return model_; }
+        Model* model() { return model_; }
+
+        template<class T>
+        T* CastModel() {
+            return dynamic_cast<T*>(model());
+        }
 
     protected:
         // subclasses can re-implement this to track model-changes
-        virtual void ModelChanged() {
+        virtual void ModelChanged() {}
 
-        }
-
-        std::shared_ptr<QWidget> widget() { return widget_; }
+        QWidget* widget() { return widget_; }
 
         virtual void DoConnections();
 
     private:
-        std::shared_ptr<QWidget> widget_;
-        std::shared_ptr<Model> model_;
+        QWidget* widget_;
+        Model* model_;
     };
 }
 

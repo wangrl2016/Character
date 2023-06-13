@@ -11,7 +11,15 @@ namespace ui {
     class Model : public QObject {
         Q_OBJECT
     public:
-        explicit Model(Model* parent, QString display_name = QString());
+        explicit Model(Model* parent,
+                       QString display_name = QString(),
+                       bool default_constructed = false);
+
+        ~Model() override = default;
+
+        [[nodiscard]] bool default_constructed() const { return default_constructed_; }
+
+        [[nodiscard]] Model* ParentModel() const;
 
         [[nodiscard]] virtual QString display_name() const;
 
@@ -29,6 +37,7 @@ namespace ui {
 
     private:
         QString display_name_;
+        bool default_constructed_;
     };
 }
 

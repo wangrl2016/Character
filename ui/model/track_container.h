@@ -5,30 +5,41 @@
 #ifndef CHARACTER_TRACK_CONTAINER_H
 #define CHARACTER_TRACK_CONTAINER_H
 
+#include <QReadWriteLock>
 #include "ui/model/model.h"
 #include "ui/model/track.h"
 
 namespace ui {
+    // Base class for all track containers like song editor.
     class TrackContainer : public Model {
+    Q_OBJECT
     public:
         TrackContainer();
 
         ~TrackContainer() override;
 
-        void AddTrack(std::shared_ptr<Track> track);
+        void AddTrack(Track* track);
 
-        void RemoveTrack(std::shared_ptr<Track> track);
+        void RemoveTrack(Track* track);
+
+        virtual void UpdateAfterTrackAdd();
 
         void ClearAllTracks();
 
         bool IsEmpty() const;
 
     signals:
-        void TrackAdded(std::shared_ptr<Track> track);
+        void TrackAdded(Track* track);
 
+    protected:
+        mutable QReadWriteLock tracks_mutex_;
 
     private:
-        QVector<std::shared_ptr<Track>> tracks_;
+        QVector<Track*> tracks_;
+
+        friend class TrackContainerView;
+
+        friend class Track;
     };
 }
 
