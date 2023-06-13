@@ -165,11 +165,19 @@ def multi_thread(function, list_of_arg_lists):
         raise Exception("Thread failure detected")
 
 
+def build_conan_packages():
+    pass
+
+
 def main():
     verbose = not bool(os.environ.get('GIT_SYNC_DEPS_QUIET', False))
 
     git_sync_deps(verbose)
 
+    build_conan_packages()
+
 
 if __name__ == '__main__':
     exit(main())
+
+    # conan install . --output-folder=build --build=missing
