@@ -19,6 +19,8 @@ include_directories(${CMAKE_SOURCE_DIR})
 
 add_library(BaseLibrary
         base/config/build_config.h
+        base/files/file_path.cc
+        base/files/file_path.h
         base/memory/aligned_memory.cc
         base/memory/aligned_memory.h
         base/time/time_delta.cc
