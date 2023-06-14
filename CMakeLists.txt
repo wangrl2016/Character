@@ -9,17 +9,25 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
+list(APPEND CMAKE_PREFIX_PATH "/Users/admin/Qt/6.3.1/macos")
+
+find_package(ZLIB REQUIRED)
+find_package(Protobuf REQUIRED)
+
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup(KEEP_RPATHS)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-include_directories(${CMAKE_SOURCE_DIR})
-
-add_subdirectory(base)
-
-add_subdirectory(media)
+add_library(BaseLibrary
+        base/files/file_path.cc
+        base/memory/aligned_memory.cc
+        base/time/time_delta.cc
+        base/config/build_config.h
+        base/files/file_path.h
+        base/memory/aligned_memory.h
+        base/time/time_delta.h
+        )
 
 add_subdirectory(third_party/JUCE)
 
@@ -88,8 +96,8 @@ set(VIEW_SOURCES
         ui/view/widget/song_view.h
         ui/view/widget/track_container_view.cc
         ui/view/widget/track_container_view.h
-        ui/view/widget/waveform_widget.cc
-        ui/view/widget/waveform_widget.h
+        # ui/view/widget/waveform_widget.cc
+        # ui/view/widget/waveform_widget.h
         ui/view/widget/widget_constant.h
         )
 
@@ -104,8 +112,6 @@ target_link_libraries(Character
         PRIVATE
         AudioGraphModule
         BaseLibrary
-        MediaLibrary
-        ${CONAN_LIBS}
         ${JUCE_LIBRARY}
         Qt${QT_VERSION_MAJOR}::Widgets
         )

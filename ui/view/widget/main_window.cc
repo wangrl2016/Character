@@ -7,7 +7,8 @@
 #include <QMenuBar>
 #include <QTextEdit>
 #include <QToolBar>
-#include <glog/logging.h>
+// #include <glog/logging.h>
+#include <zlib.h>
 #include <QHBoxLayout>
 #include "module/audio_graph/audio_bridge.h"
 #include "main_window.h"
@@ -94,20 +95,20 @@ namespace ui {
         if (file_path.isNull() || file_path.isEmpty())
             return false;
 
-        LOG(INFO) << __FUNCTION__ << ", path " << file_path.toStdString();
+        // LOG(INFO) << __FUNCTION__ << ", path " << file_path.toStdString();
         waveform_widget_->LoadAudio(file_path);
         return true;
     }
 
     void MainWindow::Play() {
-        LOG(INFO) << __FUNCTION__;
+        // LOG(INFO) << __FUNCTION__;
         is_playing_ = true;
         play_action_->setEnabled(true);
         pause_action_->setEnabled(false);
     }
 
     void MainWindow::Pause() {
-        LOG(INFO) << __FUNCTION__;
+        // LOG(INFO) << __FUNCTION__;
         is_playing_ = false;
         play_action_->setEnabled(false);
         pause_action_->setEnabled(true);
@@ -115,7 +116,7 @@ namespace ui {
 
     void MainWindow::PlayOrPause() {
         is_playing_ = !is_playing_;
-        LOG(INFO) << __FUNCTION__ << " " << is_playing_;
+        // LOG(INFO) << __FUNCTION__ << " " << is_playing_;
         if (is_playing_) {
             play_or_pause_button_->setIcon(pause_icon_);
             audio_graph::AudioBridge::StartBeat();

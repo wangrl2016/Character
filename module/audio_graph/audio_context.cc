@@ -3,7 +3,7 @@
 //
 
 #include <memory>
-#include <glog/logging.h>
+// #include <glog/logging.h>
 #include "module/audio_graph/audio_context.h"
 #include "module/audio_graph/constant.h"
 #include "gain_node.h"
@@ -22,7 +22,7 @@ namespace audio_graph {
     }
 
     bool AudioContext::Create() {
-        LOG(INFO) << __FUNCTION__;
+        // LOG(INFO) << __FUNCTION__;
         juce::MessageManager::getInstance();
 
         audio_device_manager_ = std::make_unique<juce::AudioDeviceManager>();
@@ -34,7 +34,7 @@ namespace audio_graph {
     }
 
     bool AudioContext::Start() {
-        LOG(INFO) << __FUNCTION__;
+        // LOG(INFO) << __FUNCTION__;
         audio_device_manager_->addAudioCallback(audio_processor_player_.get());
         audio_processor_player_->setProcessor(audio_processor_graph_.get());
 
@@ -42,14 +42,14 @@ namespace audio_graph {
     }
 
     bool AudioContext::Stop() {
-        LOG(INFO) << __FUNCTION__;
+        // LOG(INFO) << __FUNCTION__;
         audio_device_manager_->removeAudioCallback(audio_processor_player_.get());
         audio_processor_player_->setProcessor(nullptr);
         return true;
     }
 
     bool AudioContext::Destroy() {
-        LOG(INFO) << __FUNCTION__;
+        // LOG(INFO) << __FUNCTION__;
 
         audio_device_manager_.reset();
         audio_processor_player_.reset();
@@ -72,7 +72,7 @@ namespace audio_graph {
     }
 
     void AudioContext::StartBeat() {
-        LOG(INFO) << __FUNCTION__;
+        // LOG(INFO) << __FUNCTION__;
         auto* oscillator_node = audio_processor_graph_->getNodeForId(
                 oscillator_node_->nodeID);
         if (oscillator_node) {
@@ -86,7 +86,7 @@ namespace audio_graph {
     }
 
     void AudioContext::StopBeat() {
-        LOG(INFO) << __FUNCTION__;
+        // LOG(INFO) << __FUNCTION__;
         auto* oscillator_node = audio_processor_graph_->getNodeForId(
                 oscillator_node_->nodeID);
         if (oscillator_node) {
@@ -212,23 +212,23 @@ namespace audio_graph {
     }
 
     void AudioContext::DumpDeviceInfo() {
-        LOG(INFO) << "Current audio device type: " <<
+        // LOG(INFO) << "Current audio device type: " <<
                   ((audio_device_manager_->getCurrentDeviceTypeObject() != nullptr) ?
                    audio_device_manager_->getCurrentDeviceTypeObject()->getTypeName() : "<none>");
 
         if (auto* device = audio_device_manager_->getCurrentAudioDevice()) {
-            LOG(INFO) << "Current audio device: " << device->getName().quoted();
-            LOG(INFO) << "Sample rate:  " << device->getCurrentSampleRate() << " Hz";
-            LOG(INFO) << "Block size: " << device->getCurrentBufferSizeSamples() << " samples";
-            LOG(INFO) << "Bit depth: " << device->getCurrentBitDepth();
-            LOG(INFO) << "Input channel names: " << device->getInputChannelNames()
-                    .joinIntoString(", ").toStdString();
-            LOG(INFO) << "Active input channels: " <<
-                      GetListOfActiveBits(device->getActiveInputChannels()).toStdString();
-            LOG(INFO) << "Output channel names: " <<
-                      device->getOutputChannelNames().joinIntoString(", ").toStdString();
-            LOG(INFO) << "Active output channels: " <<
-                      GetListOfActiveBits(device->getActiveOutputChannels());
+            // LOG(INFO) << "Current audio device: " << device->getName().quoted();
+            // LOG(INFO) << "Sample rate:  " << device->getCurrentSampleRate() << " Hz";
+            // LOG(INFO) << "Block size: " << device->getCurrentBufferSizeSamples() << " samples";
+            // LOG(INFO) << "Bit depth: " << device->getCurrentBitDepth();
+            // LOG(INFO) << "Input channel names: " << device->getInputChannelNames()
+            //         .joinIntoString(", ").toStdString();
+            // LOG(INFO) << "Active input channels: " <<
+            //           GetListOfActiveBits(device->getActiveInputChannels()).toStdString();
+            // LOG(INFO) << "Output channel names: " <<
+            //           device->getOutputChannelNames().joinIntoString(", ").toStdString();
+            // LOG(INFO) << "Active output channels: " <<
+            //           GetListOfActiveBits(device->getActiveOutputChannels());
         }
     }
 

@@ -3,7 +3,7 @@
 //
 
 #include <array>
-#include <glog/logging.h>
+// #include <glog/logging.h>
 #include <QPainter>
 #include <QVBoxLayout>
 #include "ui/view/widget/piano_view.h"
@@ -231,7 +231,7 @@ namespace ui {
     }
 
     void PianoView::PianoScrolled(int new_pos) {
-        LOG(INFO) << __FUNCTION__ << ", new pos " << new_pos;
+        // LOG(INFO) << __FUNCTION__ << ", new pos " << new_pos;
         start_key_ = kWhiteKeys[new_pos % Piano::kWhiteKeysPerOctave] +
                      (new_pos / Piano::kWhiteKeysPerOctave) * kKeysPerOctave;
 
