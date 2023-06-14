@@ -12,10 +12,12 @@ CMAKE_PREFIX_PATH=~/Qt/6.4.1/macos
 ### Cross building
 
 ```
-conan create . --profile:host=ios_profile --profile:build=ios_profile
+conan create . --profile:host=profile --profile:build=profile
 ```
 
 ### Reference
 
 * [Google Material Design](https://m3.material.io/)
 * [ADSR Envelope](https://en.wikipedia.org/wiki/Synthesizer#ADSR_envelope)
+* [Free MIDI](https://freemidi.org/)
+* [Conan Package Manager](https://docs.conan.io/2/)

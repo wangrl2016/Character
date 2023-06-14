@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+import argparse
 import os
 import subprocess
 import sys
@@ -169,15 +170,23 @@ def build_conan_packages():
     pass
 
 
-def main():
+def main(args):
     verbose = not bool(os.environ.get('GIT_SYNC_DEPS_QUIET', False))
 
     git_sync_deps(verbose)
 
     build_conan_packages()
 
+    output_folder = '--output-folder=' + args.output_folder
+    build_type = '--settings=build_type=' + args.build_type
+    subprocess.check_call(['conan', 'install', '.', output_folder, '--build=missing', build_type])
+
 
 if __name__ == '__main__':
-    exit(main())
+    parser = argparse.ArgumentParser(prog='PROG',
+                                     conflict_handler='resolve')
+    parser.add_argument('-b', '--build_type', default='Debug', help='Build type, Debug or Release')
+    parser.add_argument('-o', '--output_folder', default='cmake-build-debug',
+                        help='Output directory, e.g. cmake-build-release')
 
-    # conan install . --output-folder=build --build=missing
+    exit(main(parser.parse_args()))
