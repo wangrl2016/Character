@@ -17,6 +17,7 @@ namespace ui {
         ~AudioDeviceSelector();
 
     private:
+        QComboBox* device_types_combo_;
         QComboBox* output_device_combo_;
     };
 }

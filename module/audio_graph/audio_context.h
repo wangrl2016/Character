@@ -41,12 +41,32 @@ namespace audio_graph {
 
         void Clear();
 
-        juce::String GetCurrentDefaultAudioDeviceName(bool is_input);
+        std::vector<std::string> DeviceTypes(int* default_index = nullptr);
+
+        std::vector<std::string>& InputDeviceNames(int* default_index = nullptr);
+
+        std::vector<std::string>& OutputDeviceNames(int* default_index = nullptr);
+
+        std::vector<int>& SampleRates(int* default_index = nullptr);
+
+        std::vector<int>& BufferSizes(int* default_index = nullptr);
+
+        bool UpdateDeviceType(int device_type_index);
+
+        bool UpdateInputDevice(int input_device_index);
+
+        bool UpdateOutputDevice(int output_device_index);
+
+        bool UpdateSampleRate(int sample_rate_index);
+
+        bool UpdateBufferSize(int buffer_size_index);
 
     private:
         AudioContext() = default;
 
         ~AudioContext() = default;
+
+        juce::String GetCurrentDefaultAudioDeviceName(bool is_input);
 
         // JUCE/examples/DemoRunner/Source/Demos/JUCEDemos.cpp
         bool InitAudioDeviceManager(int num_input_channels,

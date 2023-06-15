@@ -105,6 +105,23 @@ namespace audio_graph {
 
     }
 
+    std::vector<std::string> AudioContext::DeviceTypes(int* default_index) {
+        const juce::OwnedArray<juce::AudioIODeviceType>& types =
+                audio_device_manager_->getAvailableDeviceTypes();
+
+        std::vector<std::string> ret = {};
+        for (auto& type: types) {
+            ret.push_back(type->getTypeName().toStdString());
+        }
+        *default_index = ret.empty() ? -1 : 0;
+
+        return ret;
+    }
+
+    std::vector<std::string>& AudioContext::InputDeviceNames(int* default_index) {
+
+    }
+
     juce::String AudioContext::GetCurrentDefaultAudioDeviceName(bool is_input) {
         auto* device_type = audio_device_manager_->getCurrentDeviceTypeObject();
 
