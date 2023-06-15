@@ -2,17 +2,15 @@
 // Created by wangrl2016 on 2023/6/2.
 //
 
-#include <QDockWidget>
 #include <QFileDialog>
 #include <QMenuBar>
 #include <QTextEdit>
 #include <QToolBar>
 // #include <glog/logging.h>
-#include <zlib.h>
 #include <QHBoxLayout>
 #include "module/audio_graph/audio_bridge.h"
 #include "main_window.h"
-#include "waveform_widget.h"
+// #include "waveform_widget.h"
 
 namespace ui {
     MainWindow::MainWindow() {
@@ -96,7 +94,7 @@ namespace ui {
             return false;
 
         // LOG(INFO) << __FUNCTION__ << ", path " << file_path.toStdString();
-        waveform_widget_->LoadAudio(file_path);
+        //waveform_widget_->LoadAudio(file_path);
         return true;
     }
 

@@ -11,7 +11,7 @@
 #include "ui/view/widget/piano_view.h"
 #include "ui/view/widget/resource_view.h"
 #include "ui/view/widget/song_view.h"
-#include "ui/view/widget/waveform_widget.h"
+// #include "ui/view/widget/waveform_widget.h"
 
 namespace ui {
     class MainWindow : public QMainWindow {
@@ -62,7 +62,7 @@ namespace ui {
         PianoView* piano_view_;
         ResourceView* resource_view_;
 
-        WaveformWidget* waveform_widget_;
+        // WaveformWidget* waveform_widget_;
         QWidget* central_widget_;
         QToolBar* tool_bar_;
 

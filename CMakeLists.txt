@@ -10,9 +10,9 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 list(APPEND CMAKE_PREFIX_PATH "/Users/admin/Qt/6.3.1/macos")
+# set(CMAKE_TOOLCHAIN_FILE "cmake-build-debug/build/Debug/generators/conan_toolchain.cmake")
 
 find_package(ZLIB REQUIRED)
-find_package(Protobuf REQUIRED)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
