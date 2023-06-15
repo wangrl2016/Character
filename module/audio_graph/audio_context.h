@@ -13,8 +13,12 @@ namespace audio_graph {
     using AudioGraphIOProcessor = juce::AudioProcessorGraph::AudioGraphIOProcessor;
     using Node = juce::AudioProcessorGraph::Node;
 
-    class AudioContext {
+    class AudioContext : public juce::ChangeListener {
     public:
+        void changeListenerCallback(juce::ChangeBroadcaster* override) {
+            DumpDeviceInfo();
+        }
+
         static AudioContext* Instance();
 
         void DeleteInstance();

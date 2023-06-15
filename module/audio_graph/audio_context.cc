@@ -3,11 +3,11 @@
 //
 
 #include <memory>
-// #include <glog/logging.h>
+#include <glog/logging.h>
 #include "module/audio_graph/audio_context.h"
 #include "module/audio_graph/constant.h"
-#include "gain_node.h"
-#include "oscillator_node.h"
+#include "module/audio_graph/gain_node.h"
+#include "module/audio_graph/oscillator_node.h"
 
 namespace audio_graph {
     AudioContext* AudioContext::Instance() {
@@ -35,6 +35,7 @@ namespace audio_graph {
 
     bool AudioContext::Start() {
         // LOG(INFO) << __FUNCTION__;
+        audio_device_manager_->addChangeListener(this);
         audio_device_manager_->addAudioCallback(audio_processor_player_.get());
         audio_processor_player_->setProcessor(audio_processor_graph_.get());
 
@@ -43,6 +44,7 @@ namespace audio_graph {
 
     bool AudioContext::Stop() {
         // LOG(INFO) << __FUNCTION__;
+        audio_device_manager_->removeChangeListener(this);
         audio_device_manager_->removeAudioCallback(audio_processor_player_.get());
         audio_processor_player_->setProcessor(nullptr);
         return true;
@@ -192,13 +194,9 @@ namespace audio_graph {
                     nullptr);
         }
 
-        if (ret.isEmpty()) {
-            DumpDeviceInfo();
+        DumpDeviceInfo();
 
-            return true;
-        } else {
-            return false;
-        }
+        return ret.isEmpty();
     }
 
     static juce::String GetListOfActiveBits(const juce::BigInteger& b) {
@@ -212,23 +210,26 @@ namespace audio_graph {
     }
 
     void AudioContext::DumpDeviceInfo() {
-        // LOG(INFO) << "Current audio device type: " <<
+        LOG(INFO) << __FUNCTION__;
+        LOG(INFO) << "Current audio device type: " <<
                   ((audio_device_manager_->getCurrentDeviceTypeObject() != nullptr) ?
                    audio_device_manager_->getCurrentDeviceTypeObject()->getTypeName() : "<none>");
 
         if (auto* device = audio_device_manager_->getCurrentAudioDevice()) {
-            // LOG(INFO) << "Current audio device: " << device->getName().quoted();
-            // LOG(INFO) << "Sample rate:  " << device->getCurrentSampleRate() << " Hz";
-            // LOG(INFO) << "Block size: " << device->getCurrentBufferSizeSamples() << " samples";
-            // LOG(INFO) << "Bit depth: " << device->getCurrentBitDepth();
-            // LOG(INFO) << "Input channel names: " << device->getInputChannelNames()
-            //         .joinIntoString(", ").toStdString();
-            // LOG(INFO) << "Active input channels: " <<
-            //           GetListOfActiveBits(device->getActiveInputChannels()).toStdString();
-            // LOG(INFO) << "Output channel names: " <<
-            //           device->getOutputChannelNames().joinIntoString(", ").toStdString();
-            // LOG(INFO) << "Active output channels: " <<
-            //           GetListOfActiveBits(device->getActiveOutputChannels());
+            LOG(INFO) << "Current audio device: " << device->getName().quoted();
+            LOG(INFO) << "Sample rate:  " << device->getCurrentSampleRate() << " Hz";
+            LOG(INFO) << "Block size: " << device->getCurrentBufferSizeSamples() << " samples";
+            LOG(INFO) << "Input latency: " << device->getInputLatencyInSamples() << " samples";
+            LOG(INFO) << "Output latency: " << device->getOutputLatencyInSamples() << " samples";
+            LOG(INFO) << "Bit depth: " << device->getCurrentBitDepth();
+            LOG(INFO) << "Input channel names: " << device->getInputChannelNames()
+                    .joinIntoString(", ").toStdString();
+            LOG(INFO) << "Active input channels: " <<
+                      GetListOfActiveBits(device->getActiveInputChannels()).toStdString();
+            LOG(INFO) << "Output channel names: " <<
+                      device->getOutputChannelNames().joinIntoString(", ").toStdString();
+            LOG(INFO) << "Active output channels: " <<
+                      GetListOfActiveBits(device->getActiveOutputChannels());
         }
     }
 
@@ -289,4 +290,5 @@ namespace audio_graph {
                 {{midi_input_node_->nodeID,  juce::AudioProcessorGraph::midiChannelIndex},
                  {midi_output_node_->nodeID, juce::AudioProcessorGraph::midiChannelIndex}});
     }
+
 }

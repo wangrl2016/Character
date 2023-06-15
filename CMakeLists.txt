@@ -9,6 +9,9 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup(KEEP_RPATHS)
+
 list(APPEND CMAKE_PREFIX_PATH "/Users/admin/Qt/6.3.1/macos")
 # set(CMAKE_TOOLCHAIN_FILE "cmake-build-debug/build/Debug/generators/conan_toolchain.cmake")
 
@@ -82,6 +85,8 @@ set(VIEW_SOURCES
         ui/model/track.h
         ui/model/track_container.cc
         ui/model/track_container.h
+        ui/view/setting/audio_device_selector.cc
+        ui/view/setting/audio_device_selector.h
         ui/view/widget/main_window.cc
         ui/view/widget/main_window.h
         ui/view/widget/model_view.cc
@@ -112,6 +117,7 @@ target_link_libraries(Character
         PRIVATE
         AudioGraphModule
         BaseLibrary
+        ${CONAN_LIBS}
         ${JUCE_LIBRARY}
         Qt${QT_VERSION_MAJOR}::Widgets
         )
