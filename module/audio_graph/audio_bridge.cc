@@ -61,6 +61,26 @@ namespace audio_graph {
         return AudioContext::Instance()->BufferSizes(default_index);
     }
 
+    bool AudioBridge::UpdateDeviceType(int device_type_index) {
+        return AudioContext::Instance()->UpdateDeviceType(device_type_index);
+    }
+
+    bool AudioBridge::UpdateInputDevice(int input_device_index) {
+        return AudioContext::Instance()->UpdateInputDevice(input_device_index);
+    }
+
+    bool AudioBridge::UpdateOutputDevice(int output_device_index) {
+        return AudioContext::Instance()->UpdateOutputDevice(output_device_index);
+    }
+
+    bool AudioBridge::UpdateSampleRate(int sample_rate_index) {
+        return AudioContext::Instance()->UpdateSampleRate(sample_rate_index);
+    }
+
+    bool AudioBridge::UpdateBufferSize(int buffer_size_index) {
+        return AudioContext::Instance()->UpdateBufferSize(buffer_size_index);
+    }
+
     TrackID AudioBridge::AddTrack(Track::TrackType type) {
 
     }

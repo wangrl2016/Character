@@ -85,6 +85,8 @@ set(VIEW_SOURCES
         ui/model/track.h
         ui/model/track_container.cc
         ui/model/track_container.h
+        ui/menu/about_dialog.cc
+        ui/menu/about_dialog.h
         ui/view/setting/audio_device_selector.cc
         ui/view/setting/audio_device_selector.h
         ui/view/setting/device_combo_box.cc

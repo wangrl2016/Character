@@ -9,21 +9,10 @@
 #include "module/audio_graph/audio_bridge.h"
 
 int main(int argc, char* argv[]) {
-    audio_graph::AudioBridge::Create();
-    audio_graph::AudioBridge::Start();
-
     QApplication app(argc, argv);
-    ui::AudioDeviceSelector selector;
-    selector.setMinimumSize(800, 600);
-    selector.show();
-    int ret =  QApplication::exec();
 
-    audio_graph::AudioBridge::Stop();
-    audio_graph::AudioBridge::Destroy();
-
-    return ret;
-    // ui::MainWindow window;
-    // window.setMinimumSize(kDefaultWindowWidth, kDefaultWindowHeight);
-    // window.show();
-    // return QApplication::exec();
+    ui::MainWindow window;
+    window.setMinimumSize(kDefaultWindowWidth, kDefaultWindowHeight);
+    window.show();
+    return QApplication::exec();
 }

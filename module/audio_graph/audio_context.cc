@@ -172,6 +172,31 @@ namespace audio_graph {
         return ret;
     }
 
+    bool AudioContext::UpdateDeviceType(int device_type_index) {
+        LOG(INFO) << __FUNCTION__ << ", index " << device_type_index;
+        return true;
+    }
+
+    bool AudioContext::UpdateInputDevice(int input_device_index) {
+        LOG(INFO) << __FUNCTION__ << ", index " << input_device_index;
+        return true;
+    }
+
+    bool AudioContext::UpdateOutputDevice(int output_device_index) {
+        LOG(INFO) << __FUNCTION__ << ", index " << output_device_index;
+        return true;
+    }
+
+    bool AudioContext::UpdateSampleRate(int sample_rate_index) {
+        LOG(INFO) << __FUNCTION__ << ", index " << sample_rate_index;
+        return true;
+    }
+
+    bool AudioContext::UpdateBufferSize(int buffer_size_index) {
+        LOG(INFO) << __FUNCTION__ << ", index " << buffer_size_index;
+        return true;
+    }
+
     juce::String AudioContext::GetCurrentDefaultAudioDeviceName(bool is_input) {
         auto* device_type = audio_device_manager_->getCurrentDeviceTypeObject();
 

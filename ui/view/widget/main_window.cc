@@ -70,6 +70,7 @@ namespace ui {
 
         setCentralWidget(widget);
 
+        setUnifiedTitleAndToolBarOnMac(true);
 
         audio_graph::AudioBridge::Create();
 
@@ -139,13 +140,20 @@ namespace ui {
         file_open_action_->setStatusTip(tr("Open a file"));
         connect(file_open_action_, &QAction::triggered, this, &MainWindow::OpenFile);
 
-
+        setting_audio_device_action_ = new QAction(tr("Audio Device"), this);
+        connect(setting_audio_device_action_, &QAction::triggered, this, &MainWindow::OpenFile);
     }
 
     void MainWindow::CreateMenus() {
-        auto file_menu = menuBar()->addMenu(tr("&File"));
+        auto file_menu = new QMenu(tr("File"), this);
+        menuBar()->addMenu(file_menu);
         file_menu->addAction(file_new_action_);
         file_menu->addAction(file_open_action_);
+
+        auto setting_menu = new QMenu(tr("Setting"), this);
+        menuBar()->addMenu(setting_menu);
+        setting_menu->addAction(setting_audio_device_action_);
+
 
     }
 

@@ -19,43 +19,63 @@ namespace ui {
         auto* device_type_label = new QLabel(tr("设备驱动"));
         auto* device_type_combo = new DeviceComboBox;
         int current_device_type_index = -1;
-        auto device_types = audio_graph::AudioBridge::DeviceTypes(&current_device_type_index);
+        auto device_types = audio_graph::AudioBridge::DeviceTypes(
+                &current_device_type_index);
         for (auto& type : device_types) {
             device_type_combo->addItem(QString(type.c_str()));
         }
+        connect(device_type_combo, &QComboBox::currentIndexChanged, [=](int index) {
+            audio_graph::AudioBridge::UpdateDeviceType(index);
+        });
 
         auto* input_device_label = new QLabel(tr("输入设备"));
         auto* input_device_combo = new DeviceComboBox;
         int current_input_device_index = -1;
-        auto input_device_names = audio_graph::AudioBridge::InputDeviceNames(&current_input_device_index);
+        auto input_device_names = audio_graph::AudioBridge::InputDeviceNames(
+                &current_input_device_index);
         for (auto& name : input_device_names) {
             input_device_combo->addItem(QString(name.c_str()));
         }
+        connect(input_device_combo, &QComboBox::currentIndexChanged, [=](int index) {
+            audio_graph::AudioBridge::UpdateInputDevice(index);
+        });
 
         auto* output_device_label = new QLabel(tr("输出设备"));
         auto* output_device_combo = new DeviceComboBox;
         int current_output_device_index = -1;
-        auto output_device_names = audio_graph::AudioBridge::OutputDeviceNames(&current_output_device_index);
+        auto output_device_names = audio_graph::AudioBridge::OutputDeviceNames(
+                &current_output_device_index);
         for (auto& name : output_device_names) {
             output_device_combo->addItem(QString(name.c_str()));
         }
+        connect(output_device_combo, &QComboBox::currentIndexChanged, [=](int index) {
+            audio_graph::AudioBridge::UpdateOutputDevice(index);
+        });
 
         auto* sample_rate_label = new QLabel(tr("采样率"));
         auto* sample_rate_combo = new DeviceComboBox;
         int current_sample_rate_index = -1;
-        auto sample_rates = audio_graph::AudioBridge::SampleRates(&current_sample_rate_index);
+        auto sample_rates = audio_graph::AudioBridge::SampleRates(
+                &current_sample_rate_index);
         for (auto& sample_rate : sample_rates) {
             sample_rate_combo->addItem(QString::number(sample_rate));
         }
+        connect(sample_rate_combo, &QComboBox::currentIndexChanged, [=](int index) {
+            audio_graph::AudioBridge::UpdateSampleRate(index);
+        });
 
         auto* buffer_size_label = new QLabel(tr("缓冲区"));
         auto* buffer_size_combo = new DeviceComboBox;
         int current_buffer_size_index = -1;
-        auto buffer_sizes = audio_graph::AudioBridge::BufferSizes(&current_buffer_size_index);
+        auto buffer_sizes = audio_graph::AudioBridge::BufferSizes(
+                &current_buffer_size_index);
         for (auto& buffer_size : buffer_sizes) {
             // TODO: Remove some unused item
             buffer_size_combo->addItem(QString::number(buffer_size));
         }
+        connect(buffer_size_combo, &QComboBox::currentIndexChanged, [=](int index) {
+            audio_graph::AudioBridge::UpdateBufferSize(index);
+        });
 
         main_layout->addRow(device_type_label, device_type_combo);
         main_layout->addRow(input_device_label, input_device_combo);

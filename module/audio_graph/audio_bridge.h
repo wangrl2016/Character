@@ -41,6 +41,17 @@ namespace audio_graph {
 
         static std::vector<int> BufferSizes(int* default_index = nullptr);
 
+        static bool UpdateDeviceType(int device_type_index);
+
+        static bool UpdateInputDevice(int input_device_index);
+
+        static bool UpdateOutputDevice(int output_device_index);
+
+        static bool UpdateSampleRate(int sample_rate_index);
+
+        static bool UpdateBufferSize(int buffer_size_index);
+
+
         TrackID AddTrack(Track::TrackType type);
 
         bool RemoveTrack(TrackID id);

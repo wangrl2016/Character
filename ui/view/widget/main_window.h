@@ -46,6 +46,8 @@ namespace ui {
         QAction* file_new_action_;
         QAction* file_open_action_;
 
+        QAction* setting_audio_device_action_;
+
         QPushButton* play_or_pause_button_;
         QAction* play_action_;
         QAction* pause_action_;
