@@ -123,7 +123,7 @@ namespace audio_graph {
         auto type = audio_device_manager_->getCurrentDeviceTypeObject();
         if (type) {
             juce::StringArray input_device_names(type->getDeviceNames(true));
-            for (auto& name : input_device_names) {
+            for (auto& name: input_device_names) {
                 ret.push_back(name.toStdString());
             }
             *default_index = type->getDefaultDeviceIndex(true);
@@ -136,11 +136,39 @@ namespace audio_graph {
         auto type = audio_device_manager_->getCurrentDeviceTypeObject();
         if (type) {
             juce::StringArray output_device_names(type->getDeviceNames(false));
-            for (auto& name : output_device_names) {
+            for (auto& name: output_device_names) {
                 ret.push_back(name.toStdString());
             }
             *default_index = type->getDefaultDeviceIndex(false);
         }
+        return ret;
+    }
+
+    std::vector<int> AudioContext::SampleRates(int* default_index) {
+        std::vector<int> ret = {};
+        auto device = audio_device_manager_->getCurrentAudioDevice();
+        int current_sample_rate = juce::roundToInt(device->getCurrentSampleRate());
+        auto rates = device->getAvailableSampleRates();
+        for (int i = 0; i < rates.size(); i++) {
+            ret.push_back(juce::roundToInt(rates[i]));
+            if (juce::roundToInt(rates[i]) == current_sample_rate)
+                *default_index = i;
+        }
+
+        return ret;
+    }
+
+    std::vector<int> AudioContext::BufferSizes(int* default_index) {
+        std::vector<int> ret = {};
+        auto device = audio_device_manager_->getCurrentAudioDevice();
+        int current_buffer_size = juce::roundToInt(device->getCurrentBufferSizeSamples());
+        auto buffer_sizes = device->getAvailableBufferSizes();
+        for (int i = 0; i < buffer_sizes.size(); i++) {
+            ret.push_back(juce::roundToInt(buffer_sizes[i]));
+            if (juce::roundToInt(buffer_sizes[i]) == current_buffer_size)
+                *default_index = i;
+        }
+
         return ret;
     }
 

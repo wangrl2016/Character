@@ -42,8 +42,20 @@ namespace ui {
 
         auto* sample_rate_label = new QLabel(tr("采样率"));
         auto* sample_rate_combo = new DeviceComboBox;
+        int current_sample_rate_index = -1;
+        auto sample_rates = audio_graph::AudioBridge::SampleRates(&current_sample_rate_index);
+        for (auto& sample_rate : sample_rates) {
+            sample_rate_combo->addItem(QString::number(sample_rate));
+        }
+
         auto* buffer_size_label = new QLabel(tr("缓冲区"));
         auto* buffer_size_combo = new DeviceComboBox;
+        int current_buffer_size_index = -1;
+        auto buffer_sizes = audio_graph::AudioBridge::BufferSizes(&current_buffer_size_index);
+        for (auto& buffer_size : buffer_sizes) {
+            // TODO: Remove some unused item
+            buffer_size_combo->addItem(QString::number(buffer_size));
+        }
 
         main_layout->addRow(device_type_label, device_type_combo);
         main_layout->addRow(input_device_label, input_device_combo);
