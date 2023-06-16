@@ -113,13 +113,35 @@ namespace audio_graph {
         for (auto& type: types) {
             ret.push_back(type->getTypeName().toStdString());
         }
-        *default_index = ret.empty() ? -1 : 0;
+        *default_index = ret.empty() ? kInvalidIndex : current_device_type_;
 
         return ret;
     }
 
-    std::vector<std::string>& AudioContext::InputDeviceNames(int* default_index) {
+    std::vector<std::string> AudioContext::InputDeviceNames(int* default_index) {
+        std::vector<std::string> ret = {};
+        auto type = audio_device_manager_->getCurrentDeviceTypeObject();
+        if (type) {
+            juce::StringArray input_device_names(type->getDeviceNames(true));
+            for (auto& name : input_device_names) {
+                ret.push_back(name.toStdString());
+            }
+            *default_index = type->getDefaultDeviceIndex(true);
+        }
+        return ret;
+    }
 
+    std::vector<std::string> AudioContext::OutputDeviceNames(int* default_index) {
+        std::vector<std::string> ret = {};
+        auto type = audio_device_manager_->getCurrentDeviceTypeObject();
+        if (type) {
+            juce::StringArray output_device_names(type->getDeviceNames(false));
+            for (auto& name : output_device_names) {
+                ret.push_back(name.toStdString());
+            }
+            *default_index = type->getDefaultDeviceIndex(false);
+        }
+        return ret;
     }
 
     juce::String AudioContext::GetCurrentDefaultAudioDeviceName(bool is_input) {

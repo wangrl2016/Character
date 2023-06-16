@@ -10,6 +10,8 @@
 #include <juce_core/juce_core.h>
 
 namespace audio_graph {
+    constexpr int kInvalidIndex = -1;
+
     using AudioGraphIOProcessor = juce::AudioProcessorGraph::AudioGraphIOProcessor;
     using Node = juce::AudioProcessorGraph::Node;
 
@@ -43,13 +45,13 @@ namespace audio_graph {
 
         std::vector<std::string> DeviceTypes(int* default_index = nullptr);
 
-        std::vector<std::string>& InputDeviceNames(int* default_index = nullptr);
+        std::vector<std::string> InputDeviceNames(int* default_index = nullptr);
 
-        std::vector<std::string>& OutputDeviceNames(int* default_index = nullptr);
+        std::vector<std::string> OutputDeviceNames(int* default_index = nullptr);
 
-        std::vector<int>& SampleRates(int* default_index = nullptr);
+        std::vector<int> SampleRates(int* default_index = nullptr);
 
-        std::vector<int>& BufferSizes(int* default_index = nullptr);
+        std::vector<int> BufferSizes(int* default_index = nullptr);
 
         bool UpdateDeviceType(int device_type_index);
 
@@ -92,6 +94,8 @@ namespace audio_graph {
 
         Node::Ptr gain_node_;
         Node::Ptr oscillator_node_;
+
+        int current_device_type_ = 0;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AudioContext)
     };

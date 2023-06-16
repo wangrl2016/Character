@@ -31,6 +31,16 @@ namespace audio_graph {
 
         static bool Clear();
 
+        static std::vector<std::string> DeviceTypes(int* default_index = nullptr);
+
+        static std::vector<std::string> InputDeviceNames(int* default_index = nullptr);
+
+        static std::vector<std::string> OutputDeviceNames(int* default_index = nullptr);
+
+        static std::vector<int> SampleRates(int* default_index = nullptr);
+
+        static std::vector<int> BufferSizes(int* default_index = nullptr);
+
         TrackID AddTrack(Track::TrackType type);
 
         bool RemoveTrack(TrackID id);

@@ -89,6 +89,8 @@ set(VIEW_SOURCES
         ui/view/setting/audio_device_selector.h
         ui/view/setting/device_combo_box.cc
         ui/view/setting/device_combo_box.h
+        ui/view/setting/setting_widget.cc
+        ui/view/setting/setting_widget.h
         ui/view/widget/main_window.cc
         ui/view/widget/main_window.h
         ui/view/widget/model_view.cc

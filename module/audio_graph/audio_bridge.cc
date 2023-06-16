@@ -41,6 +41,18 @@ namespace audio_graph {
 
     }
 
+    std::vector<std::string> AudioBridge::DeviceTypes(int* default_index) {
+        return AudioContext::Instance()->DeviceTypes(default_index);
+    }
+
+    std::vector<std::string> AudioBridge::InputDeviceNames(int* default_index) {
+        return AudioContext::Instance()->InputDeviceNames(default_index);
+    }
+
+    std::vector<std::string> AudioBridge::OutputDeviceNames(int* default_index) {
+        return AudioContext::Instance()->OutputDeviceNames(default_index);
+    }
+
     TrackID AudioBridge::AddTrack(Track::TrackType type) {
 
     }
