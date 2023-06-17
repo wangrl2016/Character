@@ -32,6 +32,8 @@ namespace audio_graph {
     private:
         juce::dsp::Oscillator<float> oscillator_;
 
+        juce::ADSR adsr_;
+
         bool is_down = false;
     };
 }

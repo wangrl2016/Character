@@ -19,14 +19,18 @@ namespace audio_graph {
                 sample_rate,
                 static_cast<juce::uint32>(samples_per_block)};
         oscillator_.prepare(spec);
+
+        adsr_.setSampleRate(sample_rate);
+        adsr_.setParameters(juce::ADSR::Parameters(
+                0.1f, 0.1f, 1.0f, 0.1f));
     }
 
     void PianoNode::processBlock(juce::AudioSampleBuffer& buffer, juce::MidiBuffer&) {
-        if (is_down) {
-            juce::dsp::AudioBlock<float> block(buffer);
-            juce::dsp::ProcessContextReplacing<float> context(block);
-            oscillator_.process(context);
-        }
+        juce::dsp::AudioBlock<float> block(buffer);
+        juce::dsp::ProcessContextReplacing<float> context(block);
+        oscillator_.process(context);
+
+        adsr_.applyEnvelopeToBuffer(buffer, 0, buffer.getNumSamples());
     }
 
     void PianoNode::reset() {
@@ -34,10 +38,10 @@ namespace audio_graph {
     }
 
     void PianoNode::TapDown(int pitch) {
-        is_down = true;
+        adsr_.noteOn();
     }
 
     void PianoNode::TapUp(int pitch) {
-        is_down = false;
+        adsr_.noteOff();
     }
 }

@@ -82,11 +82,6 @@ namespace audio_graph {
         if (oscillator_node) {
             dynamic_cast<OscillatorNode*>(oscillator_node->getProcessor())->StartBeat();
         }
-        auto* gain_node = audio_processor_graph_->getNodeForId(
-                gain_node_->nodeID);
-        if (gain_node) {
-            dynamic_cast<GainNode*>(gain_node->getProcessor())->StartBeat();
-        }
     }
 
     void AudioContext::StopBeat() {
@@ -95,11 +90,6 @@ namespace audio_graph {
                 oscillator_node_->nodeID);
         if (oscillator_node) {
             dynamic_cast<OscillatorNode*>(oscillator_node->getProcessor())->StopBeat();
-        }
-        auto* gain_node = audio_processor_graph_->getNodeForId(
-                gain_node_->nodeID);
-        if (gain_node) {
-            dynamic_cast<GainNode*>(gain_node->getProcessor())->StopBeat();
         }
     }
 
@@ -385,7 +375,7 @@ namespace audio_graph {
         for (int channel = 0; channel < channel_count; channel++) {
             audio_processor_graph_->addConnection(
                     {{oscillator_node_->nodeID, channel},
-                     {master_mixer_node_->nodeID,       kDefaultOutputChannelCount +channel}});
+                     {master_mixer_node_->nodeID,       channel}});
 
             audio_processor_graph_->addConnection(
                     {{piano_node_->nodeID, channel},

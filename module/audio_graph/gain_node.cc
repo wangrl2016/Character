@@ -22,11 +22,9 @@ namespace audio_graph {
 
     void GainNode::processBlock(juce::AudioSampleBuffer& buffer,
                                 juce::MidiBuffer&) {
-        if (beat_) {
-            juce::dsp::AudioBlock<float> block(buffer);
-            juce::dsp::ProcessContextReplacing<float> context(block);
-            gain_.process(context);
-        }
+        juce::dsp::AudioBlock<float> block(buffer);
+        juce::dsp::ProcessContextReplacing<float> context(block);
+        gain_.process(context);
     }
 
     void GainNode::reset() {
