@@ -6,13 +6,12 @@
 #define CHARACTER_PIANO_NODE_H
 
 #include <juce_dsp/juce_dsp.h>
+#include "core/math/constant.h"
 #include "module/audio_graph/processor_base.h"
 
 // https://en.wikipedia.org/wiki/Piano_key_frequencies
 
 namespace audio_graph {
-    constexpr int kNumKey = 128;
-
     class PianoNode : public ProcessorBase {
     public:
         PianoNode();
@@ -32,11 +31,8 @@ namespace audio_graph {
         void TapUp(int pitch);
 
     private:
-        juce::dsp::Oscillator<float> oscillator_;
-
-        juce::ADSR adsr_;
-
-        bool is_down = false;
+        juce::dsp::Oscillator<float> oscillator_[kNumKeys];
+        juce::ADSR adsr_[kNumKeys];
     };
 }
 

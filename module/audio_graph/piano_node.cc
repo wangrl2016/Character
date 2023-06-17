@@ -8,10 +8,12 @@
 
 namespace audio_graph {
     PianoNode::PianoNode() {
-        oscillator_.setFrequency(440.0f);
-        oscillator_.initialise([](float x) {
-            return std::sin(x);
-        });
+        for (int i = 0; i < kNumKeys; i++) {
+            oscillator_[i].setFrequency(core::Pitch2Frequency(i));
+            oscillator_[i].initialise([](float x) {
+                return std::sin(x);
+            });
+        }
     }
 
     PianoNode::~PianoNode() = default;
@@ -20,30 +22,55 @@ namespace audio_graph {
         juce::dsp::ProcessSpec spec {
                 sample_rate,
                 static_cast<juce::uint32>(samples_per_block)};
-        oscillator_.prepare(spec);
 
-        adsr_.setSampleRate(sample_rate);
-        adsr_.setParameters(juce::ADSR::Parameters(
-                0.1f, 0.1f, 1.0f, 0.1f));
+        for (int i = 0; i < kNumKeys; i++) {
+            oscillator_[i].prepare(spec);
+
+            adsr_[i].setSampleRate(sample_rate);
+            adsr_[i].setParameters(juce::ADSR::Parameters(
+                    0.1f, 0.1f, 1.0f, 0.1f));
+        }
     }
 
     void PianoNode::processBlock(juce::AudioSampleBuffer& buffer, juce::MidiBuffer&) {
-        juce::dsp::AudioBlock<float> block(buffer);
-        juce::dsp::ProcessContextReplacing<float> context(block);
-        oscillator_.process(context);
+        juce::AudioSampleBuffer temp_buffer(buffer.getNumChannels(),
+                                            buffer.getNumSamples());
 
-        adsr_.applyEnvelopeToBuffer(buffer, 0, buffer.getNumSamples());
+        for (int i = 0; i < kNumKeys; i++) {
+            if (adsr_[i].isActive()) {
+                temp_buffer.clear();
+                juce::dsp::AudioBlock<float> block(temp_buffer);
+                juce::dsp::ProcessContextReplacing<float> context(block);
+                oscillator_[i].process(context);
+
+                adsr_[i].applyEnvelopeToBuffer(temp_buffer,
+                                               0,
+                                               temp_buffer.getNumSamples());
+                for (int ch = 0; ch < buffer.getNumChannels(); ch++) {
+                    juce::FloatVectorOperations::add(buffer.getWritePointer(ch),
+                                                     temp_buffer.getReadPointer(ch),
+                                                     buffer.getNumSamples());
+                }
+            }
+        }
     }
 
     void PianoNode::reset() {
-        oscillator_.reset();
+        for (int i = 0; i < kNumKeys; i++) {
+            oscillator_[i].reset();
+        }
     }
 
     void PianoNode::TapDown(int pitch) {
-        adsr_.noteOn();
+        if (0 <= pitch && pitch < kNumKeys) {
+            adsr_[pitch].noteOn();
+        }
+
     }
 
     void PianoNode::TapUp(int pitch) {
-        adsr_.noteOff();
+        if(0 <= pitch && pitch < kNumKeys) {
+            adsr_[pitch].noteOff();
+        }
     }
 }
