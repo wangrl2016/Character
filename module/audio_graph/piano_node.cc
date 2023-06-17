@@ -2,6 +2,8 @@
 // Created by wangrl2016 on 2023/6/17.
 //
 
+#include <glog/logging.h>
+#include "core/util/utility_function.h"
 #include "module/audio_graph/piano_node.h"
 
 namespace audio_graph {

@@ -8,8 +8,7 @@
 #include "module/audio_graph/constant.h"
 #include "module/audio_graph/gain_node.h"
 #include "module/audio_graph/oscillator_node.h"
-#include "mixer.h"
-#include "piano_node.h"
+#include "module/audio_graph/piano_node.h"
 
 namespace audio_graph {
     AudioContext* AudioContext::Instance() {
@@ -24,7 +23,7 @@ namespace audio_graph {
     }
 
     bool AudioContext::Create() {
-        // LOG(INFO) << __FUNCTION__;
+        LOG(INFO) << __FUNCTION__;
         juce::MessageManager::getInstance();
 
         audio_device_manager_ = std::make_unique<juce::AudioDeviceManager>();
@@ -36,7 +35,7 @@ namespace audio_graph {
     }
 
     bool AudioContext::Start() {
-        // LOG(INFO) << __FUNCTION__;
+        LOG(INFO) << __FUNCTION__;
         audio_device_manager_->addChangeListener(this);
         audio_device_manager_->addAudioCallback(audio_processor_player_.get());
         audio_processor_player_->setProcessor(audio_processor_graph_.get());
@@ -45,7 +44,7 @@ namespace audio_graph {
     }
 
     bool AudioContext::Stop() {
-        // LOG(INFO) << __FUNCTION__;
+        LOG(INFO) << __FUNCTION__;
         audio_device_manager_->removeChangeListener(this);
         audio_device_manager_->removeAudioCallback(audio_processor_player_.get());
         audio_processor_player_->setProcessor(nullptr);
@@ -53,7 +52,7 @@ namespace audio_graph {
     }
 
     bool AudioContext::Destroy() {
-        // LOG(INFO) << __FUNCTION__;
+        LOG(INFO) << __FUNCTION__;
 
         audio_device_manager_.reset();
         audio_processor_player_.reset();
@@ -368,22 +367,17 @@ namespace audio_graph {
                 ->getActiveOutputChannels().toInteger();
 
         gain_node_ = audio_processor_graph_->addNode(std::make_unique<GainNode>());
-        master_mixer_node_ = audio_processor_graph_->addNode(std::make_unique<Mixer>());
         oscillator_node_ = audio_processor_graph_->addNode(std::make_unique<OscillatorNode>());
         piano_node_ = audio_processor_graph_->addNode(std::make_unique<PianoNode>());
 
         for (int channel = 0; channel < channel_count; channel++) {
             audio_processor_graph_->addConnection(
                     {{oscillator_node_->nodeID, channel},
-                     {master_mixer_node_->nodeID,       channel}});
+                     {gain_node_->nodeID,       channel}});
 
             audio_processor_graph_->addConnection(
                     {{piano_node_->nodeID, channel},
-                     {master_mixer_node_->nodeID,  channel}});
-
-            audio_processor_graph_->addConnection(
-                    {{master_mixer_node_->nodeID, channel},
-                     {gain_node_->nodeID, channel}});
+                     {gain_node_->nodeID,  channel}});
 
             audio_processor_graph_->addConnection(
                     {{gain_node_->nodeID,         channel},

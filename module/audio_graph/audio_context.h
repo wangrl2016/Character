@@ -96,7 +96,6 @@ namespace audio_graph {
         Node::Ptr midi_input_node_;
         Node::Ptr midi_output_node_;
 
-        Node::Ptr master_mixer_node_;
         Node::Ptr gain_node_;
 
         // producer node

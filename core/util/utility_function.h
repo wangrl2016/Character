@@ -22,6 +22,10 @@ namespace core {
     static inline float dBFS2Amp(float dBFS) {
         return float(std::pow(10.0, dBFS / 20.0));
     }
+
+    static inline float Pitch2Frequency(int pitch) {
+        return std::powf(2.0f, float(pitch - kDefaultBaseKey) / kKeysPerOctave) * kDefaultBaseFreq;
+    }
 }
 
 #endif //CHARACTER_UTILITY_FUNCTION_H
