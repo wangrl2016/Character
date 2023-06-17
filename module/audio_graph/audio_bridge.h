@@ -51,6 +51,10 @@ namespace audio_graph {
 
         static bool UpdateBufferSize(int buffer_size_index);
 
+        static void TapDown(int pitch);
+
+        static void TapUp(int pitch);
+
 
         TrackID AddTrack(Track::TrackType type);
 

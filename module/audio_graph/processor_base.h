@@ -17,6 +17,8 @@ namespace audio_graph {
 
         }
 
+        ProcessorBase(const BusesProperties& layouts) : AudioProcessor(layouts) {}
+
         void prepareToPlay(double, int) override {}
 
         void releaseResources() override {}

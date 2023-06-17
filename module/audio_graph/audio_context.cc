@@ -8,6 +8,8 @@
 #include "module/audio_graph/constant.h"
 #include "module/audio_graph/gain_node.h"
 #include "module/audio_graph/oscillator_node.h"
+#include "mixer.h"
+#include "piano_node.h"
 
 namespace audio_graph {
     AudioContext* AudioContext::Instance() {
@@ -197,6 +199,22 @@ namespace audio_graph {
         return true;
     }
 
+    void AudioContext::TapDown(int pitch) {
+        LOG(INFO) << __FUNCTION__ << ", pitch " << pitch;
+        auto* node = audio_processor_graph_->getNodeForId(piano_node_->nodeID);
+        if(node) {
+            dynamic_cast<PianoNode*>(node->getProcessor())->TapDown(pitch);
+        }
+    }
+
+    void AudioContext::TapUp(int pitch) {
+        LOG(INFO) << __FUNCTION__ << ", pitch " << pitch;
+        auto* node = audio_processor_graph_->getNodeForId(piano_node_->nodeID);
+        if(node) {
+            dynamic_cast<PianoNode*>(node->getProcessor())->TapUp(pitch);
+        }
+    }
+
     juce::String AudioContext::GetCurrentDefaultAudioDeviceName(bool is_input) {
         auto* device_type = audio_device_manager_->getCurrentDeviceTypeObject();
 
@@ -360,12 +378,22 @@ namespace audio_graph {
                 ->getActiveOutputChannels().toInteger();
 
         gain_node_ = audio_processor_graph_->addNode(std::make_unique<GainNode>());
+        master_mixer_node_ = audio_processor_graph_->addNode(std::make_unique<Mixer>());
         oscillator_node_ = audio_processor_graph_->addNode(std::make_unique<OscillatorNode>());
+        piano_node_ = audio_processor_graph_->addNode(std::make_unique<PianoNode>());
 
         for (int channel = 0; channel < channel_count; channel++) {
             audio_processor_graph_->addConnection(
                     {{oscillator_node_->nodeID, channel},
-                     {gain_node_->nodeID,       channel}});
+                     {master_mixer_node_->nodeID,       kDefaultOutputChannelCount +channel}});
+
+            audio_processor_graph_->addConnection(
+                    {{piano_node_->nodeID, channel},
+                     {master_mixer_node_->nodeID,  channel}});
+
+            audio_processor_graph_->addConnection(
+                    {{master_mixer_node_->nodeID, channel},
+                     {gain_node_->nodeID, channel}});
 
             audio_processor_graph_->addConnection(
                     {{gain_node_->nodeID,         channel},

@@ -17,8 +17,8 @@ namespace ui {
     };
 
     const int kPianoBase = 11;      // the height of the root note display
-    const int kWhiteKeyWidth = 18;  // the width of a white key
-    const int kBlackKeyWidth = 12;   // the width of black key
+    const int kWhiteKeyWidth = 24;  // the width of a white key
+    const int kBlackKeyWidth = 16;   // the width of black key
     const int kWhiteKeyHeight = 57; // the height of a white key
     const int kBlackKeyHeight = 38; // the height of a black key
     const int kLabelTextSize = 7;   // the height of the key label text
@@ -54,7 +54,7 @@ namespace ui {
         layout->addWidget(piano_scroll_);
     }
 
-    PianoView::~PianoView() noexcept {
+    PianoView::~PianoView()  {
         delete piano_;
     }
 

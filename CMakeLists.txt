@@ -53,10 +53,14 @@ add_library(AudioGraphModule
         module/audio_graph/gain_node.h
         module/audio_graph/metronome_node.cc
         module/audio_graph/metronome_node.h
+        module/audio_graph/mixer.cc
+        module/audio_graph/mixer.h
         module/audio_graph/oscillator.cc
         module/audio_graph/oscillator.h
         module/audio_graph/oscillator_node.cc
         module/audio_graph/oscillator_node.h
+        module/audio_graph/piano_node.cc
+        module/audio_graph/piano_node.h
         module/audio_graph/processor_base.h
         module/audio_graph/track.cc
         module/audio_graph/track.h

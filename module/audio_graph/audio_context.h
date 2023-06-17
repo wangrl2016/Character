@@ -63,6 +63,10 @@ namespace audio_graph {
 
         bool UpdateBufferSize(int buffer_size_index);
 
+        void TapDown(int pitch);
+
+        void TapUp(int pitch);
+
     private:
         AudioContext() = default;
 
@@ -92,7 +96,11 @@ namespace audio_graph {
         Node::Ptr midi_input_node_;
         Node::Ptr midi_output_node_;
 
+        Node::Ptr master_mixer_node_;
         Node::Ptr gain_node_;
+
+        // producer node
+        Node::Ptr piano_node_;
         Node::Ptr oscillator_node_;
 
         int current_device_type_ = 0;

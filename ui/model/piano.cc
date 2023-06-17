@@ -4,6 +4,7 @@
 
 #include <array>
 #include "ui/model/piano.h"
+#include "module/audio_graph/audio_bridge.h"
 
 namespace ui {
     static const auto kKeyOrder = std::array {
@@ -23,7 +24,11 @@ namespace ui {
     void Piano::SetKeyState(int key, bool state) {
         if (IsValidKey(key)) {
             pressed_keys_[key] = state;
-
+            if (state) {
+                audio_graph::AudioBridge::TapDown(key);
+            } else {
+                audio_graph::AudioBridge::TapUp(key);
+            }
             emit DataChanged();
         }
     }

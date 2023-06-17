@@ -8,6 +8,8 @@
 namespace audio_graph {
     constexpr int kDefaultInputChannelCount = 0;
     constexpr int kDefaultOutputChannelCount = 2;
+
+    constexpr int kMaxMixChannel = 10;
 }
 
 #endif //CHARACTER_CONSTANTS_H

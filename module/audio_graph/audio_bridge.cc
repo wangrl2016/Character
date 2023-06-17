@@ -81,6 +81,14 @@ namespace audio_graph {
         return AudioContext::Instance()->UpdateBufferSize(buffer_size_index);
     }
 
+    void AudioBridge::TapDown(int pitch) {
+        AudioContext::Instance()->TapDown(pitch);
+    }
+
+    void AudioBridge::TapUp(int pitch) {
+        AudioContext::Instance()->TapUp(pitch);
+    }
+
     TrackID AudioBridge::AddTrack(Track::TrackType type) {
 
     }
