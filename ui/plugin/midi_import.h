@@ -14,9 +14,8 @@ namespace ui {
 
         ~MidiImport() override = default;
 
-    private:
         bool TryImport(TrackContainer* tc) override;
-
+    private:
         bool ReadSMF(TrackContainer* tc);
 
         bool ReadRIFF(TrackContainer* tc);

@@ -5,7 +5,7 @@
         <file alias="stop">toolbar/stop_fill0_wght400_grad0_opsz48.svg</file>
     </qresource>
 
-    <qresource prefix="/midi">
+    <qresource prefix="midi">
         <file alias="little_star">midi/little_star.mid</file>
     </qresource>
 </RCC>

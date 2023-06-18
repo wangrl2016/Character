@@ -25,6 +25,10 @@ namespace ui {
     }
 
     bool MidiImport::TryImport(TrackContainer* tc) {
+        if (!OpenFile()) {
+            return false;
+        }
+
         switch (ReadID()) {
             case MakeID('M', 'T', 'h', 'd'):
                 LOG(INFO) << __FUNCTION__ << ": found MThd";
@@ -44,6 +48,7 @@ namespace ui {
         seq->convert_to_beats();
 
         // tracks
+        int count = 0;
         for (int t = 0; t < seq->tracks(); t++) {
             QString track_name = QString(tr("Track") + " %1").arg(t);
             Alg_track_ptr track = seq->track(t);
@@ -59,9 +64,11 @@ namespace ui {
                     LOG(INFO) << "Note: " << note->get_identifier()
                             << ", start_time: " << note->get_start_time()
                             << ", duration " << note->get_duration()
-                            << ", loud " << note->get_loud();
+                            << ", loud " << note->get_loud()
+                            << ", count " << count++;
                 }
             }
+            LOG(INFO) << "__end__";
         }
 
         return true;

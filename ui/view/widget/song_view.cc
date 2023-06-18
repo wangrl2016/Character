@@ -12,8 +12,7 @@ namespace ui {
             TrackContainerView(song),
             song_(song) {
         LOG(INFO) << __FUNCTION__;
-
-        MidiImport midi(":/midi/little_star");
-        MidiImport::Import(":/midi/little_star", Model());
+        MidiImport midi(":midi/little_star");
+        midi.TryImport(Model());
     }
 }
