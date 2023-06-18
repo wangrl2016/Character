@@ -17,6 +17,8 @@ namespace ui {
 
         ~ImportFilter() override = default;
 
+        // Tries to import given file to given track-container by having all
+        // available import-filters to try to import the file.
         static void Import(const QString& file_to_import,
                            TrackContainer* tc);
 
@@ -49,6 +51,5 @@ namespace ui {
         QFile file_;
     };
 }
-
 
 #endif //CHARACTER_IMPORT_FILTER_H

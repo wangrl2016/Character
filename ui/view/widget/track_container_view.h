@@ -17,7 +17,7 @@ namespace ui {
 
         ~TrackContainerView() override;
 
-        std::shared_ptr<TrackContainer> Model() {
+        TrackContainer* Model() {
             return track_container_;
         }
 
@@ -28,8 +28,11 @@ namespace ui {
 
         void TracksRealigned();
 
+    public slots:
+        void dropEvent(QDropEvent* event) override;
+
     private:
-        std::shared_ptr<TrackContainer> track_container_;
+        TrackContainer* track_container_;
     };
 }
 

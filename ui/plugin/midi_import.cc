@@ -43,12 +43,28 @@ namespace ui {
         auto seq = new Alg_seq(stream, true);
         seq->convert_to_beats();
 
-        // Tracks
+        // tracks
         for (int t = 0; t < seq->tracks(); t++) {
             QString track_name = QString(tr("Track") + " %1").arg(t);
             Alg_track_ptr track = seq->track(t);
 
+            // now look at events
+            for (int e = 0; e < track->length(); e++) {
+                Alg_event_ptr event = (*track)[e];
+
+                if (event->chan == -1) {
+
+                } else if (event->is_note()) {
+                    auto note = dynamic_cast<Alg_note_ptr>(event);
+                    LOG(INFO) << "Note: " << note->get_identifier()
+                            << ", start_time: " << note->get_start_time()
+                            << ", duration " << note->get_duration()
+                            << ", loud " << note->get_loud();
+                }
+            }
         }
+
+        return true;
     }
 
     bool MidiImport::ReadRIFF(TrackContainer* tc) {

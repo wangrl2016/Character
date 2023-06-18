@@ -8,6 +8,8 @@
 #include "ui/model/model.h"
 
 namespace ui {
+    // Abstract representation of a plugin. such a plugin can be an
+    // Instrument, Effect, Tool plugin etc.
     class Plugin : public Model {
     Q_OBJECT
     public:
@@ -29,7 +31,18 @@ namespace ui {
         Plugin(const Descriptor* descriptor,
                Model* parent);
 
+        inline PluginType type() const {
+            return descriptor_->type;
+        }
 
+        inline const Descriptor* descriptor() const {
+            return descriptor_;
+        }
+
+        virtual void LoadFile(const QString& file);
+
+    private:
+        const Descriptor* descriptor_;
     };
 }
 

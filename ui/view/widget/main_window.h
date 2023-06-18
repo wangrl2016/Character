@@ -34,6 +34,9 @@ namespace ui {
 
         void Stop();
 
+    private slots:
+        void ImportProject();
+
     private:
         void CreateActions();
 

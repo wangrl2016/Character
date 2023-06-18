@@ -3,6 +3,7 @@
 //
 
 #include <utility>
+#include <glog/logging.h>
 #include <QVBoxLayout>
 #include "ui/view/widget/track_container_view.h"
 
@@ -28,5 +29,7 @@ namespace ui {
 
     }
 
-
+    void TrackContainerView::dropEvent(QDropEvent* event) {
+        LOG(INFO) << __FUNCTION__;
+    }
 }

@@ -23,11 +23,7 @@ namespace ui {
     class Song : public TrackContainer {
     Q_OBJECT
     public:
-        Song();
-
-        Song(const Song& song);
-
-        ~Song() override;
+        static Song* Instance();
 
         struct SaveOption {
 
@@ -68,6 +64,11 @@ namespace ui {
         void MasterVolumeChanged();
 
     private:
+        Song();
+
+        Song(const Song& song);
+
+        ~Song() override;
 
         bool exporting_ = false;
 

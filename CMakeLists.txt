@@ -44,7 +44,7 @@ set(JUCE_LIBRARY
         juce::juce_dsp
         )
 
-add_library(AudioGraphModule
+add_library(AudioGraphModule STATIC
         module/audio_graph/audio_bridge.cc
         module/audio_graph/audio_bridge.h
         module/audio_graph/audio_context.cc
@@ -125,6 +125,8 @@ set(VIEW_SOURCES
         ui/view/widget/track_view.h
         ui/view/widget/song_view.cc
         ui/view/widget/song_view.h
+        ui/view/widget/time_line_widget.cc
+        ui/view/widget/time_line_widget.h
         ui/view/widget/track_container_view.cc
         ui/view/widget/track_container_view.h
         # ui/view/widget/waveform_widget.cc
@@ -143,6 +145,7 @@ target_link_libraries(Character
         PRIVATE
         AudioGraphModule
         BaseLibrary
+        PortSMF
         ${CONAN_LIBS}
         Qt${QT_VERSION_MAJOR}::Widgets
         )

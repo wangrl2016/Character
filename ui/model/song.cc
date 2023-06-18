@@ -6,6 +6,10 @@
 #include "ui/model/track.h"
 
 namespace ui {
+    Song* Song::Instance() {
+        static auto* instance = new Song;
+        return instance;
+    }
 
     Song::Song() :
         TrackContainer() {

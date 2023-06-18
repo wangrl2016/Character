@@ -3,6 +3,7 @@
 //
 
 #include <QMessageBox>
+#include <glog/logging.h>
 #include "ui/plugin/import_filter.h"
 
 namespace ui {
@@ -15,6 +16,7 @@ namespace ui {
 
     void ImportFilter::Import(const QString& file_to_import,
                               TrackContainer* tc) {
+        LOG(INFO) << __FUNCTION__;
         bool successful = false;
 
         QByteArray s = file_to_import.toUtf8();

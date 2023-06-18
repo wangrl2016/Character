@@ -6,7 +6,7 @@
 #include <QMenuBar>
 #include <QTextEdit>
 #include <QToolBar>
-// #include <glog/logging.h>
+#include <glog/logging.h>
 #include <QHBoxLayout>
 #include "module/audio_graph/audio_bridge.h"
 #include "main_window.h"
@@ -25,9 +25,8 @@ namespace ui {
         QHBoxLayout* h_layout = new QHBoxLayout(h_widget);
         // h_widget->setLayout(h_layout);
         central_widget_ = new QWidget(h_widget);
-        central_widget_->setFixedSize(600, 400);
+        // central_widget_->setFixedSize(600, 400);
 
-        // setUnifiedTitleAndToolBarOnMac(true);
         CreateActions();
         CreateMenus();
 
@@ -45,7 +44,7 @@ namespace ui {
 
         left_tab_widget_->addTab(new QWidget(), tr("Draw"));
         left_tab_widget_->addTab(new QWidget(), tr("Game"));
-        left_tab_widget_->addTab(new QWidget(), tr("Music"));
+        left_tab_widget_->addTab(new SongView(Song::Instance()), tr("Music"));
         left_tab_widget_->addTab(new QWidget(), tr("Show"));
         left_tab_widget_->addTab(new QWidget(), tr("Talk"));
         left_tab_widget_->addTab(new QWidget(), tr("Text"));
@@ -126,6 +125,10 @@ namespace ui {
 
     void MainWindow::Stop() {
 
+    }
+
+    void MainWindow::ImportProject() {
+        LOG(INFO) << __FUNCTION__;
     }
 
     void MainWindow::CreateActions() {
