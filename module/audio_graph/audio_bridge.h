@@ -5,8 +5,7 @@
 #ifndef CHARACTER_AUDIO_BRIDGE_H
 #define CHARACTER_AUDIO_BRIDGE_H
 
-#include "module/audio_graph/audio_context.h"
-#include "module/audio_graph/track.h"
+#include <vector>
 
 namespace audio_graph {
     class AudioBridge {
@@ -54,15 +53,6 @@ namespace audio_graph {
         static void TapDown(int pitch);
 
         static void TapUp(int pitch);
-
-
-        TrackID AddTrack(Track::TrackType type);
-
-        bool RemoveTrack(TrackID id);
-
-        void ClearTrack(TrackID id);
-
-        void SetTrackVolume(TrackID id, float volume);
     };
 }
 

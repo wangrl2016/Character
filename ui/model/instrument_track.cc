@@ -3,12 +3,25 @@
 //
 
 #include "ui/model/instrument_track.h"
+#include "ui/model/song.h"
 
 namespace ui {
     InstrumentTrack::InstrumentTrack(TrackContainer* tc) :
-            Track(Track::kInstrumentTrack, tc) {
+            Track(Track::kInstrumentTrack, tc),
+            piano_(this) {
 
     }
 
     InstrumentTrack::~InstrumentTrack() = default;
+
+    void InstrumentTrack::ProcessInEvent(const core::MidiEvent& event, int time, int offset) {
+//        if (Song::Instance()->exporting()) {
+//            return;
+//        }
+
+    }
+
+    void InstrumentTrack::ProcessOutEvent(const core::MidiEvent& event, int time, int offset) {
+
+    }
 }

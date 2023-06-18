@@ -9,6 +9,16 @@
 #include "ui/model/track_container.h"
 
 namespace ui {
+    constexpr int kMinTempo = 10;
+    constexpr int kDefaultTempo = 120;
+    constexpr int kMaxTempo = 999;
+
+    const int kDefaultTicksPerBar = 480;
+    const int kDefaultStepsPerBar = 16;
+    const int kDefaultBeatsPerBar = kDefaultTicksPerBar / kDefaultStepsPerBar;
+
+    constexpr int kMaxSongLength = 9999 * kDefaultTicksPerBar;  // tick
+
     // Song -> Track -> Clip -> Fragment or Note -> Syllable -> Phone
     class Song : public TrackContainer {
     Q_OBJECT
@@ -18,6 +28,12 @@ namespace ui {
         Song(const Song& song);
 
         ~Song() override;
+
+        struct SaveOption {
+
+        };
+
+        inline bool exporting() const { return exporting_; }
 
         // file management
         void CreateNewProject();
@@ -52,6 +68,9 @@ namespace ui {
         void MasterVolumeChanged();
 
     private:
+
+        bool exporting_ = false;
+
         QString project_file_name_;
         bool loading_project_;
     };

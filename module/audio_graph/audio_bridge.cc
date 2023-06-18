@@ -2,6 +2,7 @@
 // Created by wangrl2016 on 2023/6/9.
 //
 
+#include "module/audio_graph/audio_context.h"
 #include "module/audio_graph/audio_bridge.h"
 
 namespace audio_graph {
@@ -87,21 +88,5 @@ namespace audio_graph {
 
     void AudioBridge::TapUp(int pitch) {
         AudioContext::Instance()->TapUp(pitch);
-    }
-
-    TrackID AudioBridge::AddTrack(Track::TrackType type) {
-
-    }
-
-    bool AudioBridge::RemoveTrack(TrackID id) {
-
-    }
-
-    void AudioBridge::ClearTrack(TrackID id) {
-
-    }
-
-    void AudioBridge::SetTrackVolume(TrackID id, float volume) {
-
     }
 }

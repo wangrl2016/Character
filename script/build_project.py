@@ -7,6 +7,7 @@ import threading
 
 dependencies = {
     'third_party/JUCE': 'https://github.com/juce-framework/JUCE.git@69795dc8e589a9eb5df251b6dd994859bf7b3fab',
+    'third_party/portsmf':'https://codeberg.org/tenacityteam/portsmf.git@3c970d64ac77bc291634f7927f7fd22e5c84d649'
 }
 
 
@@ -179,7 +180,7 @@ def main(args):
 
     output_folder = '--output-folder=' + args.output_folder
     build_type = '--settings=build_type=' + args.build_type
-    subprocess.check_call(['conan', 'install', '.', output_folder, '--build=missing', build_type])
+    # subprocess.check_call(['conan', 'install', '.', output_folder, '--build=missing', build_type])
 
 
 if __name__ == '__main__':

@@ -33,6 +33,7 @@ add_library(BaseLibrary
         )
 
 add_subdirectory(third_party/JUCE)
+add_subdirectory(third_party/portsmf)
 
 set(JUCE_LIBRARY
         juce::juce_audio_basics
@@ -60,21 +61,32 @@ add_library(AudioGraphModule
         module/audio_graph/piano_node.cc
         module/audio_graph/piano_node.h
         module/audio_graph/processor_base.h
+        module/audio_graph/time_stretch_node.cc
+        module/audio_graph/time_stretch_node.h
         module/audio_graph/track.cc
         module/audio_graph/track.h
         )
 
 target_link_libraries(AudioGraphModule
+        PRIVATE
         ${JUCE_LIBRARY}
+        ${CONAN_LIBS}
         )
 
 set(VIEW_SOURCES
         core/math/constant.h
+        core/midi/midi.h
+        core/midi/midi_event.h
+        core/midi/midi_event_processor.h
         core/util/utility_function.h
+        ui/menu/about_dialog.cc
+        ui/menu/about_dialog.h
         ui/model/clip.cc
         ui/model/clip.h
         ui/model/instrument_track.cc
         ui/model/instrument_track.h
+        ui/model/midi_clip.cc
+        ui/model/midi_clip.h
         ui/model/model.cc
         ui/model/model.h
         ui/model/note.cc
@@ -87,8 +99,14 @@ set(VIEW_SOURCES
         ui/model/track.h
         ui/model/track_container.cc
         ui/model/track_container.h
-        ui/menu/about_dialog.cc
-        ui/menu/about_dialog.h
+        ui/plugin/import_filter.cc
+        ui/plugin/import_filter.h
+        ui/plugin/instrument.cc
+        ui/plugin/instrument.h
+        ui/plugin/midi_import.cc
+        ui/plugin/midi_import.h
+        ui/plugin/plugin.cc
+        ui/plugin/plugin.h
         ui/view/setting/audio_device_selector.cc
         ui/view/setting/audio_device_selector.h
         ui/view/setting/device_combo_box.cc
@@ -126,7 +144,6 @@ target_link_libraries(Character
         AudioGraphModule
         BaseLibrary
         ${CONAN_LIBS}
-        ${JUCE_LIBRARY}
         Qt${QT_VERSION_MAJOR}::Widgets
         )
 

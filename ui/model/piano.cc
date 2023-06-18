@@ -4,6 +4,7 @@
 
 #include <array>
 #include "ui/model/piano.h"
+#include "ui/model/instrument_track.h"
 #include "module/audio_graph/audio_bridge.h"
 
 namespace ui {
@@ -17,7 +18,9 @@ namespace ui {
     };
 
     Piano::Piano(InstrumentTrack* track) :
-            Model(nullptr) {
+            Model(nullptr),
+            instrument_track_(track),
+            midi_event_processor_(track) {
 
     }
 
@@ -31,6 +34,17 @@ namespace ui {
             }
             emit DataChanged();
         }
+    }
+
+    // Handle a note being pressed on our keyboard display
+    //
+    // @param key the key being pressed
+    void Piano::HandleKeyPress(int key, int midi_velocity) {
+
+    }
+
+    void Piano::HandleKeyRelease(int key) {
+
     }
 
     bool Piano::IsWhiteKey(int key) {

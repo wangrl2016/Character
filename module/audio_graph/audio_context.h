@@ -5,9 +5,9 @@
 #ifndef CHARACTER_AUDIO_CONTEXT_H
 #define CHARACTER_AUDIO_CONTEXT_H
 
+#include <juce_core/juce_core.h>
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_audio_utils/juce_audio_utils.h>
-#include <juce_core/juce_core.h>
 
 namespace audio_graph {
     constexpr int kInvalidIndex = -1;

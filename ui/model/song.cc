@@ -6,6 +6,7 @@
 #include "ui/model/track.h"
 
 namespace ui {
+
     Song::Song() :
         TrackContainer() {
 

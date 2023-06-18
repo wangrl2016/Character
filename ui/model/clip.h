@@ -13,6 +13,10 @@ namespace ui {
 
     class Clip : public Model {
     public:
+        explicit Clip(Track* track);
+
+        ~Clip() override;
+
     private:
         enum Action {
             kNoAction,

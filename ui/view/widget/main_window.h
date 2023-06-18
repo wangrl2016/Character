@@ -68,8 +68,6 @@ namespace ui {
         QWidget* central_widget_;
         QToolBar* tool_bar_;
 
-        std::shared_ptr<Song> song_;
-
         bool is_playing_ = false;
     };
 }

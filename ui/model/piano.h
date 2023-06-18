@@ -5,6 +5,7 @@
 #ifndef CHARACTER_PIANO_H
 #define CHARACTER_PIANO_H
 
+#include "core/midi/midi_event_processor.h"
 #include "ui/model/model.h"
 #include "ui/model/note.h"
 
@@ -19,12 +20,12 @@ namespace ui {
         static const int kNumWhiteKeys = 75;
         static const int kNumBlackKeys = 53;
 
-        explicit Piano(InstrumentTrack* track);
-
         enum KeyType {
             kWhiteKey,
             kBlackKey,
         };
+
+        explicit Piano(InstrumentTrack* track);
 
         // Turn a key on or off.
         // @param key   the key number to change
@@ -35,6 +36,14 @@ namespace ui {
             return pressed_keys_[key];
         }
 
+        void HandleKeyPress(int key, int midi_velocity = -1);
+
+        void HandleKeyRelease(int key);
+
+        InstrumentTrack* instrument_track() const {
+            return instrument_track_;
+        }
+
         static bool IsWhiteKey(int key);
 
         static bool IsBlackKey(int key);
@@ -43,6 +52,9 @@ namespace ui {
         static bool IsValidKey(int key) {
             return 0 <= key && key < kNumKeys;
         }
+
+        InstrumentTrack* instrument_track_;
+        core::MidiEventProcessor* midi_event_processor_;
 
         // key is pressed or not?
         std::array<bool, kNumKeys> pressed_keys_ = {};

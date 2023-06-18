@@ -4,6 +4,7 @@ CMakeUserPresets.json
 .DS_Store
 
 third_party/JUCE/
+third_party/portsmf/
 
 # Prerequisites
 *.d

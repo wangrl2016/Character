@@ -14,7 +14,7 @@
 
 namespace ui {
     MainWindow::MainWindow() {
-        song_ = std::make_shared<Song>();
+        // song_ = std::make_shared<Song>();
         //waveform_widget_ = new WaveformWidget(this);
 
         QWidget* widget = new QWidget(this);
@@ -73,7 +73,6 @@ namespace ui {
         setUnifiedTitleAndToolBarOnMac(true);
 
         audio_graph::AudioBridge::Create();
-
         audio_graph::AudioBridge::Start();
     }
 
@@ -150,9 +149,9 @@ namespace ui {
         file_menu->addAction(file_new_action_);
         file_menu->addAction(file_open_action_);
 
-        auto setting_menu = new QMenu(tr("Setting"), this);
-        menuBar()->addMenu(setting_menu);
-        setting_menu->addAction(setting_audio_device_action_);
+        // auto setting_menu = new QMenu(tr("Setting"), this);
+        // menuBar()->addMenu(setting_menu);
+        // setting_menu->addAction(setting_audio_device_action_);
 
 
     }
