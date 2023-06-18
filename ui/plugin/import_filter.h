@@ -40,6 +40,11 @@ namespace ui {
         inline int ReadBlock(char* data, int len) {
             return int(file_.read(data, len));
         }
+
+        inline QByteArray ReadAllData() {
+            file_.seek(0);
+            return file_.readAll();
+        }
     private:
         QFile file_;
     };

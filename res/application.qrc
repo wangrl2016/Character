@@ -4,4 +4,8 @@
         <file alias="play_arrow">toolbar/play_arrow_fill0_wght400_grad0_opsz48.svg</file>
         <file alias="stop">toolbar/stop_fill0_wght400_grad0_opsz48.svg</file>
     </qresource>
+
+    <qresource prefix="/midi">
+        <file alias="little_star">midi/little_star.mid</file>
+    </qresource>
 </RCC>

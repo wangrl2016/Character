@@ -25,6 +25,11 @@ namespace ui {
             PluginType type;
             const char* supported_file_types;   // csv list of extensions
         };
+
+        Plugin(const Descriptor* descriptor,
+               Model* parent);
+
+
     };
 }
 

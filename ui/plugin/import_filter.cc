@@ -6,6 +6,23 @@
 #include "ui/plugin/import_filter.h"
 
 namespace ui {
+    ImportFilter::ImportFilter(const QString& file_name,
+                               const Descriptor* descriptor) :
+                               Plugin(descriptor, nullptr),
+                               file_(file_name) {
+
+    }
+
+    void ImportFilter::Import(const QString& file_to_import,
+                              TrackContainer* tc) {
+        bool successful = false;
+
+        QByteArray s = file_to_import.toUtf8();
+        s.detach();
+
+
+    }
+
     bool ImportFilter::OpenFile() {
         if (!file_.open(QFile::ReadOnly)) {
             QMessageBox::critical(
