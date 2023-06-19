@@ -55,8 +55,13 @@ namespace audio_graph {
 
         void StopBeat() { beat_ = false; }
 
+        void Seek(int play_index) { play_index_ = play_index; }
+
+        int play_index() const { return play_index_; }
+
     protected:
         bool beat_ = false;
+        int play_index_ = 0;
 
     private:
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ProcessorBase)

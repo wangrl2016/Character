@@ -5,6 +5,7 @@
 #ifndef CHARACTER_NOTE_H
 #define CHARACTER_NOTE_H
 
+#include <QString>
 #include "core/math/constant.h"
 
 namespace ui {
@@ -27,41 +28,41 @@ namespace ui {
             old_length_ = old_length;
         }
 
-        inline void set_is_playing(const bool is_playing) {
+        inline void set_is_playing(bool is_playing) {
             is_playing_ = is_playing;
         }
 
-        void set_length(const float length) { length_ = length; }
+        void set_length(int length) { length_ = length; }
 
-        void set_pos(const int pos) { pos_ = pos; }
+        void set_pos(int pos) { pos_ = pos; }
 
-        void set_key(const int key) { key_ = key; }
+        void set_key(int key) { key_ = key; }
 
         virtual void set_volume(float volume) { volume_ = volume; }
 
         virtual void set_panning(float panning) { panning_ = panning; }
 
-        inline bool selected() const { return selected_; }
+        [[nodiscard]] inline bool selected() const { return selected_; }
 
-        inline int old_key() const { return old_key_; }
+        [[nodiscard]] inline int old_key() const { return old_key_; }
 
-        inline int old_pos() const { return old_pos_; }
+        [[nodiscard]] inline int old_pos() const { return old_pos_; }
 
-        inline int old_length() const { return old_length_; }
+        [[nodiscard]] inline int old_length() const { return old_length_; }
 
-        inline bool is_playing() const { return is_playing_; }
+        [[nodiscard]] inline bool is_playing() const { return is_playing_; }
 
-        inline int pos() const { return pos_; }
+        [[nodiscard]] inline int pos() const { return pos_; }
 
-        inline int length() const { return length_; }
+        [[nodiscard]] inline int length() const { return length_; }
 
-        inline int end_pos() const { return pos_ + length_; }
+        [[nodiscard]] inline int end_pos() const { return pos_ + length_; }
 
-        inline int key() const { return key_; }
+        [[nodiscard]] inline int key() const { return key_; }
 
-        inline float volume() const { return volume_; }
+        [[nodiscard]] inline float volume() const { return volume_; }
 
-        inline float panning() const { return panning_; }
+        [[nodiscard]] inline float panning() const { return panning_; }
 
         static inline bool LessThan(const Note* lhs, const Note* rhs) {
             // function to compare two notes
@@ -79,6 +80,9 @@ namespace ui {
         float panning_;
         int pos_;
         int length_;
+
+        QString pronouncing_;
+        QString lyric_;
 
         // for piano roll editing
         bool selected_;

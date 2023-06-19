@@ -35,7 +35,7 @@ namespace audio_graph {
 
         bool Exist();
 
-        bool Seek();
+        void Seek(double sec);
 
         void StartBeat();
 
@@ -66,6 +66,8 @@ namespace audio_graph {
         void TapDown(int pitch);
 
         void TapUp(int pitch);
+
+        static void OnPlayProgressCallback(double sec);
 
     private:
         AudioContext() = default;

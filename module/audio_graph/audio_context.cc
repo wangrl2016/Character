@@ -9,6 +9,7 @@
 #include "module/audio_graph/gain_node.h"
 #include "module/audio_graph/oscillator_node.h"
 #include "module/audio_graph/piano_node.h"
+#include "module/audio_graph/audio_bridge.h"
 
 namespace audio_graph {
     AudioContext* AudioContext::Instance() {
@@ -70,8 +71,17 @@ namespace audio_graph {
         return true;
     }
 
-    bool AudioContext::Seek() {
-        return true;
+    void AudioContext::Seek(double sec) {
+        LOG(INFO) << __FUNCTION__ << ", time " << sec;
+        if (auto* device = audio_device_manager_->getCurrentAudioDevice()) {
+            double sample_rate = device->getCurrentSampleRate();
+
+            auto* gain_node = audio_processor_graph_->getNodeForId(gain_node_->nodeID);
+            if (gain_node) {
+                dynamic_cast<GainNode*>(gain_node->getProcessor())->Seek(
+                        int(std::round(sec * sample_rate)));
+            }
+        }
     }
 
     void AudioContext::StartBeat() {
@@ -191,7 +201,7 @@ namespace audio_graph {
     void AudioContext::TapDown(int pitch) {
         LOG(INFO) << __FUNCTION__ << ", pitch " << pitch;
         auto* node = audio_processor_graph_->getNodeForId(piano_node_->nodeID);
-        if(node) {
+        if (node) {
             dynamic_cast<PianoNode*>(node->getProcessor())->TapDown(pitch);
         }
     }
@@ -199,9 +209,13 @@ namespace audio_graph {
     void AudioContext::TapUp(int pitch) {
         LOG(INFO) << __FUNCTION__ << ", pitch " << pitch;
         auto* node = audio_processor_graph_->getNodeForId(piano_node_->nodeID);
-        if(node) {
+        if (node) {
             dynamic_cast<PianoNode*>(node->getProcessor())->TapUp(pitch);
         }
+    }
+
+    void AudioContext::OnPlayProgressCallback(double sec) {
+        AudioBridge::OnPlayProgressCallback(sec);
     }
 
     juce::String AudioContext::GetCurrentDefaultAudioDeviceName(bool is_input) {

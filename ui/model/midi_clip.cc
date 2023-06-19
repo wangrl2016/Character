@@ -18,8 +18,36 @@ namespace ui {
 
     }
 
-    Note* MidiClip::AddNote(const Note& new_note, const bool quant_pos) {
-        return nullptr;
+    Note* MidiClip::AddNote(const Note& note, const bool quant_pos) {
+        auto new_note = new Note(note);
+
+        instrument_track_->Lock();
+        notes_.insert(std::upper_bound(notes_.begin(),
+                                       notes_.end(),
+                                       new_note,
+                                       Note::LessThan),
+                      new_note);
+        instrument_track_->Unlock();
+
+        CheckType();
+
+        UpdateLength();
+
+        emit DataChanged();
+
+        return new_note;
+    }
+
+    void MidiClip::CheckType() {
+        auto iter = notes_.begin();
+        while (iter != notes_.end()) {
+            if ((*iter)->length() > 0) {
+                set_clip_type(kMelodyClip);
+                return;
+            }
+            iter++;
+        }
+        set_clip_type(kBeatClip);
     }
 
 

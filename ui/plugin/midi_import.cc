@@ -41,7 +41,18 @@ namespace ui {
             return this;
         }
 
+        void AddNote(Note& note) {
+            if (!clip) {
+                clip = dynamic_cast<MidiClip*>(instrument_track->CreateClip(0));
+            }
+            clip->AddNote(note, false);
+            has_note = true;
+        }
 
+        void SplitMidiClips() {
+            MidiClip* new_midi_clip = nullptr;
+            int last_end = 0;
+        }
     };
 
     Plugin::Descriptor midi_import_plugin_descriptor = {

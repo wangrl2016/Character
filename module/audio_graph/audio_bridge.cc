@@ -26,8 +26,8 @@ namespace audio_graph {
         return AudioContext::Instance()->Exist();
     }
 
-    bool AudioBridge::Seek() {
-        return AudioContext::Instance()->Seek();
+    void AudioBridge::Seek(double sec) {
+        AudioContext::Instance()->Seek(sec);
     }
 
     void AudioBridge::StartBeat() {
@@ -89,4 +89,16 @@ namespace audio_graph {
     void AudioBridge::TapUp(int pitch) {
         AudioContext::Instance()->TapUp(pitch);
     }
+
+    void AudioBridge::RegisterPlayProgressHandler(PlayProgressHandler handler) {
+        play_progress_handler = std::move(handler);
+    }
+
+    void AudioBridge::OnPlayProgressCallback(double sec) {
+        if (play_progress_handler) {
+            play_progress_handler(sec);
+        }
+    }
+
+    PlayProgressHandler AudioBridge::play_progress_handler = nullptr;
 }

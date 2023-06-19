@@ -56,6 +56,8 @@ add_library(AudioGraphModule STATIC
         module/audio_graph/constant.h
         module/audio_graph/gain_node.cc
         module/audio_graph/gain_node.h
+        module/audio_graph/master_track.cc
+        module/audio_graph/master_track.h
         module/audio_graph/metronome_node.cc
         module/audio_graph/metronome_node.h
         module/audio_graph/oscillator.cc
@@ -99,6 +101,8 @@ set(VIEW_SOURCES
         ui/model/piano.h
         ui/model/song.cc
         ui/model/song.h
+        ui/model/time_pos.cc
+        ui/model/time_pos.h
         ui/model/track.cc
         ui/model/track.h
         ui/model/track_container.cc

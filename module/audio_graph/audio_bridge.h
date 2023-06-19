@@ -8,6 +8,8 @@
 #include <vector>
 
 namespace audio_graph {
+    using PlayProgressHandler = std::function<void(double sec)>;
+
     class AudioBridge {
     public:
         // create / destroy
@@ -22,7 +24,7 @@ namespace audio_graph {
 
         static bool Exist();
 
-        static bool Seek();
+        static void Seek(double sec);
 
         static void StartBeat();
 
@@ -53,6 +55,13 @@ namespace audio_graph {
         static void TapDown(int pitch);
 
         static void TapUp(int pitch);
+
+        static void RegisterPlayProgressHandler(PlayProgressHandler handler);
+
+        static void OnPlayProgressCallback(double sec);
+
+    private:
+        static PlayProgressHandler play_progress_handler;
     };
 }
 
