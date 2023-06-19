@@ -39,7 +39,7 @@ namespace audio_graph {
     }
 
     bool AudioBridge::Clear() {
-
+        return true;
     }
 
     std::vector<std::string> AudioBridge::DeviceTypes(int* default_index) {

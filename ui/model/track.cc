@@ -36,6 +36,6 @@ namespace ui {
     }
 
     Track* Track::Clone() {
-
+        return nullptr;
     }
 }

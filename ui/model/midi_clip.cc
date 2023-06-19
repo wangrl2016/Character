@@ -19,7 +19,7 @@ namespace ui {
     }
 
     Note* MidiClip::AddNote(const Note& new_note, const bool quant_pos) {
-
+        return nullptr;
     }
 
 

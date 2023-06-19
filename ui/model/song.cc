@@ -45,15 +45,15 @@ namespace ui {
     }
 
     bool Song::SaveProject() {
-
+        return true;
     }
 
     bool Song::SaveProjectAs(const QString& filename) {
-
+        return true;
     }
 
     bool Song::SaveProjectFile(const QString& filename, bool with_resource) {
-
+        return true;
     }
 
     void Song::ClearProject() {

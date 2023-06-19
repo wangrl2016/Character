@@ -110,6 +110,6 @@ namespace ui {
     }
 
     bool MidiImport::ReadRIFF(TrackContainer* tc) {
-
+        return true;
     }
 }

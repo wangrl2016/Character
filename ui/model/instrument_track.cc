@@ -28,7 +28,7 @@ namespace ui {
 
     Clip* InstrumentTrack::CreateClip(int pos) {
         auto clip = new MidiClip(this);
-        clip->MovePosition(pos);
+        // clip->MovePosition(pos);
         return clip;
     }
 }
