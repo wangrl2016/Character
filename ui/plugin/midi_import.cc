@@ -3,11 +3,46 @@
 //
 
 #include <glog/logging.h>
+
+#include <utility>
 #include "ui/plugin/midi_import.h"
 #include "third_party/portsmf/include/allegro.h"
+#include "ui/model/instrument_track.h"
+#include "ui/model/midi_clip.h"
 
 namespace ui {
-    #define MakeID(a, b, c, d) (0 | (a | (b << 8) | (c << 16) | (d << 24)))
+#define MakeID(a, b, c, d) (0 | ((a) | ((b) << 8) | ((c) << 16) | ((d) << 24)))
+
+    class MidiChannel {
+    public:
+        MidiChannel() : instrument_track(nullptr),
+                        clip(nullptr),
+                        instrument(nullptr),
+                        is_sf(false),
+                        has_note(false) {}
+
+        InstrumentTrack* instrument_track;
+        MidiClip* clip;
+        Instrument* instrument;
+        bool is_sf;
+        bool has_note;
+        QString track_name;
+
+        MidiChannel* Create(TrackContainer* tc, QString name) {
+            if (!instrument_track) {
+                instrument_track = dynamic_cast<InstrumentTrack*>(
+                        Track::Create(Track::kInstrumentTrack, tc));
+                track_name = std::move(name);
+
+                // create a default clip
+                clip = dynamic_cast<MidiClip*>(instrument_track->CreateClip(0));
+            }
+
+            return this;
+        }
+
+
+    };
 
     Plugin::Descriptor midi_import_plugin_descriptor = {
             nullptr,
@@ -62,10 +97,10 @@ namespace ui {
                 } else if (event->is_note()) {
                     auto note = dynamic_cast<Alg_note_ptr>(event);
                     LOG(INFO) << "Note: " << note->get_identifier()
-                            << ", start_time: " << note->get_start_time()
-                            << ", duration " << note->get_duration()
-                            << ", loud " << note->get_loud()
-                            << ", count " << count++;
+                              << ", start_time: " << note->get_start_time()
+                              << ", duration " << note->get_duration()
+                              << ", loud " << note->get_loud()
+                              << ", count " << count++;
                 }
             }
             LOG(INFO) << "__end__";

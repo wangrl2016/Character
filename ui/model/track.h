@@ -34,6 +34,8 @@ namespace ui {
 
         Track* Clone();
 
+        virtual Clip* CreateClip(int pos) = 0;
+
         TrackType type() const {
             return type_;
         }

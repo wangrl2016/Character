@@ -28,6 +28,8 @@ namespace ui {
                              int time,
                              int offset = 0) override;
 
+        Clip* CreateClip(int pos) override;
+
     signals:
         void InstrumentChanged();
 

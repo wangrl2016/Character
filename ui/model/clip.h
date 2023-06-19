@@ -12,10 +12,20 @@ namespace ui {
     class Track;
 
     class Clip : public Model {
+    Q_OBJECT
     public:
         explicit Clip(Track* track);
 
         ~Clip() override;
+
+        inline Track* track() const { return track_; }
+
+        inline const QString& name() const { return name_; }
+
+        inline void set_name(const QString& name) {
+            name_ = name;
+            emit DataChanged();
+        }
 
     private:
         enum Action {
@@ -24,7 +34,7 @@ namespace ui {
             kResize,
         };
 
-        std::shared_ptr<Track> track_;
+        Track* track_;
 
         QString name_;
 
