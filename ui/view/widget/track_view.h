@@ -10,7 +10,19 @@
 
 namespace ui {
     class TrackView : public QWidget, public ModelView {
+    Q_OBJECT
+    public:
 
+    private:
+        enum Action {
+        kNoAction,
+        kMoveTrack,
+        kResizeTrack,
+    };
+
+    Track* track;
+
+    TrackContainerView * track_container_view;
     };
 }
 

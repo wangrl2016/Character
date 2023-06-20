@@ -28,6 +28,8 @@ namespace ui {
                              int time,
                              int offset = 0) override;
 
+        TrackView* CreateView(TrackContainerView* tcv) override;
+
         Clip* CreateClip(int pos) override;
 
     signals:

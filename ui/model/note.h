@@ -27,7 +27,7 @@ namespace ui {
 
         inline void set_old_key(const int old_key) { old_key_ = old_key; }
 
-        inline void set_old_pos(const int old_pos) { old_pos_ = old_pos; };
+        inline void set_old_pos(const int old_pos) { old_pos_ = old_pos; }
 
         inline void set_old_length(const int old_length) {
             old_length_ = old_length;

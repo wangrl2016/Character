@@ -61,6 +61,8 @@ namespace ui {
 
         bool Empty();
 
+        ClipView* CreateView(TrackView* tv) override;
+
     protected:
         void UpdateTrack();
 

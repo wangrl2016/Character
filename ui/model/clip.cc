@@ -16,7 +16,42 @@ namespace ui {
         if (track()) {
             track()->AddClip(this);
         }
+        //MovePosition(0);
+        //ChangeLength(0);
     }
 
-    Clip::~Clip() = default;
+    Clip::~Clip() {
+        emit DestroyClip();
+
+        if (track()) {
+            track()->RemoveClip(this);
+        }
+    }
+
+    void Clip::MovePosition(int pos) {
+        if (start_pos_ != pos) {
+            start_pos_ = pos;
+
+            emit PositionChanged();
+        }
+    }
+
+    void Clip::ChangeLength(int length) {
+        length_ = length;
+        emit LengthChanged();
+    }
+
+    bool Clip::ComparePosition(const Clip* a, const Clip* b) {
+        return a->start_pos() < b->start_pos();
+    }
+
+    void Clip::CopyStateTo(Clip* src, Clip* dst) {
+
+    }
+
+    void Clip::ToggleMute() {
+        mute_ = !mute_;
+        emit DataChanged();
+    }
+
 }

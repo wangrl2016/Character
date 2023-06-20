@@ -5,6 +5,7 @@
 #include "ui/model/instrument_track.h"
 #include "ui/model/song.h"
 #include "ui/model/midi_clip.h"
+#include "ui/view/widget/instrument_track_view.h"
 
 namespace ui {
     InstrumentTrack::InstrumentTrack(TrackContainer* tc) :
@@ -24,6 +25,10 @@ namespace ui {
 
     void InstrumentTrack::ProcessOutEvent(const core::MidiEvent& event, int time, int offset) {
 
+    }
+
+    TrackView* InstrumentTrack::CreateView(TrackContainerView* tcv) {
+        return new InstrumentTrackView(this, tcv);
     }
 
     Clip* InstrumentTrack::CreateClip(int pos) {

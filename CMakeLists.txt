@@ -121,14 +121,22 @@ set(VIEW_SOURCES
         ui/view/setting/device_combo_box.h
         ui/view/setting/setting_widget.cc
         ui/view/setting/setting_widget.h
+        ui/view/widget/clip_view.cc
+        ui/view/widget/clip_view.h
+        ui/view/widget/instrument_track_view.cc
+        ui/view/widget/instrument_track_view.h
         ui/view/widget/main_window.cc
         ui/view/widget/main_window.h
+        ui/view/widget/midi_clip_view.cc
+        ui/view/widget/midi_clip_view.h
         ui/view/widget/model_view.cc
         ui/view/widget/model_view.h
         ui/view/widget/piano_view.cc
         ui/view/widget/piano_view.h
         ui/view/widget/resource_view.cc
         ui/view/widget/resource_view.h
+        ui/view/widget/selectable_object.cc
+        ui/view/widget/selectable_object.h
         ui/view/widget/track_view.cc
         ui/view/widget/track_view.h
         ui/view/widget/song_view.cc
