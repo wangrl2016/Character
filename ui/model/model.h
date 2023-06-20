@@ -9,7 +9,7 @@
 
 namespace ui {
     class Model : public QObject {
-        Q_OBJECT
+    Q_OBJECT
     public:
         explicit Model(Model* parent,
                        QString display_name = QString(),
@@ -26,6 +26,7 @@ namespace ui {
         virtual void set_display_name(const QString& display_name);
 
     signals:
+
         // emitted if actual data of the model (e.g. values) have changed
         void DataChanged();
 

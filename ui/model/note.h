@@ -11,8 +11,13 @@
 namespace ui {
     class Note {
     public:
-        Note(int pos, int length,
-             int key, float volume, float panning);
+        Note(int pos,
+             int length,
+             int key,
+             float volume = 1.0f,
+             float panning = 0.0f,
+             QString pronouncing = "",
+             QString lyric = "");
 
         Note(const Note& note);
 
@@ -92,6 +97,5 @@ namespace ui {
         bool is_playing_;
     };
 }
-
 
 #endif //CHARACTER_NOTE_H

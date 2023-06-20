@@ -2,11 +2,11 @@
 // Created by wangrl2016 on 2023/6/11.
 //
 
+#include <utility>
 #include "ui/model/model.h"
 
-#include <utility>
-
 namespace ui {
+    // Implementation of Model base class.
     Model::Model(Model* parent, QString display_name, bool default_constructed) :
             QObject(parent),
             display_name_(std::move(display_name)),
