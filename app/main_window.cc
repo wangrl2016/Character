@@ -4,6 +4,7 @@
 
 #include <QMenu>
 #include <QMenuBar>
+#include <QShortcut>
 #include "app/dialog/about_dialog.h"
 #include "app/main_window.h"
 
@@ -16,6 +17,7 @@ namespace app {
 
 
     void MainWindow::SetupMenuBar() {
+        // app menu
         auto* app_menu = new QMenu(this);
         menuBar()->addMenu(app_menu);
 
@@ -44,11 +46,20 @@ namespace app {
         // setting
         auto* setting_action = new QAction(QIcon(), tr("Setting"), app_menu);
         setting_action->setMenuRole(QAction::ApplicationSpecificRole);
+        setting_action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_0));
         connect(setting_action, &QAction::triggered, this, [this]() {
             auto* dialog = new QDialog(this);
             dialog->show();
         });
         app_menu->addAction(setting_action);
+
+        // file menu
+        auto* file_menu = new QMenu(this);
+        menuBar()->addMenu(file_menu)->setText(tr("File"));
+
+        // new
+        auto* new_action = new QAction(QIcon(), tr("New"), file_menu);
+        file_menu->addAction(new_action);
     }
 
     void MainWindow::SetupToolBar() {
