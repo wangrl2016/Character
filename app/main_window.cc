@@ -7,6 +7,7 @@
 #include <QShortcut>
 #include "app/dialog/about_dialog.h"
 #include "app/main_window.h"
+#include "app/toolbar/top_tool_bar.h"
 
 namespace app {
     MainWindow::MainWindow(QWidget* parent) :
@@ -66,6 +67,8 @@ namespace app {
 #ifdef Q_OS_MACOS
         setUnifiedTitleAndToolBarOnMac(true);
 #endif
+        auto* top_tool_bar = new TopToolBar(this);
+        addToolBar(top_tool_bar);
 
     }
 }
