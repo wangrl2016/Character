@@ -63,6 +63,9 @@ namespace app {
     }
 
     void MainWindow::SetupToolBar() {
+#ifdef Q_OS_MACOS
+        setUnifiedTitleAndToolBarOnMac(true);
+#endif
 
     }
 }
