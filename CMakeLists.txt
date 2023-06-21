@@ -80,6 +80,8 @@ target_link_libraries(AudioGraphModule
         )
 
 set(VIEW_SOURCES
+        app/dialog/about_dialog.cc
+        app/dialog/about_dialog.h
         app/main_window.cc
         app/main_window.h
         core/math/constant.h
