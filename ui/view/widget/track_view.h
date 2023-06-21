@@ -7,22 +7,36 @@
 
 #include <QWidget>
 #include "ui/view/widget/model_view.h"
+#include "track_content_widget.h"
+#include "track_setting_widget.h"
 
 namespace ui {
+    class Clip;
+    class Track;
+    class TrackContainerView;
+
     class TrackView : public QWidget, public ModelView {
     Q_OBJECT
     public:
+        TrackView(Track* track, TrackContainerView* tcv);
+
+        ~TrackView() override = default;
+
+        inline Track* track() const { return track_; }
 
     private:
         enum Action {
-        kNoAction,
-        kMoveTrack,
-        kResizeTrack,
-    };
+            kNoAction,
+            kMoveTrack,
+            kResizeTrack,
+        };
 
-    Track* track;
+        Track* track_;
 
-    TrackContainerView * track_container_view;
+        TrackContainerView * track_container_view_;
+
+        TrackContentWidget* track_content_widget_;
+        TrackSettingWidget* track_setting_widget_;
     };
 }
 

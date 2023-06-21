@@ -80,74 +80,80 @@ target_link_libraries(AudioGraphModule
         )
 
 set(VIEW_SOURCES
+        app/main_window.cc
+        app/main_window.h
         core/math/constant.h
         core/midi/midi.h
         core/midi/midi_event.h
         core/midi/midi_event_processor.h
         core/util/utility_function.h
-        ui/menu/about_dialog.cc
-        ui/menu/about_dialog.h
-        ui/model/clip.cc
-        ui/model/clip.h
-        ui/model/instrument_track.cc
-        ui/model/instrument_track.h
-        ui/model/midi_clip.cc
-        ui/model/midi_clip.h
-        ui/model/model.cc
-        ui/model/model.h
-        ui/model/note.cc
-        ui/model/note.h
-        ui/model/piano.cc
-        ui/model/piano.h
-        ui/model/song.cc
-        ui/model/song.h
-        ui/model/time_pos.cc
-        ui/model/time_pos.h
-        ui/model/track.cc
-        ui/model/track.h
-        ui/model/track_container.cc
-        ui/model/track_container.h
-        ui/plugin/import_filter.cc
-        ui/plugin/import_filter.h
-        ui/plugin/instrument.cc
-        ui/plugin/instrument.h
-        ui/plugin/midi_import.cc
-        ui/plugin/midi_import.h
-        ui/plugin/plugin.cc
-        ui/plugin/plugin.h
-        ui/view/setting/audio_device_selector.cc
-        ui/view/setting/audio_device_selector.h
-        ui/view/setting/device_combo_box.cc
-        ui/view/setting/device_combo_box.h
-        ui/view/setting/setting_widget.cc
-        ui/view/setting/setting_widget.h
-        ui/view/widget/clip_view.cc
-        ui/view/widget/clip_view.h
-        ui/view/widget/instrument_track_view.cc
-        ui/view/widget/instrument_track_view.h
-        ui/view/widget/main_window.cc
-        ui/view/widget/main_window.h
-        ui/view/widget/midi_clip_view.cc
-        ui/view/widget/midi_clip_view.h
-        ui/view/widget/model_view.cc
-        ui/view/widget/model_view.h
-        ui/view/widget/piano_view.cc
-        ui/view/widget/piano_view.h
-        ui/view/widget/resource_view.cc
-        ui/view/widget/resource_view.h
-        ui/view/widget/selectable_object.cc
-        ui/view/widget/selectable_object.h
-        ui/view/widget/track_view.cc
-        ui/view/widget/track_view.h
-        ui/view/widget/song_view.cc
-        ui/view/widget/song_view.h
-        ui/view/widget/time_line_widget.cc
-        ui/view/widget/time_line_widget.h
-        ui/view/widget/track_container_view.cc
-        ui/view/widget/track_container_view.h
-        # ui/view/widget/waveform_widget.cc
-        # ui/view/widget/waveform_widget.h
-        ui/view/widget/widget_constant.h
+#        ui/menu/about_dialog.cc
+#        ui/menu/about_dialog.h
+#        ui/model/clip.cc
+#        ui/model/clip.h
+#        ui/model/instrument_track.cc
+#        ui/model/instrument_track.h
+#        ui/model/midi_clip.cc
+#        ui/model/midi_clip.h
+#        ui/model/model.cc
+#        ui/model/model.h
+#        ui/model/note.cc
+#        ui/model/note.h
+#        ui/model/piano.cc
+#        ui/model/piano.h
+#        ui/model/song.cc
+#        ui/model/song.h
+#        ui/model/time_pos.cc
+#        ui/model/time_pos.h
+#        ui/model/track.cc
+#        ui/model/track.h
+#        ui/model/track_container.cc
+#        ui/model/track_container.h
+#        ui/plugin/import_filter.cc
+#        ui/plugin/import_filter.h
+#        ui/plugin/instrument.cc
+#        ui/plugin/instrument.h
+#        ui/plugin/midi_import.cc
+#        ui/plugin/midi_import.h
+#        ui/plugin/plugin.cc
+#        ui/plugin/plugin.h
+#        ui/view/setting/audio_device_selector.cc
+#        ui/view/setting/audio_device_selector.h
+#        ui/view/setting/device_combo_box.cc
+#        ui/view/setting/device_combo_box.h
+#        ui/view/setting/setting_widget.cc
+#        ui/view/setting/setting_widget.h
+#        ui/view/widget/clip_view.cc
+#        ui/view/widget/clip_view.h
+#        ui/view/widget/instrument_track_view.cc
+#        ui/view/widget/instrument_track_view.h
+#        ui/view/widget/main_window.cc
+#        ui/view/widget/main_window.h
+#        ui/view/widget/midi_clip_view.cc
+#        ui/view/widget/midi_clip_view.h
+#        ui/view/widget/model_view.cc
+#        ui/view/widget/model_view.h
+#        ui/view/widget/piano_view.cc
+#        ui/view/widget/piano_view.h
+#        ui/view/widget/resource_view.cc
+#        ui/view/widget/resource_view.h
+#        ui/view/widget/selectable_object.cc
+#        ui/view/widget/selectable_object.h
+#        ui/view/widget/track_view.cc
+#        ui/view/widget/track_view.h
+#        ui/view/widget/song_view.cc
+#        ui/view/widget/song_view.h
+#        ui/view/widget/time_line_widget.cc
+#        ui/view/widget/time_line_widget.h
+#        ui/view/widget/track_container_view.cc
+#        ui/view/widget/track_container_view.h
+#        ui/view/widget/track_content_widget.cc
+#        ui/view/widget/track_content_widget.h
+#        ui/view/widget/track_setting_widget.cc
+#        ui/view/widget/track_setting_widget.h
+#        # ui/view/widget/waveform_widget.cc
+#        # ui/view/widget/waveform_widget.h
+#        ui/view/widget/widget_constant.h
         )
 
 qt_add_executable(Character
