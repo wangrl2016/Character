@@ -3,7 +3,7 @@
 //
 
 #include <QApplication>
-#include "app/main_window.h"
+#include "app/gui/main_window.h"
 #include "ui/view/widget/widget_constant.h"
 #include "ui/view/setting/audio_device_selector.h"
 #include "module/audio_graph/audio_bridge.h"

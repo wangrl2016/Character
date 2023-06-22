@@ -80,12 +80,14 @@ target_link_libraries(AudioGraphModule
         )
 
 set(VIEW_SOURCES
-        app/dialog/about_dialog.cc
-        app/dialog/about_dialog.h
-        app/toolbar/top_tool_bar.cc
-        app/toolbar/top_tool_bar.h
-        app/main_window.cc
-        app/main_window.h
+        app/gui/dialog/about_dialog.cc
+        app/gui/dialog/about_dialog.h
+        app/gui/toolbar/top_tool_bar.cc
+        app/gui/toolbar/top_tool_bar.h
+        app/gui/widget/timeline_widget.cc
+        app/gui/widget/timeline_widget.h
+        app/gui/main_window.cc
+        app/gui/main_window.h
         core/math/constant.h
         core/midi/midi.h
         core/midi/midi_event.h

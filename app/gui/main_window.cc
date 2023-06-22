@@ -5,17 +5,19 @@
 #include <QMenu>
 #include <QMenuBar>
 #include <QShortcut>
-#include "app/dialog/about_dialog.h"
-#include "app/main_window.h"
-#include "app/toolbar/top_tool_bar.h"
+#include "app/gui/dialog/about_dialog.h"
+#include "app/gui/toolbar/top_tool_bar.h"
+#include "main_window.h"
 
 namespace app {
     MainWindow::MainWindow(QWidget* parent) :
             QMainWindow(parent) {
         SetupMenuBar();
         SetupToolBar();
-    }
 
+        timeline_widget_ = new TimelineWidget(this);
+        setCentralWidget(timeline_widget_);
+    }
 
     void MainWindow::SetupMenuBar() {
         // app menu

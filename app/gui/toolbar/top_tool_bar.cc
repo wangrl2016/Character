@@ -6,7 +6,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QToolButton>
-#include "app/toolbar/top_tool_bar.h"
+#include "top_tool_bar.h"
 
 namespace app {
     constexpr int kToolBarFixedHeight = 24;

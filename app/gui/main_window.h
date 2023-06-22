@@ -6,6 +6,7 @@
 #define CHARACTER_MAIN_WINDOW_H
 
 #include <QMainWindow>
+#include "app/gui/widget/timeline_widget.h"
 
 namespace app {
     class MainWindow : public QMainWindow {
@@ -18,6 +19,10 @@ namespace app {
 
         void SetupToolBar();
 
+    private:
+        TimelineWidget* timeline_widget_;
+
+        double current_play_time_;
     };
 }
 
