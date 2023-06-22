@@ -17,19 +17,25 @@ namespace app {
         SetupToolBar();
 
         auto* central_widget = new QWidget(this);
-        auto v_layout = new QVBoxLayout(central_widget);
+        auto h_layout = new QHBoxLayout(central_widget);
+        h_layout->setContentsMargins(0, 0, 0, 0);
+        h_layout->setSpacing(0);
+
+        track_setting_widget_ = new TrackSettingWidget(central_widget);
+
+        auto* right_widget = new QWidget(central_widget);
+        auto v_layout = new QVBoxLayout(right_widget);
         v_layout->setContentsMargins(0, 0, 0, 0);
         v_layout->setSpacing(0);
 
-        timeline_widget_ = new TimelineWidget(central_widget);
+        timeline_widget_ = new TimelineWidget(right_widget);
         v_layout->addWidget(timeline_widget_);
 
-        track_content_widget_ = new TrackContentWidget(central_widget);
+        track_content_widget_ = new TrackContentWidget(right_widget);
         v_layout->addWidget(track_content_widget_);
 
-
-
-
+        h_layout->addWidget(track_setting_widget_);
+        h_layout->addWidget(right_widget);
 
         setCentralWidget(central_widget);
     }

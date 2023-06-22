@@ -8,6 +8,7 @@
 #include <QMainWindow>
 #include "app/gui/widget/timeline_widget.h"
 #include "app/gui/widget/track_content_widget.h"
+#include "app/gui/widget/track_setting_widget.h"
 
 namespace app {
     class MainWindow : public QMainWindow {
@@ -23,6 +24,7 @@ namespace app {
     private:
         TimelineWidget* timeline_widget_;
         TrackContentWidget* track_content_widget_;
+        TrackSettingWidget* track_setting_widget_;
 
         double current_play_time_;
     };

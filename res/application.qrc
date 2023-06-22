@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/toolbar">
         <file alias="account_circle">toolbar/account_circle_fill1_wght400_grad0_opsz48.svg</file>
+        <file alias="export">toolbar/drive_file_move_fill1_wght400_grad0_opsz48.svg</file>
         <file alias="fast_forward">toolbar/fast_forward_fill1_wght400_grad0_opsz48.svg</file>
         <file alias="fast_rewind">toolbar/fast_rewind_fill1_wght400_grad0_opsz48.svg</file>
         <file alias="pause">toolbar/pause_fill1_wght400_grad0_opsz48.svg</file>

@@ -20,6 +20,7 @@ namespace app {
         QAction* play_arrow_action_;
         QAction* pause_action_;
 
+        QAction* export_action_;
         QAction* account_circle_action_;
     };
 }

@@ -73,6 +73,12 @@ namespace app {
         spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         addWidget(spacer);
 
+        export_action_ = new QAction(
+                QIcon(tr(":/toolbar/export")),
+                tr("Export"),
+                this);
+        addAction(export_action_);
+
         account_circle_action_ = new QAction(
                 QIcon(tr(":/toolbar/account_circle")),
                 tr("Account"),
