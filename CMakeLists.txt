@@ -86,6 +86,8 @@ set(VIEW_SOURCES
         app/gui/toolbar/top_tool_bar.h
         app/gui/widget/timeline_widget.cc
         app/gui/widget/timeline_widget.h
+        app/gui/widget/track_content_widget.cc
+        app/gui/widget/track_content_widget.h
         app/gui/main_window.cc
         app/gui/main_window.h
         core/math/constant.h

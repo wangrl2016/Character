@@ -5,6 +5,7 @@
 #include <QMenu>
 #include <QMenuBar>
 #include <QShortcut>
+#include <QVBoxLayout>
 #include "app/gui/dialog/about_dialog.h"
 #include "app/gui/toolbar/top_tool_bar.h"
 #include "main_window.h"
@@ -15,8 +16,22 @@ namespace app {
         SetupMenuBar();
         SetupToolBar();
 
-        timeline_widget_ = new TimelineWidget(this);
-        setCentralWidget(timeline_widget_);
+        auto* central_widget = new QWidget(this);
+        auto v_layout = new QVBoxLayout(central_widget);
+        v_layout->setContentsMargins(0, 0, 0, 0);
+        v_layout->setSpacing(0);
+
+        timeline_widget_ = new TimelineWidget(central_widget);
+        v_layout->addWidget(timeline_widget_);
+
+        track_content_widget_ = new TrackContentWidget(central_widget);
+        v_layout->addWidget(track_content_widget_);
+
+
+
+
+
+        setCentralWidget(central_widget);
     }
 
     void MainWindow::SetupMenuBar() {

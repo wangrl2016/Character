@@ -33,7 +33,7 @@ namespace app {
             if (current_interval_ < kDefaultPixelPerSecond) {
                 // If the scale is too small, it will be drawn at intervals.
                 int multiple = kDefaultPixelPerSecond / current_interval_;
-                if ((i / current_interval_) % multiple == 0) {
+                if (count % multiple == 0) {
                     painter.drawText(i + kTextPadding,
                                      kTimelineFixedHeight - kTextPadding,
                                      QString::number(count));
@@ -53,7 +53,7 @@ namespace app {
             if (current_interval_ < kDefaultPixelPerSecond) {
                 // If the scale is too small, it will be drawn at intervals.
                 int multiple = kDefaultPixelPerSecond / current_interval_;
-                if ((i / current_interval_) % multiple == 0) {
+                if (count % multiple == 0) {
                     painter.drawText(i + kTextPadding,
                                      kTimelineFixedHeight - kTextPadding,
                                      QString::number(count));
