@@ -67,7 +67,7 @@ namespace audio_graph {
 
         void TapUp(int pitch);
 
-        static void OnPlayProgressCallback(double sec);
+        void OnPlayProgressCallback(int play_index);
 
     private:
         AudioContext() = default;

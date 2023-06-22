@@ -6,7 +6,8 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QToolButton>
-#include "top_tool_bar.h"
+#include "app/gui/toolbar/top_tool_bar.h"
+#include "app/gui/main_window.h"
 
 namespace app {
     constexpr int kToolBarFixedHeight = 24;
@@ -53,6 +54,7 @@ namespace app {
                 [this]() {
                     play_arrow_action_->setVisible(!play_arrow_action_->isVisible());
                     pause_action_->setVisible(!play_arrow_action_->isVisible());
+                    dynamic_cast<MainWindow*>(parentWidget())->PlayOrPause();
                 });
         addAction(play_arrow_action_);
 
@@ -66,6 +68,7 @@ namespace app {
                 [this]() {
                     play_arrow_action_->setVisible(!play_arrow_action_->isVisible());
                     pause_action_->setVisible(!play_arrow_action_->isVisible());
+                    dynamic_cast<MainWindow*>(parentWidget())->PlayOrPause();
                 });
         addAction(pause_action_);
 

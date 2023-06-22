@@ -23,4 +23,8 @@ namespace app {
             painter.drawLine(rect().x(), i, rect().x() + rect().width(), i);
         }
     }
+
+    void TrackContentWidget::PlayProgressReceive(double sec) {
+        update();
+    }
 }

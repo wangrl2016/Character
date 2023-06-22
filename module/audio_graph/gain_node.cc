@@ -4,6 +4,7 @@
 
 #include "module/audio_graph/constant.h"
 #include "module/audio_graph/gain_node.h"
+#include "audio_context.h"
 
 namespace audio_graph {
     GainNode::GainNode() {
@@ -25,6 +26,11 @@ namespace audio_graph {
         juce::dsp::AudioBlock<float> block(buffer);
         juce::dsp::ProcessContextReplacing<float> context(block);
         gain_.process(context);
+
+        if (beat_) {
+            play_index_ += buffer.getNumSamples();
+            AudioContext::Instance()->OnPlayProgressCallback(play_index_);
+        }
     }
 
     void GainNode::reset() {

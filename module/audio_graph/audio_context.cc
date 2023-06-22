@@ -85,20 +85,30 @@ namespace audio_graph {
     }
 
     void AudioContext::StartBeat() {
-        // LOG(INFO) << __FUNCTION__;
+        LOG(INFO) << __FUNCTION__;
         auto* oscillator_node = audio_processor_graph_->getNodeForId(
                 oscillator_node_->nodeID);
         if (oscillator_node) {
             dynamic_cast<OscillatorNode*>(oscillator_node->getProcessor())->StartBeat();
         }
+        auto* gain_node = audio_processor_graph_->getNodeForId(
+                gain_node_->nodeID);
+        if (gain_node) {
+            dynamic_cast<GainNode*>(gain_node->getProcessor())->StartBeat();
+        }
     }
 
     void AudioContext::StopBeat() {
-        // LOG(INFO) << __FUNCTION__;
+        LOG(INFO) << __FUNCTION__;
         auto* oscillator_node = audio_processor_graph_->getNodeForId(
                 oscillator_node_->nodeID);
         if (oscillator_node) {
             dynamic_cast<OscillatorNode*>(oscillator_node->getProcessor())->StopBeat();
+        }
+        auto* gain_node = audio_processor_graph_->getNodeForId(
+                gain_node_->nodeID);
+        if (gain_node) {
+            dynamic_cast<GainNode*>(gain_node->getProcessor())->StopBeat();
         }
     }
 
@@ -214,8 +224,10 @@ namespace audio_graph {
         }
     }
 
-    void AudioContext::OnPlayProgressCallback(double sec) {
-        AudioBridge::OnPlayProgressCallback(sec);
+    void AudioContext::OnPlayProgressCallback(int play_index) {
+        if (auto* device = audio_device_manager_->getCurrentAudioDevice()) {
+            AudioBridge::OnPlayProgressCallback(play_index / device->getCurrentSampleRate());
+        }
     }
 
     juce::String AudioContext::GetCurrentDefaultAudioDeviceName(bool is_input) {

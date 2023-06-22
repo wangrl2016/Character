@@ -16,17 +16,31 @@ namespace app {
     public:
         explicit MainWindow(QWidget* parent = nullptr);
 
+        ~MainWindow();
+
+        void PlayOrPause();
+
+        [[nodiscard]] double play_progress() const { return play_progress_; }
+
     private:
         void SetupMenuBar();
 
         void SetupToolBar();
+
+        bool SetupAudioGraph();
+
+        static void DestroyAudioGraph();
+
+    signals:
+        void PlayProgressUpdate(double sec);
 
     private:
         TimelineWidget* timeline_widget_;
         TrackContentWidget* track_content_widget_;
         TrackSettingWidget* track_setting_widget_;
 
-        double current_play_time_;
+        bool is_playing_;
+        double play_progress_;
     };
 }
 

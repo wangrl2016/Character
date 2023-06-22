@@ -18,11 +18,15 @@ namespace app {
 
         void wheelEvent(QWheelEvent* event) override;
 
+    public slots:
+        void PlayProgressReceive(double sec);
+
     private:
         int current_interval_;
         // The pixel value corresponding to the current time.
         std::pair<int, int> benchmark_;
 
+        double play_progress_ = 0;
     };
 }
 

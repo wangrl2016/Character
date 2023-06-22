@@ -15,6 +15,8 @@ namespace app {
 
         void paintEvent(QPaintEvent* event) override;
 
+    public slots:
+        void PlayProgressReceive(double sec);
     private:
         int track_height_;
     };

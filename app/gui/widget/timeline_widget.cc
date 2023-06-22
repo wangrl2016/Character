@@ -5,6 +5,7 @@
 #include <glog/logging.h>
 #include <QPainter>
 #include "app/gui/widget/timeline_widget.h"
+#include "app/gui/main_window.h"
 
 namespace app {
     constexpr int kTimelineFixedHeight = 24;
@@ -65,6 +66,11 @@ namespace app {
             }
             count--;
         }
+
+        double distance = play_progress_ - benchmark_.first;
+        int play_progress_index = int(std::round(benchmark_.second + distance * current_interval_));
+        painter.drawLine(play_progress_index,
+                         rect().y(), play_progress_index, rect().y() + rect().height());
     }
 
     void TimelineWidget::wheelEvent(QWheelEvent* event) {
@@ -88,6 +94,11 @@ namespace app {
         if (current_interval_ > kMaxPixelPerSecond)
             current_interval_ = kMaxPixelPerSecond;
 
+        update();
+    }
+
+    void TimelineWidget::PlayProgressReceive(double sec) {
+        play_progress_ = sec;
         update();
     }
 }
