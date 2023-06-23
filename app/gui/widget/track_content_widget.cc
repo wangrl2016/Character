@@ -24,7 +24,7 @@ namespace app {
         }
     }
 
-    void TrackContentWidget::PlayProgressReceive(double sec) {
+    void TrackContentWidget::PlayProgressUpdate() {
         update();
     }
 }

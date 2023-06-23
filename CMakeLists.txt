@@ -92,6 +92,12 @@ set(VIEW_SOURCES
         app/gui/widget/track_setting_widget.h
         app/gui/main_window.cc
         app/gui/main_window.h
+        app/model/play_progress_model.h
+        app/presenter/play_progress_presenter.cc
+        app/presenter/play_progress_presenter.h
+        app/presenter/play_progress_subscriber.h
+        app/presenter/play_progress_view.cc
+        app/presenter/play_progress_view.h
         core/math/constant.h
         core/midi/midi.h
         core/midi/midi_event.h

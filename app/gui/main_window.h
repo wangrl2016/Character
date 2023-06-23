@@ -6,21 +6,25 @@
 #define CHARACTER_MAIN_WINDOW_H
 
 #include <QMainWindow>
+#include "app/gui/toolbar/top_tool_bar.h"
 #include "app/gui/widget/timeline_widget.h"
 #include "app/gui/widget/track_content_widget.h"
 #include "app/gui/widget/track_setting_widget.h"
+#include "app/presenter/play_progress_subscriber.h"
+#include "app/presenter/play_progress_presenter.h"
 
 namespace app {
-    class MainWindow : public QMainWindow {
+    class MainWindow : public QMainWindow,
+            public PlayProgressView {
     Q_OBJECT
     public:
         explicit MainWindow(QWidget* parent = nullptr);
 
         ~MainWindow();
 
-        void PlayOrPause();
+        void Subscribe(PlayProgressPresenter* presenter) override;
 
-        [[nodiscard]] double play_progress() const { return play_progress_; }
+        void PlayOrPause();
 
     private:
         void SetupMenuBar();
@@ -31,16 +35,14 @@ namespace app {
 
         static void DestroyAudioGraph();
 
-    signals:
-        void PlayProgressUpdate(double sec);
-
     private:
+        TopToolBar* top_tool_bar_;
+
         TimelineWidget* timeline_widget_;
         TrackContentWidget* track_content_widget_;
         TrackSettingWidget* track_setting_widget_;
 
         bool is_playing_;
-        double play_progress_;
     };
 }
 

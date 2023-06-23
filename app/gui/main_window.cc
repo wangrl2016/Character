@@ -11,12 +11,12 @@
 #include "app/gui/toolbar/top_tool_bar.h"
 #include "module/audio_graph/audio_bridge.h"
 #include "app/gui/main_window.h"
+#include "app/presenter/play_progress_presenter.h"
 
 namespace app {
     MainWindow::MainWindow(QWidget* parent) :
             QMainWindow(parent),
-            is_playing_(false),
-            play_progress_(0) {
+            is_playing_(false) {
         SetupMenuBar();
         SetupToolBar();
 
@@ -44,19 +44,23 @@ namespace app {
         setCentralWidget(central_widget);
 
         SetupAudioGraph();
-
-        connect(this, &MainWindow::PlayProgressUpdate,
-                timeline_widget_, &TimelineWidget::PlayProgressReceive);
     }
 
     MainWindow::~MainWindow() {
         DestroyAudioGraph();
     }
 
+    void MainWindow::Subscribe(PlayProgressPresenter* presenter) {
+        PlayProgressView::Subscribe(presenter);
+
+        timeline_widget_->Subscribe(presenter);
+        track_content_widget_->Subscribe(presenter);
+    }
+
     void MainWindow::PlayOrPause() {
         is_playing_ = !is_playing_;
         if (is_playing_) {
-            audio_graph::AudioBridge::Seek(play_progress_);
+            audio_graph::AudioBridge::Seek(play_progress_presenter_->PlayProgress());
             audio_graph::AudioBridge::StartBeat();
         } else {
             audio_graph::AudioBridge::StopBeat();
@@ -113,8 +117,8 @@ namespace app {
 #ifdef Q_OS_MACOS
         setUnifiedTitleAndToolBarOnMac(true);
 #endif
-        auto* top_tool_bar = new TopToolBar(this);
-        addToolBar(top_tool_bar);
+        top_tool_bar_ = new TopToolBar(this);
+        addToolBar(top_tool_bar_);
 
     }
 
@@ -126,8 +130,7 @@ namespace app {
             return false;
         }
         audio_graph::AudioBridge::RegisterPlayProgressHandler([this](double sec) {
-            play_progress_ = sec;
-            emit PlayProgressUpdate(sec);
+            play_progress_presenter_->NotifyPlayProgress(sec);
         });
         return true;
     }

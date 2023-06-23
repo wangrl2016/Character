@@ -67,10 +67,16 @@ namespace app {
             count--;
         }
 
-        double distance = play_progress_ - benchmark_.first;
+        double distance = play_progress_presenter_->PlayProgress() - benchmark_.first;
         int play_progress_index = int(std::round(benchmark_.second + distance * current_interval_));
         painter.drawLine(play_progress_index,
                          rect().y(), play_progress_index, rect().y() + rect().height());
+    }
+
+    void TimelineWidget::mousePressEvent(QMouseEvent* event) {
+        double distance = event->pos().x() - benchmark_.second;
+        double sec = benchmark_.first + distance / current_interval_;
+        play_progress_presenter_->NotifyPlayProgress(sec);
     }
 
     void TimelineWidget::wheelEvent(QWheelEvent* event) {
@@ -97,8 +103,11 @@ namespace app {
         update();
     }
 
-    void TimelineWidget::PlayProgressReceive(double sec) {
-        play_progress_ = sec;
+    void TimelineWidget::PlayProgressUpdate() {
         update();
+    }
+
+    void TimelineWidget::ResetBenchmark() {
+        benchmark_ = {0, 0};
     }
 }

@@ -7,26 +7,30 @@
 
 #include <QWheelEvent>
 #include <QWidget>
+#include "app/presenter/play_progress_view.h"
+#include "app/presenter/play_progress_presenter.h"
 
 namespace app {
-    class TimelineWidget : public QWidget {
+    class TimelineWidget : public QWidget,
+            public PlayProgressView {
     Q_OBJECT
     public:
         explicit TimelineWidget(QWidget* parent = nullptr);
 
         void paintEvent(QPaintEvent* event) override;
 
+        void mousePressEvent(QMouseEvent* event) override;
+
         void wheelEvent(QWheelEvent* event) override;
 
-    public slots:
-        void PlayProgressReceive(double sec);
+        void PlayProgressUpdate() override;
 
+        void ResetBenchmark();
     private:
         int current_interval_;
         // The pixel value corresponding to the current time.
         std::pair<int, int> benchmark_;
 
-        double play_progress_ = 0;
     };
 }
 

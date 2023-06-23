@@ -6,17 +6,20 @@
 #define CHARACTER_TRACK_CONTENT_WIDGET_H
 
 #include <QWidget>
+#include "app/presenter/play_progress_view.h"
+#include "app/presenter/play_progress_presenter.h"
 
 namespace app {
-    class TrackContentWidget : public QWidget {
+    class TrackContentWidget : public QWidget,
+            public PlayProgressView {
     Q_OBJECT
     public:
         explicit TrackContentWidget(QWidget* parent = nullptr);
 
         void paintEvent(QPaintEvent* event) override;
 
-    public slots:
-        void PlayProgressReceive(double sec);
+        void PlayProgressUpdate() override;
+
     private:
         int track_height_;
     };
