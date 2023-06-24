@@ -1,5 +1,11 @@
 <RCC>
-    <qresource prefix="/toolbar">
+    <qresource prefix="icon">
+        <file alias="project">icon/description_fill1_wght400_grad0_opsz48.svg</file>
+        <file alias="track">icon/leaderboard_fill1_wght400_grad0_opsz48.svg</file>
+        <file alias="minimize">icon/minimize_fill1_wght400_grad0_opsz48.svg</file>
+    </qresource>
+
+    <qresource prefix="toolbar">
         <file alias="account_circle">toolbar/account_circle_fill1_wght400_grad0_opsz48.svg</file>
         <file alias="export">toolbar/drive_file_move_fill1_wght400_grad0_opsz48.svg</file>
         <file alias="fast_forward">toolbar/fast_forward_fill1_wght400_grad0_opsz48.svg</file>

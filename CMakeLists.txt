@@ -82,6 +82,11 @@ target_link_libraries(AudioGraphModule
 set(VIEW_SOURCES
         app/gui/dialog/about_dialog.cc
         app/gui/dialog/about_dialog.h
+        app/gui/style/color_constant.h
+        app/gui/tab/left_tab_widget.cc
+        app/gui/tab/left_tab_widget.h
+        app/gui/tab/tab_widget.cc
+        app/gui/tab/tab_widget.h
         app/gui/toolbar/top_tool_bar.cc
         app/gui/toolbar/top_tool_bar.h
         app/gui/widget/timeline_widget.cc

@@ -17,6 +17,8 @@ namespace app {
     MainWindow::MainWindow(QWidget* parent) :
             QMainWindow(parent),
             is_playing_(false) {
+        setStyleSheet("background-color: #FFFBFE;");
+
         SetupMenuBar();
         SetupToolBar();
 
@@ -25,7 +27,8 @@ namespace app {
         h_layout->setContentsMargins(0, 0, 0, 0);
         h_layout->setSpacing(0);
 
-        track_setting_widget_ = new TrackSettingWidget(central_widget);
+        // track_setting_widget_ = new TrackSettingWidget(central_widget);
+        left_tab_widget_ = new LeftTabWidget(central_widget);
 
         auto* right_widget = new QWidget(central_widget);
         auto v_layout = new QVBoxLayout(right_widget);
@@ -38,7 +41,8 @@ namespace app {
         track_content_widget_ = new TrackContentWidget(right_widget);
         v_layout->addWidget(track_content_widget_);
 
-        h_layout->addWidget(track_setting_widget_);
+        // h_layout->addWidget(track_setting_widget_);
+        h_layout->addWidget(left_tab_widget_);
         h_layout->addWidget(right_widget);
 
         setCentralWidget(central_widget);
