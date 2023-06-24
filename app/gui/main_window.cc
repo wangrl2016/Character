@@ -17,7 +17,15 @@ namespace app {
     MainWindow::MainWindow(QWidget* parent) :
             QMainWindow(parent),
             is_playing_(false) {
-        setStyleSheet("background-color: #FFFBFE;");
+        setStyleSheet("QWidget {"
+                      "    background-color: #FFFBFE;"
+                      "}"
+                      "QMainWindow QToolBar {"
+                      "    spacing: 0px;"
+                      "}"
+                      "QMainWindow QToolBar QToolButton:hover {"
+                      "    background-color: rgba(255, 00, 255, 0.1);"
+                      "}");
 
         SetupMenuBar();
         SetupToolBar();

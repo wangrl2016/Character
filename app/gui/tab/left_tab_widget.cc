@@ -3,6 +3,8 @@
 //
 
 #include "app/gui/tab/left_tab_widget.h"
+#include "app/gui/widget/track_content_widget.h"
+#include "app/gui/widget/track_setting_widget.h"
 
 namespace app {
     constexpr int kDefaultWidgetWidth = 256;
@@ -32,7 +34,7 @@ namespace app {
                       "}");
 
         addTab(new QWidget, QIcon(":icon/project"), "Project");
-        addTab(new QWidget, QIcon(":icon/track"), "Track");
+        addTab(new TrackSettingWidget(this), QIcon(":icon/track"), "Track");
         addTab(new QWidget, "Others");
     }
 }

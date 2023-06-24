@@ -6,10 +6,11 @@
 #define CHARACTER_TRACK_SETTING_WIDGET_H
 
 #include <QWidget>
+#include <QListView>
 
 namespace app {
 
-    class TrackSettingWidget : public QWidget {
+    class TrackSettingWidget : public QListView {
     Q_OBJECT
     public:
         explicit TrackSettingWidget(QWidget* parent = nullptr);
