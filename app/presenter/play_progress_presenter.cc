@@ -27,4 +27,18 @@ namespace app {
         else
             return 0.0;
     }
+
+    double PlayProgressPresenter::LoopStart() const {
+        if (model_)
+            return model_->loop_start();
+        else
+            return 0.0;
+    }
+
+    double PlayProgressPresenter::LoopEnd() const {
+        if (model_)
+            return model_->loop_end();
+        else
+            return 0.0;
+    }
 }

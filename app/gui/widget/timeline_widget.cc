@@ -25,6 +25,8 @@ namespace app {
     }
 
     void TimelineWidget::paintEvent(QPaintEvent* event) {
+        QWidget::paintEvent(event);
+
         QPainter painter(this);
         int width = rect().width();
         int count = benchmark_.first;
@@ -71,6 +73,17 @@ namespace app {
         int play_progress_index = int(std::round(benchmark_.second + distance * current_interval_));
         painter.drawLine(play_progress_index,
                          rect().y(), play_progress_index, rect().y() + rect().height());
+
+        double loop_start = play_progress_presenter_->LoopStart() - benchmark_.first;
+        int start_index = int(std::round(benchmark_.second + loop_start * current_interval_));
+        double loop_end = play_progress_presenter_->LoopEnd() - benchmark_.first;
+        int end_index = int(std::round(benchmark_.second + loop_end * current_interval_));
+        painter.setBrush(QBrush(QColor(0xEADDFF)));
+        painter.setPen(Qt::NoPen);
+        painter.drawRect(start_index,
+                         rect().y(),
+                         end_index,
+                         rect().y() + kTimelineFixedHeight - kLongScaleHeight);
     }
 
     void TimelineWidget::mousePressEvent(QMouseEvent* event) {

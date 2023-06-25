@@ -13,7 +13,7 @@
 int main(int argc, char* argv[]) {
     QApplication app(argc, argv);
 
-    auto* play_progress_model = new app::PlayProgressModel(0.0);
+    auto* play_progress_model = new app::PlayProgressModel();
     auto* play_progress_presenter =
             new app::PlayProgressPresenter(play_progress_model);
 

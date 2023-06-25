@@ -20,6 +20,10 @@ namespace app {
 
         [[nodiscard]] double PlayProgress() const;
 
+        [[nodiscard]] double LoopStart() const;
+
+        [[nodiscard]] double LoopEnd() const;
+
     private:
         PlayProgressModel* model_;
 
