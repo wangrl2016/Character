@@ -7,8 +7,12 @@
 
 namespace app {
     TrackSettingWidget::TrackSettingWidget(QWidget* parent) :
-            QListView(parent) {;
-        autoFillBackground();
+            QListView(parent) {
+        // setAutoFillBackground(true);
+
+        setStyleSheet("QWidget {"
+                      "    border: none;"
+                      "}");
 
         auto* standard_model = new QStandardItemModel(this);
         standard_model->appendRow(new QStandardItem("Banana"));

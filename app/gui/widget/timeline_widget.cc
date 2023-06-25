@@ -21,7 +21,7 @@ namespace app {
             benchmark_(0.0, 0) {
         setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
         setFixedHeight(kTimelineFixedHeight);
-        setAutoFillBackground(true);
+        // setAutoFillBackground(true);
     }
 
     void TimelineWidget::paintEvent(QPaintEvent* event) {

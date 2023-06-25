@@ -17,9 +17,9 @@ namespace app {
     MainWindow::MainWindow(QWidget* parent) :
             QMainWindow(parent),
             is_playing_(false) {
-        setStyleSheet("QWidget {"
+        setStyleSheet(/* "QWidget {"
                       "    background-color: #FFFBFE;"
-                      "}"
+                      "}" */
                       "QMainWindow QToolBar {"
                       "    spacing: 0px;"
                       "}"

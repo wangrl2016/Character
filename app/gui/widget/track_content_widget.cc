@@ -13,7 +13,7 @@ namespace app {
     TrackContentWidget::TrackContentWidget(QWidget* parent) :
             QWidget(parent),
             track_height_(kDefaultTrackHeight) {
-        setAutoFillBackground(true);
+        // setAutoFillBackground(true);
     }
 
     void TrackContentWidget::paintEvent(QPaintEvent* event) {
