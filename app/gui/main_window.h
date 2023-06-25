@@ -6,6 +6,7 @@
 #define CHARACTER_MAIN_WINDOW_H
 
 #include <QMainWindow>
+#include "app/gui/tab/bottom_tab_widget.h"
 #include "app/gui/tab/left_tab_widget.h"
 #include "app/gui/toolbar/top_tool_bar.h"
 #include "app/gui/widget/timeline_widget.h"
@@ -13,6 +14,7 @@
 #include "app/gui/widget/track_setting_widget.h"
 #include "app/presenter/play_progress_subscriber.h"
 #include "app/presenter/play_progress_presenter.h"
+#include "app/gui/tab/right_tab_widget.h"
 
 namespace app {
     class MainWindow : public QMainWindow,
@@ -44,6 +46,8 @@ namespace app {
         TrackSettingWidget* track_setting_widget_;
 
         LeftTabWidget* left_tab_widget_;
+        BottomTabWidget* bottom_tab_widget_;
+        RightTabWidget* right_tab_widget_;
 
         bool is_playing_;
     };

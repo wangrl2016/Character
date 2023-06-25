@@ -30,13 +30,19 @@ namespace app {
         SetupMenuBar();
         SetupToolBar();
 
-        auto* central_widget = new QWidget(this);
+        auto* widget = new QWidget(this);
+        auto layout = new QVBoxLayout(widget);
+        layout->setContentsMargins(0, 0, 0, 0);
+        layout->setSpacing(0);
+
+        auto* central_widget = new QWidget(widget);
         auto h_layout = new QHBoxLayout(central_widget);
         h_layout->setContentsMargins(0, 0, 0, 0);
         h_layout->setSpacing(0);
 
         // track_setting_widget_ = new TrackSettingWidget(central_widget);
         left_tab_widget_ = new LeftTabWidget(central_widget);
+        right_tab_widget_ = new RightTabWidget(central_widget);
 
         auto* right_widget = new QWidget(central_widget);
         auto v_layout = new QVBoxLayout(right_widget);
@@ -52,8 +58,13 @@ namespace app {
         // h_layout->addWidget(track_setting_widget_);
         h_layout->addWidget(left_tab_widget_);
         h_layout->addWidget(right_widget);
+        h_layout->addWidget(right_tab_widget_);
 
-        setCentralWidget(central_widget);
+        bottom_tab_widget_ = new BottomTabWidget(widget);
+        layout->addWidget(central_widget);
+        layout->addWidget(bottom_tab_widget_);
+
+        setCentralWidget(widget);
 
         SetupAudioGraph();
     }
