@@ -1,16 +1,21 @@
 //
-// Created by wr on 2023/6/25.
+// Created by wangrl2016 on 2023/6/25.
 //
 
 #ifndef CHARACTER_INSTRUMENT_WIDGET_H
 #define CHARACTER_INSTRUMENT_WIDGET_H
 
 #include <QWidget>
+#include "app/gui/widget/instrument/piano_roll.h"
 
 namespace app {
     class InstrumentWidget : public QWidget {
     Q_OBJECT
     public:
+        explicit InstrumentWidget(QWidget* parent = nullptr);
+
+    private:
+        PianoRoll* piano_roll_;
     };
 }
 

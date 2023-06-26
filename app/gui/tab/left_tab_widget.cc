@@ -33,8 +33,8 @@ namespace app {
                       "    background: #D0BCFF;"
                       "}");
 
-        addTab(new QWidget, QIcon(":icon/project"), "Project");
-        addTab(new TrackSettingWidget(this), QIcon(":icon/track"), "Track");
+        addTab(new QWidget, QIcon(":tab/project"), "Project");
+        addTab(new TrackSettingWidget(this), QIcon(":tab/track"), "Track");
         addTab(new QWidget, "Others");
     }
 }

@@ -13,6 +13,7 @@ namespace app {
     public:
         explicit PlayProgressModel() :
                 play_progress_(0.0),
+                loop_(false),
                 loop_start_(0.0),
                 loop_end_(loop_start_ + kDefaultLoopDuration) {}
 
@@ -22,20 +23,23 @@ namespace app {
             play_progress_ = play_progress;
         }
 
+        [[nodiscard]] bool loop() const { return loop_; }
+
+        void set_loop(bool loop) { loop_ = loop; }
+
         [[nodiscard]] double loop_start() const { return loop_start_; }
 
-        void set_loop_start(double loop_start) {
-            loop_start_ = loop_start;
-        }
+        void set_loop_start(double loop_start);
 
         [[nodiscard]] double loop_end() const { return loop_end_; }
 
-        void set_loop_end(double loop_end) {
-            loop_end_ = loop_end;
-        }
+        void set_loop_end(double loop_end);
+
+        void SetLoopRange(double loop_start, double loop_end);
 
     private:
         double play_progress_;
+        bool loop_;
         double loop_start_;
         double loop_end_;
     };

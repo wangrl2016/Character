@@ -7,8 +7,9 @@
 #include "app/gui/main_window.h"
 #include "app/model/play_progress_model.h"
 #include "app/presenter/play_progress_presenter.h"
-#include "ui/view/widget/widget_constant.h"
-#include "ui/view/setting/audio_device_selector.h"
+
+constexpr int kDefaultWindowWidth = 1280;
+constexpr int kDefaultWindowHeight = 720;
 
 int main(int argc, char* argv[]) {
     QApplication app(argc, argv);

@@ -5,6 +5,7 @@
 #ifndef CHARACTER_AUDIO_BRIDGE_H
 #define CHARACTER_AUDIO_BRIDGE_H
 
+#include <future>
 #include <vector>
 
 namespace audio_graph {

@@ -1,8 +1,12 @@
 <RCC>
     <qresource prefix="icon">
-        <file alias="project">icon/description_fill1_wght400_grad0_opsz48.svg</file>
-        <file alias="track">icon/leaderboard_fill1_wght400_grad0_opsz48.svg</file>
         <file alias="minimize">icon/minimize_fill1_wght400_grad0_opsz48.svg</file>
+    </qresource>
+
+    <qresource prefix="tab">
+        <file alias="instrument">tab/piano_fill1_wght400_grad0_opsz48.svg</file>
+        <file alias="project">tab/description_fill1_wght400_grad0_opsz48.svg</file>
+        <file alias="track">tab/leaderboard_fill1_wght400_grad0_opsz48.svg</file>
     </qresource>
 
     <qresource prefix="toolbar">

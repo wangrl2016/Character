@@ -95,6 +95,10 @@ set(VIEW_SOURCES
         app/gui/toolbar/top_tool_bar.h
         app/gui/widget/instrument/instrument_widget.cc
         app/gui/widget/instrument/instrument_widget.h
+        app/gui/widget/instrument/piano.cc
+        app/gui/widget/instrument/piano.h
+        app/gui/widget/instrument/piano_roll.cc
+        app/gui/widget/instrument/piano_roll.h
         app/gui/widget/timeline_widget.cc
         app/gui/widget/timeline_widget.h
         app/gui/widget/track_content_widget.cc
@@ -103,7 +107,16 @@ set(VIEW_SOURCES
         app/gui/widget/track_setting_widget.h
         app/gui/main_window.cc
         app/gui/main_window.h
+        app/model/music/note.cc
+        app/model/music/note.h
+        app/model/play_progress_model.cc
         app/model/play_progress_model.h
+        app/plugin/import_filter.cc
+        app/plugin/import_filter.h
+        app/plugin/midi_import.cc
+        app/plugin/midi_import.h
+        app/plugin/plugin.cc
+        app/plugin/plugin.h
         app/presenter/play_progress_presenter.cc
         app/presenter/play_progress_presenter.h
         app/presenter/play_progress_subscriber.h

@@ -10,6 +10,27 @@ namespace app {
             TabWidget(parent) {
         setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
         setMinimumHeight(kDefaultWidgetHeight);
+        setTabPosition(QTabWidget::South);
+        setStyleSheet("QTabWidget {"
+                      "    border: none;"
+                      "}"
+                      "QTabWidget::tab-bar {"
+                      "    alignment: left;"
+                      "}"
+                      "QTabBar::tab {"
+                      "    background: #EADDFF;"
+                      "    border: none;"
+                      "    padding: 2px;"
+                      "}"
+                      "QTabBar::tab::hover {"
+                      "    background: #F6EDFF;"
+                      "}"
+                      "QTabBar::tab::selected {"
+                      "    background: #D0BCFF;"
+                      "}");
+
+        instrument_widget_ = new InstrumentWidget(this);
+        addTab(instrument_widget_, QIcon(":tab/instrument"), tr("Instrument"));
 
     }
 }

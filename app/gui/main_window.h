@@ -23,7 +23,7 @@ namespace app {
     public:
         explicit MainWindow(QWidget* parent = nullptr);
 
-        ~MainWindow();
+        ~MainWindow() override;
 
         void Subscribe(PlayProgressPresenter* presenter) override;
 
