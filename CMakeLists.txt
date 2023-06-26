@@ -91,6 +91,8 @@ set(VIEW_SOURCES
         app/gui/tab/left_tab_widget.h
         app/gui/tab/tab_widget.cc
         app/gui/tab/tab_widget.h
+        app/gui/toolbar/middle_tool_bar.cc
+        app/gui/toolbar/middle_tool_bar.h
         app/gui/toolbar/top_tool_bar.cc
         app/gui/toolbar/top_tool_bar.h
         app/gui/widget/instrument/instrument_widget.cc
@@ -107,10 +109,18 @@ set(VIEW_SOURCES
         app/gui/widget/track_setting_widget.h
         app/gui/main_window.cc
         app/gui/main_window.h
+        app/model/clip/clip.cc
+        app/model/clip/clip.h
         app/model/music/note.cc
         app/model/music/note.h
+        app/model/track/track.cc
+        app/model/track/track.h
         app/model/play_progress_model.cc
         app/model/play_progress_model.h
+        app/model/project_model.cc
+        app/model/project_model.h
+        app/model/track_container.cc
+        app/model/track_container.h
         app/plugin/import_filter.cc
         app/plugin/import_filter.h
         app/plugin/midi_import.cc

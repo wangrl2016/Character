@@ -7,6 +7,7 @@
 
 #include <QWidget>
 #include "app/gui/widget/instrument/piano_roll.h"
+#include "app/gui/toolbar/middle_tool_bar.h"
 
 namespace app {
     class InstrumentWidget : public QWidget {
@@ -16,6 +17,8 @@ namespace app {
 
     private:
         PianoRoll* piano_roll_;
+
+        MiddleToolBar* middle_tool_bar_;
     };
 }
 

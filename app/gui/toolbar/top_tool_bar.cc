@@ -16,15 +16,11 @@ namespace app {
             QToolBar(parent) {
         setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
         setFixedHeight(kToolBarFixedHeight);
-        // setContentsMargins(0,0,0,0);
         setMovable(false);
-//        setStyleSheet("QToolBar QToolButton:hover {"
-//                      "    background-color: rgba(255, 255, 255, 0.1);"
-//                      "}");
 
         // fast rewind
         fast_rewind_action_ = new QAction(
-                QIcon(tr(":toolbar/fast_rewind")),
+                QIcon(":toolbar/fast_rewind"),
                 tr("Fast Rewind"),
                 this);
         addAction(fast_rewind_action_);
