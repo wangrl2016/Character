@@ -6,7 +6,7 @@
 #define CHARACTER_NOTE_H
 
 #include <QString>
-#include "core/math/constant.h"
+#include "core/math/music_constant.h"
 
 namespace ui {
     class Note {

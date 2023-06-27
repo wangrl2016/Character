@@ -2,8 +2,8 @@
 // Created by wangrl2016 on 2023/6/11.
 //
 
-#ifndef CHARACTER_CONSTANT_H
-#define CHARACTER_CONSTANT_H
+#ifndef CHARACTER_MUSIC_CONSTANT_H
+#define CHARACTER_MUSIC_CONSTANT_H
 
 #define _USE_MATH_DEFINES
 #include <cmath>
@@ -39,14 +39,14 @@ enum Octaves {
     kNumOctaves,
 };
 
-const int kFirstOctave = -1;
-const int kKeysPerOctave = 12;
-const int kDefaultKey = kDefaultOctave * kKeysPerOctave + kKeyA;
+constexpr int kFirstOctave = -1;
+constexpr int kKeysPerOctave = 12;
+constexpr int kDefaultKey = kDefaultOctave * kKeysPerOctave + kKeyA;
 // Number of physical keys, limited to MIDI range (valid for both MIDI 1.0 and 2.0)
-const int kNumKeys = 128;
+constexpr int kNumKeys = 128;
 
-const int kDefaultMiddleKey = kOctave4 * kKeysPerOctave + kKeyC;
-const int kDefaultBaseKey = kOctave4 * kKeysPerOctave + kKeyA;
-const float kDefaultBaseFreq = 440.0f;
+constexpr int kDefaultMiddleKey = kOctave4 * kKeysPerOctave + kKeyC;    // 60
+constexpr int kDefaultBaseKey = kOctave4 * kKeysPerOctave + kKeyA;      // 69
+constexpr float kDefaultBaseFreq = 440.0f;
 
-#endif //CHARACTER_CONSTANT_H
+#endif //CHARACTER_MUSIC_CONSTANT_H

@@ -5,7 +5,7 @@
 #ifndef CHARACTER_UTILITY_FUNCTION_H
 #define CHARACTER_UTILITY_FUNCTION_H
 
-#include "core/math/constant.h"
+#include "core/math/music_constant.h"
 
 namespace core {
     // Converts linear amplitude [0, 1.0] to dBFS [-100, 0] scale.

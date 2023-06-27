@@ -8,6 +8,8 @@
 #include <QWidget>
 #include <QListView>
 
+// https://doc.qt.io/qt-6/model-view-programming.html
+
 namespace app {
 
     class TrackSettingWidget : public QListView {

@@ -7,7 +7,7 @@
 
 #include <array>
 #include "core/midi/midi_event_processor.h"
-#include "core/math/constant.h"
+#include "core/math/music_constant.h"
 
 namespace app {
     class Piano {

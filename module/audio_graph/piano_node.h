@@ -6,7 +6,7 @@
 #define CHARACTER_PIANO_NODE_H
 
 #include <juce_dsp/juce_dsp.h>
-#include "core/math/constant.h"
+#include "core/math/music_constant.h"
 #include "module/audio_graph/processor_base.h"
 
 // https://en.wikipedia.org/wiki/Piano_key_frequencies
