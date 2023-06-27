@@ -15,6 +15,7 @@
 #include "app/presenter/play_progress_subscriber.h"
 #include "app/presenter/play_progress_presenter.h"
 #include "app/gui/tab/right_tab_widget.h"
+#include "app/gui/toolbar/status_bar.h"
 
 namespace app {
     class MainWindow : public QMainWindow,
@@ -34,12 +35,15 @@ namespace app {
 
         void SetupToolBar();
 
+        void SetupStatusBar();
+
         bool SetupAudioGraph();
 
         static void DestroyAudioGraph();
 
     private:
         TopToolBar* top_tool_bar_;
+        StatusBar* status_bar_;
 
         TimelineWidget* timeline_widget_;
         TrackContentWidget* track_content_widget_;

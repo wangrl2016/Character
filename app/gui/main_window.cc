@@ -29,6 +29,7 @@ namespace app {
 
         SetupMenuBar();
         SetupToolBar();
+        SetupStatusBar();
 
         auto* widget = new QWidget(this);
         auto layout = new QVBoxLayout(widget);
@@ -142,7 +143,11 @@ namespace app {
 #endif
         top_tool_bar_ = new TopToolBar(this);
         addToolBar(top_tool_bar_);
+    }
 
+    void MainWindow::SetupStatusBar() {
+        status_bar_ = new StatusBar(this);
+        setStatusBar(status_bar_);
     }
 
     bool MainWindow::SetupAudioGraph() {

@@ -13,9 +13,6 @@ include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup(KEEP_RPATHS)
 
 list(APPEND CMAKE_PREFIX_PATH "/Users/admin/Qt/6.3.1/macos")
-# set(CMAKE_TOOLCHAIN_FILE "cmake-build-debug/build/Debug/generators/conan_toolchain.cmake")
-
-find_package(ZLIB REQUIRED)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
@@ -93,6 +90,8 @@ set(VIEW_SOURCES
         app/gui/tab/tab_widget.h
         app/gui/toolbar/middle_tool_bar.cc
         app/gui/toolbar/middle_tool_bar.h
+        app/gui/toolbar/status_bar.cc
+        app/gui/toolbar/status_bar.h
         app/gui/toolbar/top_tool_bar.cc
         app/gui/toolbar/top_tool_bar.h
         app/gui/widget/instrument/instrument_widget.cc
