@@ -32,6 +32,42 @@ add_library(BaseLibrary
 add_subdirectory(third_party/JUCE)
 add_subdirectory(third_party/portsmf)
 
+add_library(MediaLibrary
+        media/base/audio_bus.cc
+        media/base/audio_bus.h
+        media/base/audio_constant.h
+        media/base/audio_parameters.cc
+        media/base/audio_parameters.h
+        media/filters/ffmpeg_audio_decoder.cc
+        media/filters/ffmpeg_audio_decoder.h
+        media/filters/ffmpeg_audio_encoder.cc
+        media/filters/ffmpeg_audio_encoder.h
+        media/filters/ffmpeg_video_encoder.cc
+        media/filters/ffmpeg_video_encoder.h
+        )
+target_link_libraries(MediaLibrary
+        PRIVATE
+        BaseLibrary
+        ${CONAN_LIBS}
+        )
+
+# Media library unit test
+enable_testing()
+
+add_executable(MediaLibraryTest
+        media/base/audio_bus_test.cc
+        media/filters/ffmpeg_audio_decoder_test.cc
+        )
+target_link_libraries(MediaLibraryTest
+        PRIVATE
+        BaseLibrary
+        MediaLibrary
+        ${CONAN_LIBS}
+        )
+
+include(GoogleTest)
+gtest_discover_tests(MediaLibraryTest)
+
 set(JUCE_LIBRARY
         juce::juce_audio_basics
         juce::juce_audio_devices
