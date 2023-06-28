@@ -15,11 +15,26 @@ namespace audio_graph {
     using AudioGraphIOProcessor = juce::AudioProcessorGraph::AudioGraphIOProcessor;
     using Node = juce::AudioProcessorGraph::Node;
 
-    class AudioContext : public juce::ChangeListener {
+    class AudioContext : public juce::ChangeListener,
+        public juce::MidiInputCallback,
+        public juce::MidiKeyboardState::Listener {
     public:
-        void changeListenerCallback(juce::ChangeBroadcaster* override) {
+        void changeListenerCallback(juce::ChangeBroadcaster* override) override {
             DumpDeviceInfo();
         }
+
+        void handleIncomingMidiMessage (juce::MidiInput* source,
+                                        const juce::MidiMessage& message) override;
+
+        void handleNoteOn(juce::MidiKeyboardState* source,
+                          int midi_channel,
+                          int midi_note_number,
+                          float velocity) override;
+
+        void handleNoteOff(juce::MidiKeyboardState* source,
+                           int midi_channel,
+                           int midi_note_number,
+                           float velocity) override;
 
         static AudioContext* Instance();
 
@@ -74,6 +89,8 @@ namespace audio_graph {
 
         ~AudioContext() = default;
 
+        void SetMidiInput(int index);
+
         juce::String GetCurrentDefaultAudioDeviceName(bool is_input);
 
         // JUCE/examples/DemoRunner/Source/Demos/JUCEDemos.cpp
@@ -105,6 +122,10 @@ namespace audio_graph {
         Node::Ptr oscillator_node_;
 
         int current_device_type_ = 0;
+
+        juce::MidiKeyboardState keyboard_state_;
+        int last_input_index_ = 0;
+        bool is_adding_from_midi_input_ = false;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AudioContext)
     };

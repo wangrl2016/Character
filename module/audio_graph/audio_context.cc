@@ -12,6 +12,27 @@
 #include "module/audio_graph/audio_bridge.h"
 
 namespace audio_graph {
+    void AudioContext::handleIncomingMidiMessage(juce::MidiInput* source,
+                                                 const juce::MidiMessage& message) {
+        const juce::ScopedValueSetter<bool> scoped_input_flag(is_adding_from_midi_input_, true);
+        keyboard_state_.processNextMidiEvent(message);
+        LOG(INFO) << __FUNCTION__;
+    }
+
+    void AudioContext::handleNoteOn(juce::MidiKeyboardState* source,
+                                    int midiChannel,
+                                    int midiNoteNumber,
+                                    float velocity) {
+
+    }
+
+    void AudioContext::handleNoteOff(juce::MidiKeyboardState* source,
+                                     int midiChannel,
+                                     int midiNoteNumber,
+                                     float velocity) {
+
+    }
+
     AudioContext* AudioContext::Instance() {
         // Using pointer for AudioProcessorGraph release.
         // Instantiated on first use.
@@ -30,6 +51,29 @@ namespace audio_graph {
         audio_device_manager_ = std::make_unique<juce::AudioDeviceManager>();
         audio_processor_graph_ = std::make_unique<juce::AudioProcessorGraph>();
         audio_processor_player_ = std::make_unique<juce::AudioProcessorPlayer>();
+
+        auto midi_inputs = juce::MidiInput::getAvailableDevices();
+        juce::StringArray midi_input_names;
+        for (const auto& input : midi_inputs) {
+            midi_input_names.add(input.name);
+            LOG(INFO) << "MIDI " << input.name.toStdString();
+        }
+
+        // find the first enabled device and use that by default
+        bool found = false;
+        for (const auto& input : midi_inputs) {
+            if (audio_device_manager_->isMidiInputDeviceEnabled(input.identifier)) {
+                SetMidiInput(midi_inputs.indexOf(input));
+                found = true;
+                break;
+            }
+        }
+
+        // if no enabled devices were found just use the first one in the list
+        if (!found)
+            SetMidiInput(0);
+
+        keyboard_state_.addListener(this);
 
         return InitAudioDeviceManager(kDefaultInputChannelCount,
                                       kDefaultOutputChannelCount);
@@ -228,6 +272,20 @@ namespace audio_graph {
         if (auto* device = audio_device_manager_->getCurrentAudioDevice()) {
             AudioBridge::OnPlayProgressCallback(play_index / device->getCurrentSampleRate());
         }
+    }
+
+    void AudioContext::SetMidiInput(int index) {
+        auto list = juce::MidiInput::getAvailableDevices();
+        audio_device_manager_->removeMidiInputDeviceCallback(list[last_input_index_].identifier, this);
+
+        auto new_input = list[index];
+
+        if (!audio_device_manager_->isMidiInputDeviceEnabled(new_input.identifier))
+            audio_device_manager_->setMidiInputDeviceEnabled(new_input.identifier, true);
+
+        audio_device_manager_->addMidiInputDeviceCallback(new_input.identifier, this);
+
+        last_input_index_ = index;
     }
 
     juce::String AudioContext::GetCurrentDefaultAudioDeviceName(bool is_input) {
