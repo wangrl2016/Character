@@ -13,3 +13,4 @@ cmake_layout
 
 [options]
 ffmpeg:with_libx265=False
+ffmpeg:with_openh264=False
