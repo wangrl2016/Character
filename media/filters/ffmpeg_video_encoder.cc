@@ -18,6 +18,9 @@ namespace media {
     }
 
     bool FFmpegVideoEncoder::Open(std::string file_path) {
+        int ret;
+        AVDictionary* opt = nullptr;
+
         // allocate the output media context
         avformat_alloc_output_context2(&output_format_context_,
                                        nullptr,
@@ -39,9 +42,42 @@ namespace media {
         // Add the audio and video streams using the default format codecs
         // and initialize the codecs.
         if (fmt->video_codec != AV_CODEC_ID_NONE) {
-            AddStream(&video_stream_, fmt->audio_codec);
+            AddStream(&video_stream_, fmt->video_codec);
+            have_video_ = true;
+            encode_video = false;
+        }
+        if (fmt->audio_codec != AV_CODEC_ID_NONE) {
+            AddStream(&audio_stream_, fmt->audio_codec);
+            have_audio_ = true;
+            encode_audio_ = false;
         }
 
+        if (have_video_) {
+            OpenVideo(opt);
+        }
+        if (have_audio_) {
+            OpenAudio(opt);
+        }
+
+        av_dump_format(output_format_context_, 0, file_path.c_str(), 1);
+
+        // Open the output file, if needed.
+        if (!(fmt->flags & AVFMT_NOFILE)) {
+            ret = avio_open(&output_format_context_->pb, file_path.c_str(), AVIO_FLAG_WRITE);
+            if (ret < 0) {
+                LOG(ERROR) << "Could not open " << file_path << ": " << av_err2str(ret);
+                return false;
+            }
+        }
+
+        // Write the stream header, if any.
+        ret = avformat_write_header(output_format_context_, &opt);
+        if (ret < 0) {
+            LOG(ERROR) << "Error occurred when opening output file: " << av_err2str(ret);
+            return false;
+        }
+
+        return true;
     }
 
     bool FFmpegVideoEncoder::AddStream(OutputStream* stream,
@@ -119,6 +155,158 @@ namespace media {
         // Some formats want stream headers to be separate.
         if (output_format_context_->flags & AVFMT_GLOBALHEADER)
             c->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
+
+        return true;
+    }
+
+    // video output
+    static AVFrame* AllocFrame(enum AVPixelFormat pix_fmt, int width, int height) {
+        AVFrame* frame;
+        int ret;
+
+        frame = av_frame_alloc();
+        if (!frame)
+            return nullptr;
+
+        frame->format = pix_fmt;
+        frame->width = width;
+        frame->height = height;
+
+        // Allocate the buffer for the frame data.
+        ret = av_frame_get_buffer(frame, 0);
+        if (ret < 0) {
+            LOG(ERROR) << "Could not allocate frame data";
+            return nullptr;
+        }
+        return frame;
+    }
+
+    bool FFmpegVideoEncoder::OpenVideo(AVDictionary* opt_arg) {
+        AVCodecContext* c = video_stream_.encoder;
+        AVDictionary* opt = nullptr;
+
+        av_dict_copy(&opt, opt_arg, 0);
+
+        // open the codec
+        int ret = avcodec_open2(c, video_codec_, &opt);
+        av_dict_free(&opt);
+        if (ret < 0) {
+            LOG(ERROR) << "Could not open video codec: " << av_err2str(ret);
+            return false;
+        }
+
+        // Allocate and init a re-usable frame.
+        video_stream_.frame = AllocFrame(c->pix_fmt, c->width, c->height);
+        if (!video_stream_.frame) {
+            LOG(ERROR) << "Could not allocate video frame";
+            return false;
+        }
+
+        // If the output format is not YUV420P, then a temporary YUV420P
+        // picture is needed too. It is then converted to the required
+        // output format.
+        video_stream_.temp_frame = nullptr;
+        if (c->pix_fmt != AV_PIX_FMT_YUV420P) {
+            video_stream_.temp_frame = AllocFrame(AV_PIX_FMT_YUV420P, c->width, c->height);
+            if (!video_stream_.temp_frame) {
+                LOG(ERROR) << "Could not allocate temporary video frame";
+                return false;
+            }
+        }
+
+        // copy the stream parameters to the muxer
+        ret = avcodec_parameters_from_context(video_stream_.stream->codecpar, c);
+        if (ret < 0) {
+            LOG(ERROR) << "Could not copy the stream parameters";
+            return false;
+        }
+        return true;
+    }
+
+    static AVFrame* AllocAudioFrame(enum AVSampleFormat sample_fmt,
+                                    uint64_t channel_layout,
+                                    int sample_rate,
+                                    int nb_samples) {
+        AVFrame* frame = av_frame_alloc();
+        if (!frame) {
+            LOG(ERROR) << "Error allocating an audio frame";
+            return nullptr;
+        }
+
+        frame->format = sample_fmt;
+        frame->channel_layout = channel_layout;
+        frame->sample_rate = sample_rate;
+        frame->nb_samples = nb_samples;
+
+        if (nb_samples) {
+            if (av_frame_get_buffer(frame, 0) < 0) {
+                LOG(ERROR) << "Error allocating an audio buffer";
+                return nullptr;
+            }
+        }
+        return frame;
+    }
+
+    bool FFmpegVideoEncoder::OpenAudio(AVDictionary* opt_arg) {
+        AVCodecContext* c;
+        int nb_samples;
+        int ret;
+        AVDictionary* opt = nullptr;
+
+        c = audio_stream_.encoder;
+
+        // open it
+        av_dict_copy(&opt, opt_arg, 0);
+        ret = avcodec_open2(c, audio_codec_, &opt);
+        av_dict_free(&opt);
+        if (ret < 0) {
+            LOG(ERROR) << "Could not open audio codec: " << av_err2str(ret);
+            return false;
+        }
+
+        // init signal generator
+        audio_stream_.t = 0;
+        audio_stream_.cr = float(2.0 * M_PI * 110.0 / c->sample_rate);
+        // increment frequency by 110 Hz per second
+        audio_stream_.cr2 = float(2.0 * M_PI * 110.0 / c->sample_rate / c->sample_rate);
+
+        if (c->codec->capabilities & AV_CODEC_CAP_VARIABLE_FRAME_SIZE)
+            nb_samples = 10000;
+        else
+            nb_samples = c->frame_size;
+
+        audio_stream_.frame = AllocAudioFrame(c->sample_fmt,
+                                              c->channel_layout,
+                                              c->sample_rate,
+                                              nb_samples);
+        audio_stream_.temp_frame = AllocAudioFrame(AV_SAMPLE_FMT_S16,
+                                                   c->channel_layout,
+                                                   c->sample_rate,
+                                                   nb_samples);
+
+        // copy the stream parameters to the muxer
+        ret = avcodec_parameters_from_context(audio_stream_.stream->codecpar, c);
+        if (ret < 0) {
+            LOG(ERROR) << "Could not copy the stream parameters";
+            return false;
+        }
+
+        // create resampler context
+        audio_stream_.swr_context = swr_alloc_set_opts(nullptr,
+                                                       int64_t(c->channel_layout),
+                                                       c->sample_fmt,
+                                                       c->sample_rate,
+                                                       int64_t(c->channel_layout),
+                                                       AV_SAMPLE_FMT_S16,
+                                                       c->sample_rate,
+                                                       0,
+                                                       nullptr);
+
+        // initialize the resampling context
+        if (swr_init(audio_stream_.swr_context) < 0) {
+            LOG(ERROR) << "Failed to initialize the resampling context";
+            return false;
+        }
 
         return true;
     }

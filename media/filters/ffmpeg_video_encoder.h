@@ -47,6 +47,10 @@ namespace media {
     private:
         bool AddStream(OutputStream* stream, enum AVCodecID codec_id);
 
+        bool OpenVideo(AVDictionary* opt_arg);
+
+        bool OpenAudio(AVDictionary* opt_arg);
+
         AVFormatContext* output_format_context_;
         OutputStream video_stream_, audio_stream_;
         const AVCodec* video_codec_, * audio_codec_;
