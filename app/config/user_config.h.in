@@ -1,0 +1,10 @@
+//
+// Created by wangrl2016 on 2023/6/30.
+//
+
+#ifndef CHARACTER_USER_CONFIG_H_IN_H
+#define CHARACTER_USER_CONFIG_H_IN_H
+
+#define CHARACTER_VERSION "@VERSION@"
+
+#endif //CHARACTER_USER_CONFIG_H_IN_H

@@ -7,6 +7,7 @@
 #include "app/gui/main_window.h"
 #include "app/model/play_progress_model.h"
 #include "app/presenter/play_progress_presenter.h"
+#include "config/user_config.h"
 
 constexpr int kDefaultWindowWidth = 1280;
 constexpr int kDefaultWindowHeight = 720;

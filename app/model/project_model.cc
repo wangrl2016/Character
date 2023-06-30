@@ -5,5 +5,7 @@
 #include "app/model/project_model.h"
 
 namespace app {
+    void ProjectModel::CreateNewProject() {
 
+    }
 }

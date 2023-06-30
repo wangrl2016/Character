@@ -12,12 +12,11 @@ set(CMAKE_AUTORCC ON)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup(KEEP_RPATHS)
 
-list(APPEND CMAKE_PREFIX_PATH "/Users/admin/Qt/6.3.1/macos")
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+configure_file(app/config/user_config.h.in config/user_config.h)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
-
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 add_library(BaseLibrary
         base/files/file_path.cc
@@ -113,6 +112,8 @@ target_link_libraries(AudioGraphModule
         )
 
 set(VIEW_SOURCES
+        app/config/config_manager.cc
+        app/config/config_manager.h
         app/gui/dialog/about_dialog.cc
         app/gui/dialog/about_dialog.h
         app/gui/style/color_constant.h

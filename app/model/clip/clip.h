@@ -5,10 +5,15 @@
 #ifndef CHARACTER_CLIP_H
 #define CHARACTER_CLIP_H
 
+#include <QObject>
 
-class clip {
+namespace app {
+    class Clip : QObject {
+    Q_OBJECT
+    public:
 
-};
+    };
+}
 
 
 #endif //CHARACTER_CLIP_H

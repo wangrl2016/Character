@@ -10,6 +10,9 @@
 namespace app {
     class ProjectModel : public TrackContainer {
 
+
+    public:
+        void CreateNewProject();
     };
 }
 
