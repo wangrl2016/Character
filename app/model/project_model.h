@@ -9,10 +9,18 @@
 
 namespace app {
     class ProjectModel : public TrackContainer {
-
-
+    Q_OBJECT
     public:
+        ProjectModel();
+
         void CreateNewProject();
+
+    public slots:
+        void ClearProject();
+
+    private:
+        bool loading_project_;
+
     };
 }
 

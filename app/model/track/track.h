@@ -9,6 +9,7 @@
 
 namespace app {
     class Clip;
+    class TrackContainer;
 
     class Track : public QObject {
     Q_OBJECT
@@ -21,10 +22,22 @@ namespace app {
             kTrackCount,
         };
 
+        Track(TrackType type, TrackContainer* tc);
+
+        static Track* Create(TrackType type, TrackContainer* tc);
+
+        [[nodiscard]] TrackType type() const { return type_; }
+
+        [[nodiscard]] bool solo() const { return solo_; }
+
+        void set_solo(bool solo) { solo_ = solo; }
+
     private:
+        TrackType type_;
+        TrackContainer* track_container_;
         QVector<Clip*> clip_vec_;
 
-
+        bool solo_;
     };
 }
 

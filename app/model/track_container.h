@@ -7,11 +7,33 @@
 
 #include <memory>
 #include <QVector>
+#include <QObject>
+#include <QReadWriteLock>
 #include "app/model/track/track.h"
 
 namespace app {
-    class TrackContainer {
+    class Track;
 
+    class TrackContainer : public QObject {
+    Q_OBJECT
+    public:
+        TrackContainer();
+
+        void AddTrack(Track* track);
+
+        void RemoveTrack(Track* track);
+
+        bool Empty() const;
+
+        int TrackSize(Track::TrackType type = Track::kTrackCount) const;
+
+        void ClearAllTracks();
+
+    protected:
+        mutable QReadWriteLock track_mutex_;
+
+    private:
+        QVector<Track*> track_vec_;
     };
 }
 

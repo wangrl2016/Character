@@ -153,6 +153,8 @@ set(VIEW_SOURCES
         app/model/clip/clip.h
         app/model/music/note.cc
         app/model/music/note.h
+        app/model/track/instrument_track.cc
+        app/model/track/instrument_track.h
         app/model/track/track.cc
         app/model/track/track.h
         app/model/play_progress_model.cc
