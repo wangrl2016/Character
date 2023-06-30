@@ -16,7 +16,7 @@ namespace audio_graph {
     public:
         PianoNode();
 
-        ~PianoNode();
+        ~PianoNode() override;
 
         void prepareToPlay(double sample_rate,
                            int samples_per_block) override;

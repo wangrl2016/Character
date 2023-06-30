@@ -17,11 +17,19 @@ namespace app {
             return instance_;
         }
 
+        static QString DefaultVersion() ;
+
+        void InitInstalledWorkingDir();
+
+        // Creates the working directory & subdirectories on disk.
+        void CreateWorkingDir();
+
     private:
         ConfigManager();
 
         static ConfigManager* instance_;
         QString version_;
+        QString working_dir_;
     };
 
 }

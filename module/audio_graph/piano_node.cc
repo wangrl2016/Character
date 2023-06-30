@@ -2,7 +2,6 @@
 // Created by wangrl2016 on 2023/6/17.
 //
 
-#include <glog/logging.h>
 #include "core/util/utility_function.h"
 #include "module/audio_graph/piano_node.h"
 
@@ -19,7 +18,7 @@ namespace audio_graph {
     PianoNode::~PianoNode() = default;
 
     void PianoNode::prepareToPlay(double sample_rate, int samples_per_block) {
-        juce::dsp::ProcessSpec spec {
+        juce::dsp::ProcessSpec spec{
                 sample_rate,
                 static_cast<juce::uint32>(samples_per_block)};
 
@@ -35,7 +34,6 @@ namespace audio_graph {
     void PianoNode::processBlock(juce::AudioSampleBuffer& buffer, juce::MidiBuffer&) {
         juce::AudioSampleBuffer temp_buffer(buffer.getNumChannels(),
                                             buffer.getNumSamples());
-
         for (int i = 0; i < kNumKeys; i++) {
             if (adsr_[i].isActive()) {
                 temp_buffer.clear();
@@ -56,8 +54,8 @@ namespace audio_graph {
     }
 
     void PianoNode::reset() {
-        for (int i = 0; i < kNumKeys; i++) {
-            oscillator_[i].reset();
+        for (auto& osc: oscillator_) {
+            osc.reset();
         }
     }
 
@@ -65,11 +63,10 @@ namespace audio_graph {
         if (0 <= pitch && pitch < kNumKeys) {
             adsr_[pitch].noteOn();
         }
-
     }
 
     void PianoNode::TapUp(int pitch) {
-        if(0 <= pitch && pitch < kNumKeys) {
+        if (0 <= pitch && pitch < kNumKeys) {
             adsr_[pitch].noteOff();
         }
     }
