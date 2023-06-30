@@ -32,5 +32,7 @@ namespace app {
         instrument_widget_ = new InstrumentWidget(this);
         addTab(instrument_widget_, QIcon(":tab/instrument"), tr("Instrument"));
 
+        track_detail_widget_ = new TrackDetailWidget(this);
+        addTab(track_detail_widget_, QIcon(":tab/track_detail"), tr("Detail"));
     }
 }

@@ -142,6 +142,8 @@ set(VIEW_SOURCES
         app/gui/widget/track_content_widget.h
         app/gui/widget/track_delegate.cc
         app/gui/widget/track_delegate.h
+        app/gui/widget/track_detail_widget.cc
+        app/gui/widget/track_detail_widget.h
         app/gui/widget/track_setting_widget.cc
         app/gui/widget/track_setting_widget.h
         app/gui/main_window.cc

@@ -7,6 +7,7 @@
 
 #include "app/gui/tab/tab_widget.h"
 #include "app/gui/widget/instrument/instrument_widget.h"
+#include "app/gui/widget/track_detail_widget.h"
 
 namespace app {
     class BottomTabWidget : public TabWidget {
@@ -16,6 +17,7 @@ namespace app {
 
     private:
         InstrumentWidget* instrument_widget_;
+        TrackDetailWidget* track_detail_widget_;
     };
 }
 

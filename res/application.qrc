@@ -5,6 +5,7 @@
     </qresource>
 
     <qresource prefix="tab">
+        <file alias="track_detail">tab/art_track_fill1_wght400_grad0_opsz48.svg</file>
         <file alias="instrument">tab/piano_fill1_wght400_grad0_opsz48.svg</file>
         <file alias="project">tab/description_fill1_wght400_grad0_opsz48.svg</file>
         <file alias="track">tab/leaderboard_fill1_wght400_grad0_opsz48.svg</file>
