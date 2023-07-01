@@ -6,8 +6,8 @@
 #include <QApplication>
 #include "app/gui/main_window.h"
 #include "app/model/play_progress_model.h"
+#include "app/model/project_model.h"
 #include "app/presenter/play_progress_presenter.h"
-#include "config/user_config.h"
 
 constexpr int kDefaultWindowWidth = 1280;
 constexpr int kDefaultWindowHeight = 720;
@@ -18,6 +18,8 @@ int main(int argc, char* argv[]) {
     auto* play_progress_model = new app::PlayProgressModel();
     auto* play_progress_presenter =
             new app::PlayProgressPresenter(play_progress_model);
+
+    auto* project_model = new app::ProjectModel();
 
 
     app::MainWindow window;

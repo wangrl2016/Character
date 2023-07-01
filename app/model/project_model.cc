@@ -8,9 +8,12 @@ namespace app {
     ProjectModel::ProjectModel() :
             TrackContainer(),
             loading_project_(false) {
-
+        play_progress_model_ = new PlayProgressModel();
     }
 
+    ProjectModel::~ProjectModel() {
+        delete play_progress_model_;
+    }
 
     void ProjectModel::CreateNewProject() {
         loading_project_ = true;
