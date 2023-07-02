@@ -5,5 +5,11 @@
 #include "app/model/clip/clip.h"
 
 namespace app {
+    Clip::Clip() {
 
+    }
+
+    Clip::~Clip() {
+
+    }
 }

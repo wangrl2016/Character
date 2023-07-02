@@ -14,7 +14,7 @@ namespace app {
     public:
         ProjectModel();
 
-        ~ProjectModel();
+        ~ProjectModel() override;
 
         void CreateNewProject();
 

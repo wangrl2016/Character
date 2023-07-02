@@ -8,7 +8,6 @@
 namespace app {
     TrackSettingWidget::TrackSettingWidget(QWidget* parent) :
             QListView(parent) {
-        // setAutoFillBackground(true);
 
         setStyleSheet("QWidget {"
                       "    border: none;"

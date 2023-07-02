@@ -10,6 +10,10 @@ namespace app {
             model_(model) {
     }
 
+    PlayProgressPresenter::~PlayProgressPresenter() {
+
+    }
+
     void PlayProgressPresenter::AddView(PlayProgressView* view) {
         view_list_.append(view);
     }

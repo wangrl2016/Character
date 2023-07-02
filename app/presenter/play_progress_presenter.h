@@ -14,6 +14,8 @@ namespace app {
     public:
         explicit PlayProgressPresenter(PlayProgressModel* model);
 
+        virtual ~PlayProgressPresenter();
+
         void AddView(PlayProgressView* view);
 
         void NotifyPlayProgress(double sec) override;

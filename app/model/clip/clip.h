@@ -11,7 +11,9 @@ namespace app {
     class Clip : QObject {
     Q_OBJECT
     public:
+        Clip();
 
+        ~Clip();
     };
 }
 

@@ -174,6 +174,8 @@ set(VIEW_SOURCES
         app/presenter/play_progress_subscriber.h
         app/presenter/play_progress_view.cc
         app/presenter/play_progress_view.h
+        app/presenter/project_presenter.cc
+        app/presenter/project_presenter.h
         core/math/music_constant.h
         core/midi/midi.h
         core/midi/midi_event.h
