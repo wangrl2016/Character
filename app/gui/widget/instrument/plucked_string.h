@@ -14,6 +14,8 @@ namespace app {
         PluckedString(QWidget* widget);
 
         ~PluckedString();
+
+        void paintEvent(QPaintEvent *event) override;
     };
 }
 

@@ -139,6 +139,10 @@ set(VIEW_SOURCES
         app/gui/widget/instrument/piano_roll.h
         app/gui/widget/instrument/plucked_string.cc
         app/gui/widget/instrument/plucked_string.h
+        app/gui/widget/instrument/string.cc
+        app/gui/widget/instrument/string.h
+        app/gui/widget/instrument/string_synthesiser.cc
+        app/gui/widget/instrument/string_synthesiser.h
         app/gui/widget/timeline_widget.cc
         app/gui/widget/timeline_widget.h
         app/gui/widget/track_content_widget.cc

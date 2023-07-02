@@ -2,6 +2,7 @@
 // Created by wr on 2023/7/2.
 //
 
+#include <Qpainter>
 #include "app/gui/widget/instrument/plucked_string.h"
 
 namespace app {
@@ -11,6 +12,12 @@ namespace app {
     }
 
     PluckedString::~PluckedString() {
+
+    }
+
+    void PluckedString::paintEvent(QPaintEvent* event) {
+        QPainter painter(this);
+
 
     }
 }
