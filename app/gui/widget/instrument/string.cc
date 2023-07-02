@@ -3,3 +3,9 @@
 //
 
 #include "app/gui/widget/instrument/string.h"
+
+namespace app {
+    String::String(int length) : length_(length) {
+
+    }
+}

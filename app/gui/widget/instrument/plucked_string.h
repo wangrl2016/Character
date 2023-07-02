@@ -6,6 +6,8 @@
 #define CHARACTER_PLUCKED_STRING_H
 
 #include <QWidget>
+#include "app/gui/widget/instrument/string.h"
+#include "string_synthesiser.h"
 
 namespace app {
     class PluckedString : public QWidget {
@@ -16,6 +18,10 @@ namespace app {
         ~PluckedString();
 
         void paintEvent(QPaintEvent *event) override;
+
+    private:
+        QVector<String> string_lines_;
+        QVector<StringSynthesiser> string_synths_;
     };
 }
 
