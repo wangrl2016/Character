@@ -2,8 +2,8 @@
 // Created by wr on 2023/6/26.
 //
 
-#ifndef CHARACTER_TRACK_CONTAINER_H
-#define CHARACTER_TRACK_CONTAINER_H
+#ifndef CHARACTER_TRACK_CONTAINER_MODEL_H
+#define CHARACTER_TRACK_CONTAINER_MODEL_H
 
 #include <memory>
 #include <QVector>
@@ -14,10 +14,10 @@
 namespace app {
     class Track;
 
-    class TrackContainer : public QObject {
+    class TrackContainerModel : public QObject {
     Q_OBJECT
     public:
-        TrackContainer();
+        TrackContainerModel();
 
         void AddTrack(Track* track);
 
@@ -37,4 +37,4 @@ namespace app {
     };
 }
 
-#endif //CHARACTER_TRACK_CONTAINER_H
+#endif //CHARACTER_TRACK_CONTAINER_MODEL_H

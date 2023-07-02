@@ -5,7 +5,7 @@
 #include "app/model/track/instrument_track.h"
 
 namespace app {
-    InstrumentTrack::InstrumentTrack(TrackContainer* tc) :
+    InstrumentTrack::InstrumentTrack(TrackContainerModel* tc) :
             Track(Track::kInstrumentTrack, tc) {
 
     }

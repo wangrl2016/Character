@@ -2,8 +2,9 @@
 // Created by wangrl2016 on 2023/6/26.
 //
 
+#include <glog/logging.h>
 #include "app/model/track/track.h"
-#include "app/model/track_container.h"
+#include "app/model/track_container_model.h"
 #include "app/model/track/instrument_track.h"
 
 namespace app {
@@ -12,14 +13,14 @@ namespace app {
     //
     // @param type The type of track
     // @param tc The track container object to encapsulate in this track
-    Track::Track(TrackType type, TrackContainer* tc) :
+    Track::Track(TrackType type, TrackContainerModel* tc) :
             type_(type),
             track_container_(tc),
             clip_vec_() {
         track_container_->AddTrack(this);
     }
 
-    Track* Track::Create(TrackType type, TrackContainer* tc) {
+    Track* Track::Create(TrackType type, TrackContainerModel* tc) {
         Track* t = nullptr;
 
         switch (type) {

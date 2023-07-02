@@ -161,8 +161,8 @@ set(VIEW_SOURCES
         app/model/play_progress_model.h
         app/model/project_model.cc
         app/model/project_model.h
-        app/model/track_container.cc
-        app/model/track_container.h
+        app/model/track_container_model.cc
+        app/model/track_container_model.h
         app/plugin/import_filter.cc
         app/plugin/import_filter.h
         app/plugin/midi_import.cc
@@ -176,6 +176,11 @@ set(VIEW_SOURCES
         app/presenter/play_progress_view.h
         app/presenter/project_presenter.cc
         app/presenter/project_presenter.h
+        app/presenter/track_container_presenter.cc
+        app/presenter/track_container_presenter.h
+        app/presenter/track_container_subscriber.h
+        app/presenter/track_container_view.cc
+        app/presenter/track_container_view.h
         core/math/music_constant.h
         core/midi/midi.h
         core/midi/midi_event.h

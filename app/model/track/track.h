@@ -6,10 +6,11 @@
 #define CHARACTER_TRACK_H
 
 #include <QObject>
+#include <utility>
 
 namespace app {
     class Clip;
-    class TrackContainer;
+    class TrackContainerModel;
 
     class Track : public QObject {
     Q_OBJECT
@@ -22,9 +23,9 @@ namespace app {
             kTrackCount,
         };
 
-        Track(TrackType type, TrackContainer* tc);
+        Track(TrackType type, TrackContainerModel* tc);
 
-        static Track* Create(TrackType type, TrackContainer* tc);
+        static Track* Create(TrackType type, TrackContainerModel* tc);
 
         [[nodiscard]] TrackType type() const { return type_; }
 
@@ -32,12 +33,17 @@ namespace app {
 
         void set_solo(bool solo) { solo_ = solo; }
 
+        [[nodiscard]] QString name() const { return name_; }
+
+        void set_name(const QString& name) { name_ = name;}
+
     private:
         TrackType type_;
-        TrackContainer* track_container_;
+        TrackContainerModel* track_container_;
         QVector<Clip*> clip_vec_;
 
         bool solo_;
+        QString name_;
     };
 }
 

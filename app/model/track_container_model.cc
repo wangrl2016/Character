@@ -2,22 +2,22 @@
 // Created by wangrl2016 on 2023/6/26.
 //
 
-#include "app/model/track_container.h"
+#include "app/model/track_container_model.h"
 
 namespace app {
-    TrackContainer::TrackContainer() :
+    TrackContainerModel::TrackContainerModel() :
             track_mutex_(),
             track_vec_() {
 
     }
 
-    void TrackContainer::AddTrack(Track* track) {
+    void TrackContainerModel::AddTrack(Track* track) {
         track_mutex_.lockForWrite();
         track_vec_.push_back(track);
         track_mutex_.unlock();
     }
 
-    void TrackContainer::RemoveTrack(Track* track) {
+    void TrackContainerModel::RemoveTrack(Track* track) {
         QWriteLocker lock(&track_mutex_);
         auto index = track_vec_.indexOf(track);
         if (index != -1) {
@@ -31,11 +31,11 @@ namespace app {
         }
     }
 
-    bool TrackContainer::Empty() const {
+    bool TrackContainerModel::Empty() const {
 
     }
 
-    int TrackContainer::TrackSize(Track::TrackType type) const {
+    int TrackContainerModel::TrackSize(Track::TrackType type) const {
         int cnt = 0;
         track_mutex_.lockForRead();
         for (const auto& track: track_vec_) {
@@ -47,7 +47,7 @@ namespace app {
         return cnt;
     }
 
-    void TrackContainer::ClearAllTracks() {
+    void TrackContainerModel::ClearAllTracks() {
         while (!track_vec_.isEmpty()) {
             delete track_vec_.first();
         }

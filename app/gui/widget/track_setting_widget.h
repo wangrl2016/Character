@@ -7,12 +7,14 @@
 
 #include <QWidget>
 #include <QListView>
+#include "app/presenter/track_container_view.h"
 
 // https://doc.qt.io/qt-6/model-view-programming.html
 
 namespace app {
 
-    class TrackSettingWidget : public QListView {
+    class TrackSettingWidget : public QListView,
+            public TrackContainerView {
     Q_OBJECT
     public:
         explicit TrackSettingWidget(QWidget* parent = nullptr);

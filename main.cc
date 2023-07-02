@@ -3,11 +3,10 @@
 //
 
 #include <memory>
+#include <glog/logging.h>
 #include <QApplication>
 #include "app/gui/main_window.h"
-#include "app/model/play_progress_model.h"
 #include "app/model/project_model.h"
-#include "app/presenter/play_progress_presenter.h"
 #include "app/presenter/project_presenter.h"
 
 constexpr int kDefaultWindowWidth = 1280;
@@ -17,6 +16,7 @@ int main(int argc, char* argv[]) {
     QApplication app(argc, argv);
 
     auto* project_model = new app::ProjectModel();
+    project_model->CreateNewProject();
     auto* project_presenter = new app::ProjectPresenter(project_model);
 
     app::MainWindow window;

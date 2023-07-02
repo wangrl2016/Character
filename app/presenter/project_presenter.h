@@ -6,8 +6,9 @@
 #define CHARACTER_PROJECT_PRESENTER_H
 
 #include <QObject>
-#include "app/presenter/play_progress_presenter.h"
 #include "app/model/project_model.h"
+#include "app/presenter/play_progress_presenter.h"
+#include "app/presenter/track_container_presenter.h"
 
 namespace app {
     class ProjectPresenter : QObject {
@@ -19,8 +20,10 @@ namespace app {
 
         PlayProgressPresenter* play_progress_presenter() { return play_progress_presenter_; }
 
+        TrackContainerPresenter* track_container_presenter() { return track_container_presenter_; }
     private:
         PlayProgressPresenter* play_progress_presenter_;
+        TrackContainerPresenter* track_container_presenter_;
     };
 }
 

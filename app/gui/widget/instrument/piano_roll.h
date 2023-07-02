@@ -15,7 +15,7 @@ namespace app {
     public:
         PianoRoll(QWidget* parent = nullptr);
 
-        ~PianoRoll();
+        ~PianoRoll() override;
 
     public:
         void keyPressEvent(QKeyEvent* key) override;

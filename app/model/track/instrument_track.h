@@ -11,7 +11,7 @@ namespace app {
     class InstrumentTrack : public Track {
     Q_OBJECT
     public:
-        InstrumentTrack(TrackContainer* tc);
+        InstrumentTrack(TrackContainerModel* tc);
 
         ~InstrumentTrack();
     };

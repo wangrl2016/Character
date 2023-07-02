@@ -6,13 +6,15 @@
 
 namespace app {
     ProjectModel::ProjectModel() :
-            TrackContainer(),
+            TrackContainerModel(),
             loading_project_(false) {
         play_progress_model_ = new PlayProgressModel();
+        track_container_model_ = new TrackContainerModel();
     }
 
     ProjectModel::~ProjectModel() {
         delete play_progress_model_;
+        delete track_container_model_;
     }
 
     void ProjectModel::CreateNewProject() {
@@ -23,7 +25,7 @@ namespace app {
         // Create a track based on the given track type and container.
         //
         // @param tt
-        Track::Create(Track::kInstrumentTrack, this);
+        Track::Create(Track::kInstrumentTrack, track_container_model_);
 
         loading_project_ = false;
     }
