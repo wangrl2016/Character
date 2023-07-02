@@ -6,14 +6,17 @@
 #define CHARACTER_MIDDLE_TOOL_BAR_H
 
 #include <QToolBar>
+#include <QComboBox>
 
 namespace app {
     class MiddleToolBar : public QToolBar {
     Q_OBJECT
     public:
-        MiddleToolBar(QWidget* parent = nullptr);
+        explicit MiddleToolBar(QWidget* parent = nullptr);
 
     private:
+        QComboBox* instrument_combo_box_;
+
         QAction* minimize_action_;
         QAction* setting_action_;
     };

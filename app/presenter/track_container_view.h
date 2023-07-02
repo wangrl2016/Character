@@ -10,7 +10,7 @@
 namespace app {
     class TrackContainerView {
     public:
-        
+
     protected:
         TrackContainerPresenter* track_container_presenter_ = nullptr;
     };
