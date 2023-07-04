@@ -2,7 +2,6 @@
 // Created by wangrl2016 on 2023/6/10.
 //
 
-#include <array>
 #include "app/gui/widget/instrument/piano.h"
 #include "module/audio_graph/audio_bridge.h"
 
@@ -22,7 +21,7 @@ namespace app {
 
     void Piano::SetKeyState(int key, bool state) {
         if (IsValidKey(key)) {
-            pressed_keys_[key] = state;
+            pressed_keys_[uint64_t(key)] = state;
             if (state) {
                 audio_graph::AudioBridge::TapDown(key);
             } else {

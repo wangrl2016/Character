@@ -6,5 +6,7 @@
 
 namespace app {
     AboutDialog::AboutDialog(QWidget* parent) :
-            QDialog(parent) {}
+            QDialog(parent) {
+        setWindowFlag(Qt::WindowStaysOnTopHint, true);
+    }
 }
