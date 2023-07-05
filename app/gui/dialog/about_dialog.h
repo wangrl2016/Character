@@ -6,12 +6,16 @@
 #define CHARACTER_ABOUT_DIALOG_H
 
 #include <QDialog>
+#include <QLabel>
 
 namespace app {
     class AboutDialog : public QDialog {
     Q_OBJECT
     public:
         AboutDialog(QWidget* parent = nullptr);
+
+    private:
+        QLabel* version_label_;
     };
 }
 
