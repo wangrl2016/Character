@@ -19,6 +19,8 @@ namespace app {
 
         static QString DefaultVersion() ;
 
+        static QString ProjectName();
+
         void InitInstalledWorkingDir();
 
         // Creates the working directory & subdirectories on disk.

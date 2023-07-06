@@ -15,9 +15,13 @@ namespace app {
     }
 
     QString ConfigManager::DefaultVersion() {
-        return QString::number(CHARACTER_VERSION_MAJOR) + "." +
-               QString::number(CHARACTER_VERSION_MINOR) + "." +
-               QString::number(CHARACTER_VERSION_PATCH);
+        return QString::number(PROJECT_VERSION_MAJOR) + "." +
+               QString::number(PROJECT_VERSION_MINOR) + "." +
+               QString::number(PROJECT_VERSION_PATCH);
+    }
+
+    QString ConfigManager::ProjectName() {
+        return "";
     }
 
     void ConfigManager::InitInstalledWorkingDir() {

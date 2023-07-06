@@ -3,3 +3,7 @@
 //
 
 #include "app/gui/widget/instrument/string_synthesiser.h"
+
+namespace app {
+
+}

@@ -16,15 +16,13 @@ namespace app {
         setMovable(false);
         setStyleSheet("QToolBar {"
                       "    border: none;"
-//                      "    margin-top: 3px;"
-//                      "    margin-bottom: 3px;"
                       "}");
 
         instrument_combo_box_ = new QComboBox(this);
-        instrument_combo_box_->addItem(tr("Piano Roll"));
-        instrument_combo_box_->addItem(tr("Plucked String"));
+        instrument_combo_box_->addItem(tr("Piano"));
+        instrument_combo_box_->addItem(tr("String"));
+        instrument_combo_box_->addItem(tr("Drum"));
         addWidget(instrument_combo_box_);
-
 
         setting_action_ = new QAction(QIcon(":icon/setting"),
                                       tr("Setting"),
@@ -36,5 +34,4 @@ namespace app {
                 parent,
                 SLOT(CurrentInstrumentUpdate(int)));
     }
-
 }

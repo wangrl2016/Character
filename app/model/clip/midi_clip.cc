@@ -14,9 +14,12 @@ namespace app {
     }
 
     MidiClip::MidiClip(const MidiClip& other) :
-            Clip(other.instrument_track_){
+            Clip(other.instrument_track_) {
 
     }
 
+    MidiClip::~MidiClip() {
+
+    }
 
 }
