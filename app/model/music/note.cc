@@ -6,7 +6,7 @@
 #include <utility>
 #include "app/model/music/note.h"
 
-namespace ui {
+namespace app {
     Note::Note(int pos, int length,
                int key, float volume,
                float panning, QString pronouncing,

@@ -8,7 +8,7 @@
 #include <QString>
 #include "core/math/music_constant.h"
 
-namespace ui {
+namespace app {
     class Note {
     public:
         Note(int pos, int length, int key,

@@ -158,12 +158,16 @@ set(VIEW_SOURCES
         app/gui/main_window.h
         app/model/clip/clip.cc
         app/model/clip/clip.h
+        app/model/clip/midi_clip.cc
+        app/model/clip/midi_clip.h
         app/model/music/note.cc
         app/model/music/note.h
         app/model/track/instrument_track.cc
         app/model/track/instrument_track.h
         app/model/track/track.cc
         app/model/track/track.h
+        app/model/current_state_model.cc
+        app/model/current_state_model.h
         app/model/play_progress_model.cc
         app/model/play_progress_model.h
         app/model/project_model.cc
@@ -176,6 +180,8 @@ set(VIEW_SOURCES
         app/plugin/midi_import.h
         app/plugin/plugin.cc
         app/plugin/plugin.h
+        app/presenter/current_state_presenter.cc
+        app/presenter/current_state_presenter.h
         app/presenter/play_progress_presenter.cc
         app/presenter/play_progress_presenter.h
         app/presenter/play_progress_subscriber.h

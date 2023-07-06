@@ -3,9 +3,10 @@
 //
 
 #include "app/model/clip/clip.h"
+#include "app/model/track/track.h"
 
 namespace app {
-    Clip::Clip() {
+    Clip::Clip(Track* track) {
 
     }
 
