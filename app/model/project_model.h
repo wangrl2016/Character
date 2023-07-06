@@ -31,7 +31,6 @@ namespace app {
 
         PlayProgressModel* play_progress_model_;
         TrackContainerModel* track_container_model_;
-
     };
 }
 

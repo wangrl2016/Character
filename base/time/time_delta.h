@@ -21,6 +21,9 @@ namespace base {
     static constexpr int64_t kMicrosecondsPerMillisecond = 1000;
     static constexpr int64_t kMicrosecondsPerSecond =
             kMicrosecondsPerMillisecond * kMillisecondsPerSecond;
+    static constexpr int64_t kMicrosecondsPerMinute =
+            kMicrosecondsPerSecond * kSecondsPerMinute;
+
 
     class TimeDelta {
     public:
@@ -38,17 +41,17 @@ namespace base {
 
         [[nodiscard]] constexpr bool is_inf() const { return is_min() || is_max(); }
 
-        constexpr int InMinutes() const;
+        [[nodiscard]] constexpr int InMinutes() const;
 
-        constexpr double InSecondsF() const;
+        [[nodiscard]] constexpr double InSecondsF() const;
 
-        constexpr int64_t InSeconds() const;
+        [[nodiscard]] constexpr int64_t InSeconds() const;
 
-        double InMillisecondsF() const;
+        [[nodiscard]] double InMillisecondsF() const;
 
-        int64_t InMilliseconds() const;
+        [[nodiscard]] int64_t InMilliseconds() const;
 
-        int64_t InMillisecondsRoundedUp() const;
+        [[nodiscard]] int64_t InMillisecondsRoundedUp() const;
 
         constexpr bool operator==(TimeDelta other) const {
             return delta_ == other.delta_;
@@ -66,11 +69,19 @@ namespace base {
         return TimeDelta(std::numeric_limits<int64_t>::min());
     }
 
+    constexpr int TimeDelta::InMinutes() const {
+        return int(delta_ / kMicrosecondsPerMinute);
+    }
+
     constexpr double TimeDelta::InSecondsF() const {
         if (!is_inf())
             return static_cast<double>(delta_) / kMicrosecondsPerSecond;
         return (delta_ < 0) ? -std::numeric_limits<double>::infinity()
                             : std::numeric_limits<double>::infinity();
+    }
+
+    constexpr int64_t TimeDelta::InSeconds() const {
+        return is_inf() ? delta_ : (delta_ / kMicrosecondsPerSecond);
     }
 
     template<typename T>
