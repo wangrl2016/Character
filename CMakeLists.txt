@@ -18,55 +18,29 @@ configure_file(app/config/user_config.h.in config/user_config.h)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
-add_library(BaseLibrary
-        base/files/file_path.cc
-        base/memory/aligned_memory.cc
-        base/time/time_delta.cc
-        base/config/build_config.h
-        base/files/file_path.h
-        base/memory/aligned_memory.h
-        base/time/time_delta.h
-        )
+add_subdirectory(app)
+add_subdirectory(base)
+add_subdirectory(core)
+add_subdirectory(media)
+add_subdirectory(module)
 
 add_subdirectory(third_party/JUCE)
 add_subdirectory(third_party/portsmf)
 
-add_library(MediaLibrary
-        media/base/audio_bus.cc
-        media/base/audio_bus.h
-        media/base/audio_constant.h
-        media/base/audio_parameters.cc
-        media/base/audio_parameters.h
-        media/filters/ffmpeg_audio_decoder.cc
-        media/filters/ffmpeg_audio_decoder.h
-        media/filters/ffmpeg_audio_encoder.cc
-        media/filters/ffmpeg_audio_encoder.h
-        media/filters/ffmpeg_video_encoder.cc
-        media/filters/ffmpeg_video_encoder.h
-        )
-target_link_libraries(MediaLibrary
-        PRIVATE
-        BaseLibrary
-        ${CONAN_LIBS}
-        )
+add_library(BaseLibrary ${BASE_LIBRARY_SOURCES})
+
+add_library(MediaLibrary ${MEDIA_LIBRARY_SOURCES})
+target_link_libraries(MediaLibrary PRIVATE BaseLibrary ${CONAN_LIBS})
 
 # Media library unit test
 enable_testing()
 
-add_executable(MediaLibraryTest
-        media/base/audio_bus_test.cc
-        media/filters/ffmpeg_audio_decoder_test.cc
-        media/filters/ffmpeg_video_encoder_test.cc
-        )
-target_link_libraries(MediaLibraryTest
-        PRIVATE
-        BaseLibrary
-        MediaLibrary
-        ${CONAN_LIBS}
-        )
+add_executable(MediaLibraryTest ${MEDIA_LIBRARY_TEST_SOURCES})
+target_link_libraries(MediaLibraryTest PRIVATE BaseLibrary MediaLibrary ${CONAN_LIBS})
 
 include(GoogleTest)
 gtest_discover_tests(MediaLibraryTest)
+# Media library test end
 
 set(JUCE_LIBRARY
         juce::juce_audio_basics
@@ -81,131 +55,15 @@ set(JUCE_LIBRARY
         juce::juce_recommended_warning_flags
         )
 
-add_library(AudioGraphModule STATIC
-        module/audio_graph/audio_bridge.cc
-        module/audio_graph/audio_bridge.h
-        module/audio_graph/audio_context.cc
-        module/audio_graph/audio_context.h
-        module/audio_graph/constant.h
-        module/audio_graph/gain_node.cc
-        module/audio_graph/gain_node.h
-        module/audio_graph/master_track.cc
-        module/audio_graph/master_track.h
-        module/audio_graph/metronome_node.cc
-        module/audio_graph/metronome_node.h
-        module/audio_graph/oscillator.cc
-        module/audio_graph/oscillator.h
-        module/audio_graph/oscillator_node.cc
-        module/audio_graph/oscillator_node.h
-        module/audio_graph/piano_node.cc
-        module/audio_graph/piano_node.h
-        module/audio_graph/processor_base.h
-        module/audio_graph/time_stretch_node.cc
-        module/audio_graph/time_stretch_node.h
-        module/audio_graph/track.cc
-        module/audio_graph/track.h
-        )
-
-target_link_libraries(AudioGraphModule
-        PRIVATE
-        ${JUCE_LIBRARY}
-        ${CONAN_LIBS}
-        )
-
-set(VIEW_SOURCES
-        app/config/config_manager.cc
-        app/config/config_manager.h
-        app/gui/dialog/about_dialog.cc
-        app/gui/dialog/about_dialog.h
-        app/gui/style/color_constant.h
-        app/gui/tab/bottom_tab_widget.cc
-        app/gui/tab/bottom_tab_widget.h
-        app/gui/tab/right_tab_widget.cc
-        app/gui/tab/right_tab_widget.h
-        app/gui/tab/left_tab_widget.cc
-        app/gui/tab/left_tab_widget.h
-        app/gui/tab/tab_widget.cc
-        app/gui/tab/tab_widget.h
-        app/gui/toolbar/middle_tool_bar.cc
-        app/gui/toolbar/middle_tool_bar.h
-        app/gui/toolbar/status_bar.cc
-        app/gui/toolbar/status_bar.h
-        app/gui/toolbar/top_tool_bar.cc
-        app/gui/toolbar/top_tool_bar.h
-        app/gui/widget/instrument/instrument_widget.cc
-        app/gui/widget/instrument/instrument_widget.h
-        app/gui/widget/instrument/piano.cc
-        app/gui/widget/instrument/piano.h
-        app/gui/widget/instrument/piano_roll.cc
-        app/gui/widget/instrument/piano_roll.h
-        app/gui/widget/instrument/plucked_string.cc
-        app/gui/widget/instrument/plucked_string.h
-        app/gui/widget/instrument/string.cc
-        app/gui/widget/instrument/string.h
-        app/gui/widget/instrument/string_synthesiser.cc
-        app/gui/widget/instrument/string_synthesiser.h
-        app/gui/widget/timeline_widget.cc
-        app/gui/widget/timeline_widget.h
-        app/gui/widget/track_content_widget.cc
-        app/gui/widget/track_content_widget.h
-        app/gui/widget/track_delegate.cc
-        app/gui/widget/track_delegate.h
-        app/gui/widget/track_detail_widget.cc
-        app/gui/widget/track_detail_widget.h
-        app/gui/widget/track_setting_widget.cc
-        app/gui/widget/track_setting_widget.h
-        app/gui/main_window.cc
-        app/gui/main_window.h
-        app/model/clip/clip.cc
-        app/model/clip/clip.h
-        app/model/clip/midi_clip.cc
-        app/model/clip/midi_clip.h
-        app/model/music/note.cc
-        app/model/music/note.h
-        app/model/track/instrument_track.cc
-        app/model/track/instrument_track.h
-        app/model/track/track.cc
-        app/model/track/track.h
-        app/model/current_state_model.cc
-        app/model/current_state_model.h
-        app/model/play_progress_model.cc
-        app/model/play_progress_model.h
-        app/model/project_model.cc
-        app/model/project_model.h
-        app/model/track_container_model.cc
-        app/model/track_container_model.h
-        app/plugin/import_filter.cc
-        app/plugin/import_filter.h
-        app/plugin/midi_import.cc
-        app/plugin/midi_import.h
-        app/plugin/plugin.cc
-        app/plugin/plugin.h
-        app/presenter/current_state_presenter.cc
-        app/presenter/current_state_presenter.h
-        app/presenter/play_progress_presenter.cc
-        app/presenter/play_progress_presenter.h
-        app/presenter/play_progress_subscriber.h
-        app/presenter/play_progress_view.cc
-        app/presenter/play_progress_view.h
-        app/presenter/project_presenter.cc
-        app/presenter/project_presenter.h
-        app/presenter/track_container_presenter.cc
-        app/presenter/track_container_presenter.h
-        app/presenter/track_container_subscriber.h
-        app/presenter/track_container_view.cc
-        app/presenter/track_container_view.h
-        core/math/music_constant.h
-        core/midi/midi.h
-        core/midi/midi_event.h
-        core/midi/midi_event_processor.h
-        core/util/utility_function.h
-        )
+add_library(AudioGraphModule STATIC ${AUDIO_GRAPH_SOURCES})
+target_link_libraries(AudioGraphModule PRIVATE ${JUCE_LIBRARY} ${CONAN_LIBS})
 
 qt_add_executable(Character
         MANUAL_FINALIZATION
         main.cc
         res/application.qrc
-        ${VIEW_SOURCES}
+        ${APP_SOURCES}
+        ${CORE_SOURCES}
         )
 
 target_link_libraries(Character

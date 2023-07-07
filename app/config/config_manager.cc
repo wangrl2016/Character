@@ -21,7 +21,7 @@ namespace app {
     }
 
     QString ConfigManager::ProjectName() {
-        return "";
+        return PROJECT_NAME;
     }
 
     void ConfigManager::InitInstalledWorkingDir() {

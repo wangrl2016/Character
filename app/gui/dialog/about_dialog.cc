@@ -14,9 +14,13 @@ namespace app {
         auto* layout = new QVBoxLayout(this);
 
         version_label_ = new QLabel(this);
-        version_label_->setText(ConfigManager::DefaultVersion());
+        version_label_->setText(ConfigManager::ProjectName() + " version: " + ConfigManager::DefaultVersion());
+
+        copyright_label_ = new QLabel(this);
+        copyright_label_->setText("Copyright © 2023-2023 <wangrl2016@gmail.com>");
 
         layout->addWidget(version_label_);
+        layout->addWidget(copyright_label_);
         setLayout(layout);
     }
 }

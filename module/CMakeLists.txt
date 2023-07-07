@@ -1,0 +1,26 @@
+set(AUDIO_GRAPH_SOURCES
+        module/audio_graph/audio_bridge.cc
+        module/audio_graph/audio_bridge.h
+        module/audio_graph/audio_context.cc
+        module/audio_graph/audio_context.h
+        module/audio_graph/constant.h
+        module/audio_graph/gain_node.cc
+        module/audio_graph/gain_node.h
+        module/audio_graph/master_track.cc
+        module/audio_graph/master_track.h
+        module/audio_graph/metronome_node.cc
+        module/audio_graph/metronome_node.h
+        module/audio_graph/oscillator.cc
+        module/audio_graph/oscillator.h
+        module/audio_graph/oscillator_node.cc
+        module/audio_graph/oscillator_node.h
+        module/audio_graph/piano_node.cc
+        module/audio_graph/piano_node.h
+        module/audio_graph/processor_base.h
+        module/audio_graph/time_stretch_node.cc
+        module/audio_graph/time_stretch_node.h
+        module/audio_graph/track.cc
+        module/audio_graph/track.h
+
+        PARENT_SCOPE
+        )

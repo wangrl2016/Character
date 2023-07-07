@@ -12,10 +12,11 @@ namespace app {
     class AboutDialog : public QDialog {
     Q_OBJECT
     public:
-        AboutDialog(QWidget* parent = nullptr);
+        explicit AboutDialog(QWidget* parent = nullptr);
 
     private:
         QLabel* version_label_;
+        QLabel* copyright_label_;
     };
 }
 
