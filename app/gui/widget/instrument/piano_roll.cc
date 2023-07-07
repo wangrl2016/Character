@@ -15,21 +15,20 @@ namespace app {
             kKeyC, kKeyD, kKeyE, kKeyF, kKeyG, kKeyA, kKeyH
     };
 
-    const int kPianoBase = 11;      // the height of the root note display
+    const int kPianoBase = 16;      // the height of the root note display
     const int kWhiteKeyWidth = 24;  // the width of a white key
     const int kBlackKeyWidth = 16;   // the width of black key
-    const int kWhiteKeyHeight = 57; // the height of a white key
-    const int kBlackKeyHeight = 38; // the height of a black key
-    const int kLabelTextSize = 7;   // the height of the key label text
+    const int kWhiteKeyHeight = 64; // the height of a white key
+    const int kBlackKeyHeight = 40; // the height of a black key
 
     // Create a new keyboard display view.
     //
     // @param parent the parent instrument plugin window
     PianoRoll::PianoRoll(QWidget* parent) :
             QWidget(parent),
+            piano_(std::make_unique<Piano>()),
             start_key_(kKeyC), /* the first key displayed? */
             last_key_(kInvalidKey) {
-        piano_ = new Piano();
 
         setAttribute(Qt::WA_OpaquePaintEvent, true);
         // listen keyboard is pressed
@@ -37,8 +36,6 @@ namespace app {
 
         // create scrollbar at the bottom
         piano_scroll_ = new QScrollBar(Qt::Horizontal, this);
-        piano_scroll_->setSingleStep(1);
-        piano_scroll_->setPageStep(20);
         piano_scroll_->setValue(kOctave3 * Piano::kWhiteKeysPerOctave);
 
         // and connect it to this widget
@@ -49,32 +46,22 @@ namespace app {
         auto layout = new QVBoxLayout(this);
         layout->setSpacing(0);
         layout->setContentsMargins(0, 0, 0, 0);
-        layout->addSpacing(kPianoBase + kWhiteKeyHeight);
         layout->addWidget(piano_scroll_);
+        setLayout(layout);
     }
 
-    PianoRoll::~PianoRoll()  {
-        delete piano_;
-    }
+    PianoRoll::~PianoRoll() = default;
 
     void PianoRoll::keyPressEvent(QKeyEvent* key) {
         int key_num = GetKeyFromKeyEvent(key);
-        // LOG(INFO) << "Key num " << key_num;
-        if (piano_) {
-            piano_->SetKeyState(key_num, true);
-            // key->accept();
-            update();
-        }
+        piano_->SetKeyState(key_num, true);
+        update();
     }
 
     void PianoRoll::keyReleaseEvent(QKeyEvent* key) {
         int key_num = GetKeyFromKeyEvent(key);
-        // LOG(INFO) << "Key num " << key_num;
-        if (piano_) {
-            piano_->SetKeyState(key_num, false);
-            // key->accept();
-            update();
-        }
+        piano_->SetKeyState(key_num, false);
+        update();
     }
 
     int PianoRoll::GetKeyFromKeyEvent(QKeyEvent* event) {
@@ -88,21 +75,17 @@ namespace app {
     void PianoRoll::paintEvent(QPaintEvent* event) {
         QPainter painter(this);
 
-        // set smaller font for printing number of every octave.
+        // Draw bar above the keyboard (there will be the labels for all C's).
+        painter.fillRect(QRect(0, 0, width(), kPianoBase), painter.background());
 
-        painter.fillRect(QRect(0, 1, width(), kPianoBase - 2),
-                         painter.background());
-
+        // draw the line above the keyboard
         painter.setPen(Qt::black);
         painter.drawLine(0, 0, width(), 0);
         painter.drawLine(0, kPianoBase - 1, width(), kPianoBase - 1);
 
-        painter.setPen(Qt::white);
-
         int cur_key = start_key_;
 
         // Draw all white keys...
-
         for (int x = 0; x < width();) {
             while (Piano::IsBlackKey(cur_key)) {
                 cur_key++;
@@ -110,11 +93,9 @@ namespace app {
 
             // Draw normal, pressed or disabled key, depending on
             // state and position of current key.
-            if (piano_ && piano_->IsKeyPressed(cur_key)) {
-                painter.setPen(Qt::red);
+            if (piano_->IsKeyPressed(cur_key)) {
                 painter.setBrush(Qt::red);
             } else {
-                painter.setPen(Qt::black);
                 painter.setBrush(Qt::white);
             }
             painter.drawRect(x, kPianoBase, kWhiteKeyWidth, kWhiteKeyHeight);
@@ -124,7 +105,7 @@ namespace app {
             if ((Keys) (cur_key % kKeysPerOctave) == kKeyC) {
                 // Label key of note C with "C" and number of current octave.
                 painter.drawText(x - kWhiteKeyWidth,
-                                 kLabelTextSize + 2,
+                                 (kPianoBase + painter.font().pointSize()) / 2 - 1,
                                  QString("C") + QString::number(kFirstOctave + cur_key / kKeysPerOctave));
             }
             cur_key++;
@@ -133,21 +114,14 @@ namespace app {
         // Reset all values, because now we're going to draw all black keys.
         cur_key = start_key_;
         int white_cnt = 0;
-        int start_key = start_key_;
-        if (start_key > 0 && Piano::IsBlackKey(static_cast<Keys>(--start_key))) {
-
-        }
 
         // now draw all black keys...
-
         for (int x = 0; x < width();) {
             if (Piano::IsBlackKey(cur_key)) {
                 // Draw normal, pressed or disabled key, depending on state and position of current key.
-                if (piano_ && piano_->IsKeyPressed(cur_key)) {
-                    painter.setPen(Qt::red);
+                if (piano_->IsKeyPressed(cur_key)) {
                     painter.setBrush(Qt::red);
                 } else {
-                    painter.setPen(QColor(Qt::black));
                     painter.setBrush(QBrush(Qt::black));
                 }
                 painter.drawRect(x + kWhiteKeyWidth / 2, kPianoBase, kBlackKeyWidth, kBlackKeyHeight);
@@ -165,9 +139,7 @@ namespace app {
             if (++cur_key == kNumKeys) {
                 break;
             }
-
         }
-
     }
 
     void PianoRoll::mousePressEvent(QMouseEvent* event) {
@@ -185,7 +157,6 @@ namespace app {
 
     void PianoRoll::mouseMoveEvent(QMouseEvent* event) {
         int key_num = GetKeyFromMouse(event->pos());
-        int y_diff = event->pos().y() - kPianoBase;
 
         if (key_num != last_key_) {
             if (last_key_ != kInvalidKey) {
@@ -205,22 +176,10 @@ namespace app {
 
     void PianoRoll::mouseReleaseEvent(QMouseEvent* event) {
         if (last_key_ != kInvalidKey) {
-            if (piano_) {
-                piano_->SetKeyState(last_key_, false);
-            }
-
+            piano_->SetKeyState(last_key_, false);
             update();
-
             last_key_ = kInvalidKey;
         }
-    }
-
-    void PianoRoll::focusInEvent(QFocusEvent* event) {
-
-    }
-
-    void PianoRoll::focusOutEvent(QFocusEvent* event) {
-
     }
 
     void PianoRoll::resizeEvent(QResizeEvent* event) {
@@ -230,16 +189,29 @@ namespace app {
     }
 
     void PianoRoll::PianoScrolled(int new_pos) {
-        // LOG(INFO) << __FUNCTION__ << ", new pos " << new_pos;
-        start_key_ = kWhiteKeys[new_pos % Piano::kWhiteKeysPerOctave] +
+        start_key_ = kWhiteKeys[uint64_t(new_pos % Piano::kWhiteKeysPerOctave)] +
                      (new_pos / Piano::kWhiteKeysPerOctave) * kKeysPerOctave;
-
         update();
     }
 
     // Get the key from the mouse position in the piano display.
     //
+    // First we determine it roughly by the position of the point given in
+    // white key widths from our start.  We then add in any black keys that
+    // might have been skipped over (they take a key number, but no 'white
+    // key' space).  We then add in our starting key number.
     //
+    // We then determine whether it was a black key that was pressed by
+    // checking whether it was within the vertical range of black keys.
+    // Black keys sit exactly between white keys on this keyboard, so
+    // we then shift the note down or up if we were in the left or right
+    // half of the white note.  We only do this, of course, if the white
+    // note has a black key on that side, so to speak.
+    //
+    // This function returns const because there is a linear mapping from
+    // the point given to the key returned that never changes.
+    //
+    // @param point The point that the mouse was pressed
     int PianoRoll::GetKeyFromMouse(const QPoint& point) const {
         int offset = point.x() % kWhiteKeyWidth;
 

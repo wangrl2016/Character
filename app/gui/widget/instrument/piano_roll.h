@@ -33,10 +33,6 @@ namespace app {
 
         void mouseReleaseEvent(QMouseEvent* event) override;
 
-        void focusInEvent(QFocusEvent* event) override;
-
-        void focusOutEvent(QFocusEvent* event) override;
-
         void resizeEvent(QResizeEvent* event) override;
 
     signals:
@@ -48,10 +44,9 @@ namespace app {
         void PianoScrolled(int new_pos);
 
     private:
-        int GetKeyFromMouse(const QPoint& point) const;
+        [[nodiscard]] int GetKeyFromMouse(const QPoint& point) const;
 
-        Piano* piano_;
-
+        std::unique_ptr<Piano> piano_;
         QScrollBar* piano_scroll_;
 
         // record keystrokes starting at the leftmost

@@ -31,7 +31,10 @@ namespace app {
         void SetKeyState(int key, bool state);
 
         [[nodiscard]] bool IsKeyPressed(int key) const {
-            return pressed_keys_[uint64_t(key)];
+            if (key >= kNumKeys)
+                return false;
+            else
+                return pressed_keys_[uint64_t(key)];
         }
 
         void HandleKeyPress(int key, int midi_velocity = -1);
