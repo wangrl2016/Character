@@ -21,6 +21,10 @@ namespace app {
 
         void mousePressEvent(QMouseEvent* event) override;
 
+        void mouseMoveEvent(QMouseEvent* event) override;
+
+        void mouseReleaseEvent(QMouseEvent* event) override;
+
         void wheelEvent(QWheelEvent* event) override;
 
         void PlayProgressUpdate() override;
@@ -31,6 +35,9 @@ namespace app {
         // The pixel value corresponding to the current time.
         std::pair<int, int> benchmark_;
 
+        // Record the state of the mouse at the previous moment.
+        QPoint temp_prev_pos_;
+        bool adjust_loop_;
     };
 }
 
