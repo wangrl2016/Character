@@ -11,19 +11,24 @@ namespace app {
                int key, float volume,
                float panning, QString pronouncing,
                QString lyric) :
-            key_(qBound(0, key, kNumKeys)),
+            pitch_(qBound(0, key, kNumKeys)),
             volume_(volume),
             panning_(panning),
             pos_(pos),
             length_(length),
             pronouncing_(std::move(pronouncing)),
-            lyric_(std::move(lyric)),
-            selected_(false),
-            old_key_(qBound(0, key, kNumKeys)),
-            old_pos_(pos),
-            old_length_(length),
-            is_playing_(false) {
+            lyric_(std::move(lyric)) {
 
+    }
+
+    Note::Note(const Note& note) :
+            pitch_(note.pitch_),
+            volume_(note.volume_),
+            panning_(note.panning_),
+            pos_(note.pos_),
+            length_(note.length_),
+            pronouncing_(note.pronouncing_),
+            lyric_(note.lyric_) {
     }
 
     Note::~Note() = default;

@@ -1,5 +1,11 @@
 //
-// Created by wr on 2023/7/2.
+// Created by wangrl2016 on 2023/7/2.
 //
 
-#include "track_container_view.h"
+#include "app/presenter/track_container_view.h"
+
+namespace app {
+    void TrackContainerView::Subscribe(TrackContainerPresenter* presenter) {
+        track_container_presenter_ = presenter;
+    }
+}

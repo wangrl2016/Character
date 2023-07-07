@@ -15,9 +15,7 @@ namespace app {
         Piano::kBlackKey,   Piano::kWhiteKey,   Piano::kBlackKey,   Piano::kWhiteKey,
     };
 
-    Piano::Piano() {
-
-    }
+    Piano::Piano() = default;
 
     void Piano::SetKeyState(int key, bool state) {
         if (IsValidKey(key)) {
@@ -47,7 +45,7 @@ namespace app {
     }
 
     bool Piano::IsBlackKey(int key) {
-        int key_code = key % kKeysPerOctave;
+        auto key_code = uint64_t(key % kKeysPerOctave);
         return kKeyOrder[key_code] == Piano::kBlackKey;
     }
 }

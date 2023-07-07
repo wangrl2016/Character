@@ -6,6 +6,7 @@
 
 namespace app {
     TrackContainerModel::TrackContainerModel() :
+            Model(nullptr),
             track_mutex_(),
             track_vec_() {
 

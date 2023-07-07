@@ -25,11 +25,19 @@ namespace app {
 
         ~MidiClip() override;
 
-        Note* AddNote(const Note& new_note, const bool quant_pos = true);
+        void Init();
+
+        void UpdateLength();
+
+        Note* AddNote(const Note& note, bool quant_pos = true);
 
         void RemoveNote(Note* note_to_del);
 
     private:
+        void SetType(MidiClipType clip_type);
+
+        void CheckType();
+
         InstrumentTrack* instrument_track_;
         MidiClipType clip_type_;
         QVector<Note*> note_vec_;

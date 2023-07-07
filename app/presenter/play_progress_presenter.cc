@@ -25,6 +25,27 @@ namespace app {
         }
     }
 
+    void PlayProgressPresenter::NotifyLoop(bool loop) {
+        model_->set_loop(loop);
+        for (auto& view : view_list_) {
+            view->LoopUpdate();
+        }
+    }
+
+    void PlayProgressPresenter::NotifyLoopStart(double loop_start) {
+        model_->set_loop_start(loop_start);
+        for (auto& view : view_list_) {
+            view->LoopStartUpdate();
+        }
+    }
+
+    void PlayProgressPresenter::NotifyLoopEnd(double loop_end) {
+        model_->set_loop_end(loop_end);
+        for (auto& view : view_list_) {
+            view->LoopEndUpdate();
+        }
+    }
+
     double PlayProgressPresenter::PlayProgress() const {
         if (model_)
             return model_->play_progress();

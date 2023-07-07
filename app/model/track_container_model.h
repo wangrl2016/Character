@@ -7,14 +7,13 @@
 
 #include <memory>
 #include <QVector>
-#include <QObject>
 #include <QReadWriteLock>
 #include "app/model/track/track.h"
 
 namespace app {
     class Track;
 
-    class TrackContainerModel : public QObject {
+    class TrackContainerModel : public Model {
     Q_OBJECT
     public:
         TrackContainerModel();

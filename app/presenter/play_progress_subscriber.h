@@ -11,6 +11,12 @@ namespace app {
     class PlayProgressSubscriber {
     public:
         virtual void NotifyPlayProgress(double sec) = 0;
+
+        virtual void NotifyLoop(bool loop) = 0;
+
+        virtual void NotifyLoopStart(double loop_start) = 0;
+
+        virtual void NotifyLoopEnd(double loop_end) = 0;
     };
 }
 

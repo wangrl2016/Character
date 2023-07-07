@@ -6,7 +6,8 @@
 #include "app/model/track/track.h"
 
 namespace app {
-    Clip::Clip(Track* track) {
+    Clip::Clip(Track* track) :
+        Model(track) {
 
     }
 

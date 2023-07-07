@@ -14,6 +14,12 @@ namespace app {
 
         virtual void PlayProgressUpdate();
 
+        virtual void LoopUpdate();
+
+        virtual void LoopStartUpdate();
+
+        virtual void LoopEndUpdate();
+
     protected:
         PlayProgressPresenter* play_progress_presenter_ = nullptr;
     };

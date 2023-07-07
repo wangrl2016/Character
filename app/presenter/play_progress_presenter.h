@@ -7,7 +7,7 @@
 
 #include "app/presenter/play_progress_subscriber.h"
 #include "app/model/play_progress_model.h"
-#include "play_progress_view.h"
+#include "app/presenter/play_progress_view.h"
 
 namespace app {
     class PlayProgressPresenter : public PlayProgressSubscriber {
@@ -19,6 +19,12 @@ namespace app {
         void AddView(PlayProgressView* view);
 
         void NotifyPlayProgress(double sec) override;
+
+        void NotifyLoop(bool loop) override;
+
+        void NotifyLoopStart(double loop_start) override;
+
+        void NotifyLoopEnd(double loop_end) override;
 
         [[nodiscard]] double PlayProgress() const;
 

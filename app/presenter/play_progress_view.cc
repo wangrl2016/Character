@@ -14,4 +14,16 @@ namespace app {
     void PlayProgressView::PlayProgressUpdate() {
 
     }
+
+    void PlayProgressView::LoopUpdate() {
+
+    }
+
+    void PlayProgressView::LoopStartUpdate() {
+
+    }
+
+    void PlayProgressView::LoopEndUpdate() {
+
+    }
 }

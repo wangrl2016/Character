@@ -9,4 +9,8 @@ namespace app {
         track_container_model_(model) {
 
     }
+
+    void TrackContainerPresenter::AddView(TrackContainerView* view) {
+        view_list_.append(view);
+    }
 }

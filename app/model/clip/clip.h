@@ -6,12 +6,12 @@
 #define CHARACTER_CLIP_H
 
 #include <QColor>
-#include <QObject>
+#include "app/model/model.h"
 
 namespace app {
     class Track;
 
-    class Clip : public QObject {
+    class Clip : public Model {
     Q_OBJECT
     public:
         explicit Clip(Track* track);

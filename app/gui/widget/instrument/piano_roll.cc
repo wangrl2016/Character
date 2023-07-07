@@ -177,6 +177,8 @@ namespace app {
     void PianoRoll::mouseReleaseEvent(QMouseEvent* event) {
         if (last_key_ != kInvalidKey) {
             piano_->SetKeyState(last_key_, false);
+
+            // and let the user see that he released a key
             update();
             last_key_ = kInvalidKey;
         }

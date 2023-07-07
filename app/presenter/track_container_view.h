@@ -5,11 +5,12 @@
 #ifndef CHARACTER_TRACK_CONTAINER_VIEW_H
 #define CHARACTER_TRACK_CONTAINER_VIEW_H
 
-#include "app/presenter/track_container_presenter.h"
-
 namespace app {
+    class TrackContainerPresenter;
+
     class TrackContainerView {
     public:
+        virtual void Subscribe(TrackContainerPresenter* presenter);
 
     protected:
         TrackContainerPresenter* track_container_presenter_ = nullptr;

@@ -5,14 +5,15 @@
 #ifndef CHARACTER_TRACK_H
 #define CHARACTER_TRACK_H
 
-#include <QObject>
 #include <utility>
+#include <QMutex>
+#include "app/model/model.h"
 
 namespace app {
     class Clip;
     class TrackContainerModel;
 
-    class Track : public QObject {
+    class Track : public Model {
     Q_OBJECT
     public:
         enum TrackType {
@@ -24,6 +25,8 @@ namespace app {
         };
 
         Track(TrackType type, TrackContainerModel* tc);
+
+        ~Track() override;
 
         static Track* Create(TrackType type, TrackContainerModel* tc);
 
@@ -37,6 +40,15 @@ namespace app {
 
         void set_name(const QString& name) { name_ = name;}
 
+        void Lock() { processing_lock_.lock(); }
+
+        void UnLock() { processing_lock_.unlock(); }
+
+        bool TryLock() { return processing_lock_.tryLock(); }
+
+    signals:
+        void DestroyedTrack();
+
     private:
         TrackType type_;
         TrackContainerModel* track_container_;
@@ -44,6 +56,8 @@ namespace app {
 
         bool solo_;
         QString name_;
+
+        QMutex processing_lock_;
     };
 }
 

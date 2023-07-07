@@ -58,6 +58,8 @@ set(APP_SOURCES
         app/model/track/track.h
         app/model/current_state_model.cc
         app/model/current_state_model.h
+        app/model/model.cc
+        app/model/model.h
         app/model/play_progress_model.cc
         app/model/play_progress_model.h
         app/model/project_model.cc
