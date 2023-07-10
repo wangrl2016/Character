@@ -129,7 +129,7 @@ namespace app {
     }
 
     void TimelineWidget::mouseReleaseEvent(QMouseEvent* event) {
-
+        adjust_loop_ = false;
     }
 
     void TimelineWidget::wheelEvent(QWheelEvent* event) {
