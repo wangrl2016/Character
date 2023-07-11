@@ -42,7 +42,11 @@ namespace media {
 
         ~FFmpegVideoEncoder();
 
-        bool Open(std::string file_path);
+        bool Open(const std::string& file_path);
+
+        bool Encode();
+
+        void Close();
 
     private:
         bool AddStream(OutputStream* stream, enum AVCodecID codec_id);
@@ -51,11 +55,23 @@ namespace media {
 
         bool OpenAudio(AVDictionary* opt_arg);
 
+        bool WriteFrame(OutputStream* ost, AVFrame* frame, AVPacket* pkt);
+
+        AVFrame* GetVideoFrame() const;
+
+        bool WriteVideoFrame();
+
+        bool WriteAudioFrame();
+
+        void CloseVideoStream();
+
+        void CloseAudioStream();
+
         AVFormatContext* output_format_context_;
         OutputStream video_stream_, audio_stream_;
         const AVCodec* video_codec_, * audio_codec_;
         bool have_video_, have_audio_;
-        bool encode_video, encode_audio_;
+        bool encode_video_, encode_audio_;
     };
 }
 

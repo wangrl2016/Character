@@ -6,6 +6,12 @@
 #define CHARACTER_FFMPEG_AUDIO_ENCODER_H
 
 #include <string>
+extern "C" {
+#include <libavformat/avformat.h>
+#include <libavcodec/avcodec.h>
+#include <libswresample/swresample.h>
+#include <libavutil/audio_fifo.h>
+}
 #include "media/base/audio_parameters.h"
 
 namespace media {
@@ -20,6 +26,14 @@ namespace media {
         bool Open(const std::string& file_path,
                   AudioParameters& src_parameters,
                   AudioParameters& dest_parameters);
+
+    private:
+        AVFormatContext* output_format_context_ = nullptr;
+        AVCodecContext* output_codec_context_ = nullptr;
+        SwrContext* resampler_context_ = nullptr;
+        AVAudioFifo* fifo_ = nullptr;
+
+        bool open_succeed;
     };
 }
 

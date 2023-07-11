@@ -17,7 +17,7 @@ namespace media {
 
     }
 
-    bool FFmpegVideoEncoder::Open(std::string file_path) {
+    bool FFmpegVideoEncoder::Open(const std::string& file_path) {
         int ret;
         AVDictionary* opt = nullptr;
 
@@ -38,13 +38,12 @@ namespace media {
 
         auto fmt = output_format_context_->oformat;
 
-
         // Add the audio and video streams using the default format codecs
         // and initialize the codecs.
         if (fmt->video_codec != AV_CODEC_ID_NONE) {
             AddStream(&video_stream_, fmt->video_codec);
             have_video_ = true;
-            encode_video = false;
+            encode_video_ = false;
         }
         if (fmt->audio_codec != AV_CODEC_ID_NONE) {
             AddStream(&audio_stream_, fmt->audio_codec);
@@ -70,14 +69,45 @@ namespace media {
             }
         }
 
+
+        return true;
+    }
+
+    bool FFmpegVideoEncoder::Encode() {
+        int ret;
         // Write the stream header, if any.
-        ret = avformat_write_header(output_format_context_, &opt);
+        ret = avformat_write_header(output_format_context_, nullptr);
         if (ret < 0) {
             LOG(ERROR) << "Error occurred when opening output file: " << av_err2str(ret);
             return false;
         }
 
-        return true;
+        while (encode_video_ || encode_audio_) {
+            // Select the stream to encode
+            if (encode_video_ &&
+                (!encode_audio_ || av_compare_ts(video_stream_.next_pts, video_stream_.encoder->time_base,
+                                                 audio_stream_.next_pts, audio_stream_.encoder->time_base) <= 0)) {
+                encode_video_ = WriteVideoFrame();
+            } else {
+                encode_audio_ = WriteAudioFrame();
+            }
+        }
+
+        av_write_trailer(output_format_context_);
+    }
+
+    void FFmpegVideoEncoder::Close() {
+        if (have_video_)
+            CloseVideoStream();
+        if (have_audio_)
+            CloseAudioStream();
+
+        if (!(output_format_context_->oformat->flags & AVFMT_NOFILE))
+            // Close the output file.
+            avio_closep(&output_format_context_->pb);
+
+        // Free the stream.
+        avformat_free_context(output_format_context_);
     }
 
     bool FFmpegVideoEncoder::AddStream(OutputStream* stream,
@@ -309,5 +339,67 @@ namespace media {
         }
 
         return true;
+    }
+
+    bool FFmpegVideoEncoder::WriteFrame(OutputStream* ost,
+                                        AVFrame* frame,
+                                        AVPacket* packet) {
+        int ret;
+
+        // send the frame to the encoder
+        ret = avcodec_send_frame(ost->encoder, frame);
+        if (ret < 0) {
+            LOG(ERROR) << "Error sending a frame to the encoder";
+            return false;
+        }
+
+        while (ret >= 0) {
+            ret = avcodec_receive_packet(ost->encoder, packet);
+            if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
+                break;
+            else if (ret < 0) {
+                LOG(ERROR) << "Error encoding a frame";
+                return false;
+            }
+
+            // Rescale output packet timestamp values from codec to stream timebase.
+            av_packet_rescale_ts(packet, ost->encoder->time_base, ost->stream->time_base);
+            packet->stream_index = ost->stream->index;
+
+            // Write the compressed frame to the media file.
+            ret = av_interleaved_write_frame(output_format_context_, packet);
+            if (ret < 0) {
+                LOG(ERROR) << "Error while writing output packet";
+                return false;
+            }
+        }
+
+        return ret != AVERROR_EOF;
+    }
+
+    AVFrame* FFmpegVideoEncoder::GetVideoFrame() const {
+        // Check if we want to generate more frames.
+        if (av_compare_ts(video_stream_.next_pts, video_stream_.encoder->time_base,
+                          kStreamDuration))
+
+        return video_stream_.frame;
+    }
+
+    // Encode one video frame and send it to the muxer.
+    // return true when encoding is finished, false otherwise.
+    bool FFmpegVideoEncoder::WriteVideoFrame() {
+        return WriteFrame(&video_stream_, GetVideoFrame(), video_stream_.temp_packet);
+    }
+
+    bool FFmpegVideoEncoder::WriteAudioFrame() {
+
+    }
+
+    void FFmpegVideoEncoder::CloseVideoStream() {
+
+    }
+
+    void FFmpegVideoEncoder::CloseAudioStream() {
+
     }
 }
