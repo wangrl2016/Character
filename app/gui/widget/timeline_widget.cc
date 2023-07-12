@@ -111,20 +111,13 @@ namespace app {
         double loop_end = play_progress_presenter_->LoopEnd();
         int end_index = int(std::round(benchmark_.second + loop_end * current_interval_));
 
-        if (start_index - kLoopPadding < x && x < start_index + kLoopPadding) {
+        if ((start_index - kLoopPadding < x && x < start_index + kLoopPadding) ||
+                (end_index - kLoopPadding < x && x < end_index + kLoopPadding)) {
             setCursor(Qt::CursorShape::SizeHorCursor);
             adjust_loop_ = true;
         } else {
             adjust_loop_ = false;
             setCursor(Qt::CursorShape::ArrowCursor);
-        }
-
-        if (end_index - kLoopPadding < x && x < end_index + kLoopPadding) {
-            setCursor(Qt::CursorShape::SizeHorCursor);
-            adjust_loop_ = true;
-        } else {
-            setCursor(Qt::CursorShape::ArrowCursor);
-            adjust_loop_ = false;
         }
     }
 
