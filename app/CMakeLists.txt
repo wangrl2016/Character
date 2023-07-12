@@ -52,8 +52,14 @@ set(APP_SOURCES
         app/model/image/layer.h
         app/model/music/note.cc
         app/model/music/note.h
+        app/model/track/animation_track.cc
+        app/model/track/animation_track.h
         app/model/track/instrument_track.cc
         app/model/track/instrument_track.h
+        app/model/track/physical_track.cc
+        app/model/track/physical_track.h
+        app/model/track/painter_track.cc
+        app/model/track/painter_track.h
         app/model/track/track.cc
         app/model/track/track.h
         app/model/current_state_model.cc

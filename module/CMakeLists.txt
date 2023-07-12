@@ -3,6 +3,8 @@ set(AUDIO_GRAPH_SOURCES
         module/audio_graph/audio_bridge.h
         module/audio_graph/audio_context.cc
         module/audio_graph/audio_context.h
+        module/audio_graph/audio_writer_node.cc
+        module/audio_graph/audio_writer_node.h
         module/audio_graph/constant.h
         module/audio_graph/gain_node.cc
         module/audio_graph/gain_node.h

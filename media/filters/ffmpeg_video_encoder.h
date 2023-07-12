@@ -13,7 +13,7 @@ extern "C" {
 #include <libswresample/swresample.h>
 #include <libswscale/swscale.h>
 #include <libavutil/avutil.h>
-};
+}
 
 namespace media {
     // a wrapper around a single output AVStream
@@ -57,7 +57,7 @@ namespace media {
 
         bool WriteFrame(OutputStream* ost, AVFrame* frame, AVPacket* pkt);
 
-        AVFrame* GetVideoFrame() const;
+        AVFrame* GetVideoFrame();
 
         bool WriteVideoFrame();
 

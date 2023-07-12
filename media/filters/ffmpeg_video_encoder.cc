@@ -7,6 +7,7 @@
 
 namespace media {
     constexpr int kStreamFrameRate = 25;
+    constexpr int kStreamDuration = 10; // 10s
     constexpr AVPixelFormat kStreamPixelFormat = AV_PIX_FMT_YUV420P;
 
     FFmpegVideoEncoder::FFmpegVideoEncoder() {
@@ -94,6 +95,7 @@ namespace media {
         }
 
         av_write_trailer(output_format_context_);
+        return true;
     }
 
     void FFmpegVideoEncoder::Close() {
@@ -377,11 +379,73 @@ namespace media {
         return ret != AVERROR_EOF;
     }
 
-    AVFrame* FFmpegVideoEncoder::GetVideoFrame() const {
+    // Prepare a dummy image.
+    static void FillYUVImage(AVFrame* frame, int64_t frame_index,
+                             int width, int height) {
+        int x, y;
+        int64_t i = frame_index;
+
+        // Y
+        for (y = 0; y < height; y++)
+            for (x = 0; x < width; x++)
+                frame->data[0][y * frame->linesize[0] + x] = x + y + i * 3;
+
+        // Cb and Cr
+        for (y = 0; y < height / 2; y++) {
+            for (x = 0; x < width / 2; x++) {
+                frame->data[1][y * frame->linesize[1] + x] = 128 + y + i * 2;
+                frame->data[2][y * frame->linesize[2] + x] = 64 + x + i * 5;
+            }
+        }
+    }
+
+    AVFrame* FFmpegVideoEncoder::GetVideoFrame() {
         // Check if we want to generate more frames.
         if (av_compare_ts(video_stream_.next_pts, video_stream_.encoder->time_base,
-                          kStreamDuration))
+                          kStreamDuration, {1, 1}) > 0) {
+            return nullptr;
+        }
 
+        // When we pass a frame to the encoder, it may keep a reference to it
+        // internally; make sure we do not overwrite it here.
+        if (av_frame_make_writable(video_stream_.frame) < 0)
+            return nullptr;
+
+        if (video_stream_.encoder->pix_fmt != AV_PIX_FMT_YUV420P) {
+            // As we only generate a YUV420P picture, we must convert it
+            // to the codec pixel format if needed.
+            if (!video_stream_.sws_context) {
+                video_stream_.sws_context = sws_getContext(video_stream_.encoder->width,
+                                                           video_stream_.encoder->height,
+                                                           AV_PIX_FMT_YUV420P,
+                                                           video_stream_.encoder->width,
+                                                           video_stream_.encoder->height,
+                                                           video_stream_.encoder->pix_fmt,
+                                                           SWS_BICUBIC,
+                                                           nullptr,
+                                                           nullptr,
+                                                           nullptr);
+                if (!video_stream_.sws_context) {
+                    LOG(ERROR) << "Could not initialize the conversion context";
+                    return nullptr;
+                }
+            }
+            FillYUVImage(video_stream_.temp_frame,
+                         video_stream_.next_pts,
+                         video_stream_.encoder->width,
+                         video_stream_.encoder->height);
+            sws_scale(video_stream_.sws_context, (const uint8_t* const *) video_stream_.temp_frame->data,
+                      video_stream_.temp_frame->linesize, 0,
+                      video_stream_.encoder->height,
+                      video_stream_.frame->data,
+                      video_stream_.frame->linesize);
+        } else {
+            FillYUVImage(video_stream_.frame, video_stream_.next_pts,
+                         video_stream_.encoder->width,
+                         video_stream_.encoder->height);
+        }
+
+        video_stream_.frame->pts = video_stream_.next_pts++;
         return video_stream_.frame;
     }
 
@@ -391,8 +455,19 @@ namespace media {
         return WriteFrame(&video_stream_, GetVideoFrame(), video_stream_.temp_packet);
     }
 
-    bool FFmpegVideoEncoder::WriteAudioFrame() {
+    static AVFrame* GetAudioFrame(OutputStream* ost) {
+        AVFrame* frame = ost->temp_frame;
+        int i, j, v;
 
+        return frame;
+    }
+
+    // Encode one audio frame and send it to the muxer.
+    // return true when encoding is finished, false otherwise.
+    bool FFmpegVideoEncoder::WriteAudioFrame() {
+        AVFrame* frame = GetAudioFrame(&audio_stream_);
+
+        return true;
     }
 
     void FFmpegVideoEncoder::CloseVideoStream() {
