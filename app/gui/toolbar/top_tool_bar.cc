@@ -3,11 +3,12 @@
 //
 
 #include <QActionGroup>
-#include <QLabel>
 #include <QPushButton>
 #include <QToolButton>
+#include <glog/logging.h>
 #include "app/gui/toolbar/top_tool_bar.h"
 #include "app/gui/main_window.h"
+#include "app/gui/dialog/export_dialog.h"
 
 namespace app {
     constexpr int kToolBarFixedHeight = 24;
@@ -72,10 +73,8 @@ namespace app {
         spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         addWidget(spacer);
 
-        export_action_ = new QAction(
-                QIcon(tr(":toolbar/export")),
-                tr("Export"),
-                this);
+        export_action_ = new QAction(QIcon(tr(":toolbar/export")), tr("Export"), this);
+        connect(export_action_, &QAction::triggered, this, &TopToolBar::Export);
         addAction(export_action_);
 
         account_circle_action_ = new QAction(
@@ -83,5 +82,11 @@ namespace app {
                 tr("Account"),
                 this);
         addAction(account_circle_action_);
+    }
+
+    void TopToolBar::Export() {
+        LOG(INFO) << __FUNCTION__;
+        auto* export_dialog = new ExportDialog(this);
+        export_dialog->show();
     }
 }

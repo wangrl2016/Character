@@ -3,6 +3,8 @@ set(APP_SOURCES
         app/config/config_manager.h
         app/gui/dialog/about_dialog.cc
         app/gui/dialog/about_dialog.h
+        app/gui/dialog/export_dialog.cc
+        app/gui/dialog/export_dialog.h
         app/gui/style/color_constant.h
         app/gui/tab/bottom_tab_widget.cc
         app/gui/tab/bottom_tab_widget.h
@@ -54,6 +56,8 @@ set(APP_SOURCES
         app/model/music/note.h
         app/model/track/animation_track.cc
         app/model/track/animation_track.h
+        app/model/track/image_track.cc
+        app/model/track/image_track.h
         app/model/track/instrument_track.cc
         app/model/track/instrument_track.h
         app/model/track/physical_track.cc

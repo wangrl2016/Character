@@ -9,9 +9,13 @@
 
 namespace app {
     class TopToolBar : public QToolBar {
-        Q_OBJECT
+    Q_OBJECT
     public:
         TopToolBar(QWidget* parent);
+
+    public slots:
+
+        void Export();
 
     private:
         QAction* fast_rewind_action_;
