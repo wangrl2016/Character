@@ -6,20 +6,23 @@
 #define CHARACTER_TRACK_SETTING_WIDGET_H
 
 #include <QWidget>
-#include <QListView>
+#include <QTableView>
 #include "app/presenter/track_container_view.h"
+#include "track_delegate.h"
 
 // https://doc.qt.io/qt-6/model-view-programming.html
 
 namespace app {
-
-    class TrackSettingWidget : public QListView,
+    class TrackSettingWidget : public QTableView,
             public TrackContainerView {
     Q_OBJECT
     public:
         explicit TrackSettingWidget(QWidget* parent = nullptr);
+
+    private:
+        QWidget* top_widget_;
+        TrackDelegate* track_delegate_;
     };
 }
-
 
 #endif //CHARACTER_TRACK_SETTING_WIDGET_H

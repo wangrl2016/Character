@@ -5,10 +5,8 @@
 #ifndef CHARACTER_ANIMATION_H
 #define CHARACTER_ANIMATION_H
 
+namespace app {
 
-class animation {
-
-};
-
+}
 
 #endif //CHARACTER_ANIMATION_H

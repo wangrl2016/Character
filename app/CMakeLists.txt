@@ -66,6 +66,8 @@ set(APP_SOURCES
         app/model/track/painter_track.h
         app/model/track/track.cc
         app/model/track/track.h
+        app/model/track/video_track.cc
+        app/model/track/video_track.h
         app/model/current_state_model.cc
         app/model/current_state_model.h
         app/model/model.cc

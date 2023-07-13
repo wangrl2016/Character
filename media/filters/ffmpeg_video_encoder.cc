@@ -361,7 +361,7 @@ namespace media {
         // send the frame to the encoder
         ret = avcodec_send_frame(ost->encoder, frame);
         if (ret < 0) {
-            LOG(ERROR) << "Error sending a frame to the encoder";
+            // LOG(ERROR) << "Error sending a frame to the encoder";
             return false;
         }
 
