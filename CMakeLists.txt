@@ -70,6 +70,7 @@ target_link_libraries(Character
         PRIVATE
         AudioGraphModule
         BaseLibrary
+        MediaLibrary
         PortSMF
         ${CONAN_LIBS}
         Qt${QT_VERSION_MAJOR}::Widgets

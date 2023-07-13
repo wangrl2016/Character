@@ -14,6 +14,10 @@ namespace app {
 
         ~ExportDialog();
 
+    public slots:
+
+        void Export();
+
     private:
         QPushButton* export_button_;
     };

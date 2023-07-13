@@ -13,6 +13,7 @@ extern "C" {
 #include <libswresample/swresample.h>
 #include <libswscale/swscale.h>
 #include <libavutil/avutil.h>
+#include <libavutil/timestamp.h>
 }
 
 namespace media {

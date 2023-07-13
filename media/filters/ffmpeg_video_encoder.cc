@@ -3,6 +3,7 @@
 //
 
 #include <glog/logging.h>
+
 #include "media/filters/ffmpeg_video_encoder.h"
 
 namespace media {
@@ -44,12 +45,12 @@ namespace media {
         if (fmt->video_codec != AV_CODEC_ID_NONE) {
             AddStream(&video_stream_, fmt->video_codec);
             have_video_ = true;
-            encode_video_ = false;
+            encode_video_ = true;
         }
         if (fmt->audio_codec != AV_CODEC_ID_NONE) {
             AddStream(&audio_stream_, fmt->audio_codec);
             have_audio_ = true;
-            encode_audio_ = false;
+            encode_audio_ = true;
         }
 
         if (have_video_) {
@@ -69,12 +70,11 @@ namespace media {
                 return false;
             }
         }
-
-
         return true;
     }
 
     bool FFmpegVideoEncoder::Encode() {
+        LOG(INFO) << __FUNCTION__;
         int ret;
         // Write the stream header, if any.
         ret = avformat_write_header(output_format_context_, nullptr);
@@ -84,7 +84,7 @@ namespace media {
         }
 
         while (encode_video_ || encode_audio_) {
-            // Select the stream to encode
+            // select the stream to encode
             if (encode_video_ &&
                 (!encode_audio_ || av_compare_ts(video_stream_.next_pts, video_stream_.encoder->time_base,
                                                  audio_stream_.next_pts, audio_stream_.encoder->time_base) <= 0)) {
@@ -343,6 +343,16 @@ namespace media {
         return true;
     }
 
+    static void LogPacket(const AVFormatContext* format_context,
+                          const AVPacket* pkt) {
+        AVRational* time_base = &format_context->streams[pkt->stream_index]->time_base;
+        printf("pts: %s pts_time: %s dts: %s dts_time: %s duration: %s duration_time: %s stream_index: %d\n",
+               av_ts2str(pkt->pts), av_ts2timestr(pkt->pts, time_base),
+               av_ts2str(pkt->dts), av_ts2timestr(pkt->dts, time_base),
+               av_ts2str(pkt->duration), av_ts2timestr(pkt->duration, time_base),
+               pkt->stream_index);
+    }
+
     bool FFmpegVideoEncoder::WriteFrame(OutputStream* ost,
                                         AVFrame* frame,
                                         AVPacket* packet) {
@@ -358,7 +368,7 @@ namespace media {
         while (ret >= 0) {
             ret = avcodec_receive_packet(ost->encoder, packet);
             if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
-                break;
+                return true;
             else if (ret < 0) {
                 LOG(ERROR) << "Error encoding a frame";
                 return false;
@@ -369,14 +379,14 @@ namespace media {
             packet->stream_index = ost->stream->index;
 
             // Write the compressed frame to the media file.
+            LogPacket(output_format_context_, packet);
             ret = av_interleaved_write_frame(output_format_context_, packet);
             if (ret < 0) {
                 LOG(ERROR) << "Error while writing output packet";
                 return false;
             }
         }
-
-        return ret != AVERROR_EOF;
+        return false;
     }
 
     // Prepare a dummy image.
@@ -434,7 +444,7 @@ namespace media {
                          video_stream_.next_pts,
                          video_stream_.encoder->width,
                          video_stream_.encoder->height);
-            sws_scale(video_stream_.sws_context, (const uint8_t* const *) video_stream_.temp_frame->data,
+            sws_scale(video_stream_.sws_context, (const uint8_t* const*) video_stream_.temp_frame->data,
                       video_stream_.temp_frame->linesize, 0,
                       video_stream_.encoder->height,
                       video_stream_.frame->data,
@@ -458,6 +468,23 @@ namespace media {
     static AVFrame* GetAudioFrame(OutputStream* ost) {
         AVFrame* frame = ost->temp_frame;
         int i, j, v;
+        auto* q = (int16_t*) frame->data[0];
+
+        // check if we want to generate more frames
+        if (av_compare_ts(ost->next_pts, ost->encoder->time_base,
+                          kStreamDuration, {1, 1}) > 0)
+            return nullptr;
+
+        for (j = 0; j < frame->nb_samples; j++) {
+            v = (int) (sin(ost->t) * 10000);
+            for (i = 0; i < ost->encoder->channels; i++)
+                *q++ = int16_t(v);
+            ost->t += ost->cr;
+            ost->cr += ost->cr2;
+        }
+
+        frame->pts = ost->next_pts;
+        ost->next_pts += frame->nb_samples;
 
         return frame;
     }
@@ -466,8 +493,37 @@ namespace media {
     // return true when encoding is finished, false otherwise.
     bool FFmpegVideoEncoder::WriteAudioFrame() {
         AVFrame* frame = GetAudioFrame(&audio_stream_);
+        int dst_nb_samples;
+        int ret;
+        if (frame) {
+            dst_nb_samples = av_rescale_rnd(swr_get_delay(audio_stream_.swr_context,
+                                                          audio_stream_.encoder->sample_rate) + frame->nb_samples,
+                                            audio_stream_.encoder->sample_rate,
+                                            audio_stream_.encoder->sample_rate,
+                                            AV_ROUND_UP);
 
-        return true;
+            ret = av_frame_make_writable(audio_stream_.frame);
+            if (ret < 0)
+                return false;
+
+            // convert to destination format
+            ret = swr_convert(audio_stream_.swr_context,
+                              audio_stream_.frame->data,
+                              dst_nb_samples,
+                              (const uint8_t**) frame->data,
+                              frame->nb_samples);
+            if (ret < 0) {
+                LOG(ERROR) << "Error while converting";
+                return false;
+            }
+            frame = audio_stream_.frame;
+            frame->pts = av_rescale_q(audio_stream_.samples_count,
+                                      {1, audio_stream_.encoder->sample_rate},
+                                      audio_stream_.encoder->time_base);
+            audio_stream_.samples_count += dst_nb_samples;
+        }
+
+        return WriteFrame(&audio_stream_, frame, audio_stream_.temp_packet);
     }
 
     void FFmpegVideoEncoder::CloseVideoStream() {

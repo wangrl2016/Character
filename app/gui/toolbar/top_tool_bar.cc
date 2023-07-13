@@ -85,7 +85,6 @@ namespace app {
     }
 
     void TopToolBar::Export() {
-        LOG(INFO) << __FUNCTION__;
         auto* export_dialog = new ExportDialog(this);
         export_dialog->show();
     }
