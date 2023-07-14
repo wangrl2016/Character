@@ -34,8 +34,8 @@ namespace app {
 
 
         track_setting_widget_ = new TrackSettingWidget(this);
-        addTab(new QWidget(this), QIcon(":tab/project"), "Project");
         addTab(track_setting_widget_, QIcon(":tab/track"), "Track");
+        addTab(new QWidget(this), QIcon(":tab/project"), "Project");
         addTab(new QWidget(this), "Others");
     }
 }
