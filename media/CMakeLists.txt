@@ -4,6 +4,8 @@ set(MEDIA_LIBRARY_SOURCES
         media/base/audio_constant.h
         media/base/audio_parameters.cc
         media/base/audio_parameters.h
+        media/base/video_parameters.cc
+        media/base/video_parameters.h
         media/filters/ffmpeg_audio_decoder.cc
         media/filters/ffmpeg_audio_decoder.h
         media/filters/ffmpeg_audio_encoder.cc

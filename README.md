@@ -7,12 +7,11 @@
 ```
 CMAKE_PREFIX_PATH=~/Qt/6.4.1/macos
 ```
+
 * Install conan packages
 
-### Cross building
-
 ```
-conan create . --profile:host=profile --profile:build=profile
+pip install conan
 ```
 
 ### Reference

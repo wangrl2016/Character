@@ -11,7 +11,7 @@
 namespace app {
     constexpr int kTimelineFixedHeight = 24;
     constexpr int kLongScaleHeight = 12;
-    constexpr int kMinPixelPerSecond = 12;
+    constexpr int kMinPixelPerSecond = 24;
     constexpr int kDefaultPixelPerSecond = 48;
     constexpr int kMaxPixelPerSecond = 512;
     constexpr int kTextPadding = 2;
