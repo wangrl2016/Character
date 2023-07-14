@@ -1,0 +1,12 @@
+//
+// Created by wangrl2016 on 2023/7/14.
+//
+
+#ifndef CHARACTER_FFMPEG_VIDEO_DECODER_H
+#define CHARACTER_FFMPEG_VIDEO_DECODER_H
+
+namespace app {
+
+}
+
+#endif //CHARACTER_FFMPEG_VIDEO_DECODER_H

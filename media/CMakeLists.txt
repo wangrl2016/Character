@@ -10,6 +10,8 @@ set(MEDIA_LIBRARY_SOURCES
         media/filters/ffmpeg_audio_decoder.h
         media/filters/ffmpeg_audio_encoder.cc
         media/filters/ffmpeg_audio_encoder.h
+        media/filters/ffmpeg_video_decoder.cc
+        media/filters/ffmpeg_video_decoder.h
         media/filters/ffmpeg_video_encoder.cc
         media/filters/ffmpeg_video_encoder.h
         PARENT_SCOPE

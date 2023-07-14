@@ -53,4 +53,15 @@ namespace app {
             delete track_vec_.first();
         }
     }
+
+    void TrackContainerModel::AddClip(Track* track, Clip* clip) {
+
+    }
+
+    void TrackContainerModel::RemoveClip(Track* track, Clip* clip) {
+
+    }
+
+    int TrackContainerModel::ClipSize(Track* track) const {
+    }
 }

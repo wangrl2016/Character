@@ -46,6 +46,12 @@ namespace app {
 
         bool TryLock() { return processing_lock_.tryLock(); }
 
+        void AddClip(Clip* clip);
+
+        void RemoveClip(Clip* clip);
+
+        auto ClipSize() const { return clip_vec_.size(); }
+
     signals:
         void DestroyedTrack();
 

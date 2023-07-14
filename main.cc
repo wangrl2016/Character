@@ -17,14 +17,14 @@ int main(int argc, char* argv[]) {
 
     auto* project_model = new app::ProjectModel();
     project_model->CreateNewProject();
-    auto* project_presenter = new app::ProjectPresenter(project_model);
+    app::ProjectPresenter::Instance()->SetModel(project_model);
 
     app::MainWindow window;
 
     window.setMinimumSize(kDefaultWindowWidth, kDefaultWindowHeight);
     window.show();
 
-    window.Subscribe(project_presenter->play_progress_presenter());
+    window.Subscribe(app::ProjectPresenter::Instance()->play_progress_presenter());
 
     return QApplication::exec();
 }

@@ -10,7 +10,7 @@ namespace app {
 
     class TrackContainerView {
     public:
-        virtual void Subscribe(TrackContainerPresenter* presenter);
+        void Subscribe(TrackContainerPresenter* presenter);
 
     protected:
         TrackContainerPresenter* track_container_presenter_ = nullptr;

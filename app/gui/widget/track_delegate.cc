@@ -18,11 +18,7 @@ namespace app {
                               const QModelIndex& index) const {
         if (index.isValid()) {
             const QVariant value = index.data(Qt::DisplayRole);
-            QString text;
-            switch (index.column()) {
-                case 0:
-                    text =  value.toBool() ? "True" : "False";
-            }
+            QString text = value.toBool() ? "True" : "False";
 
             QRect rect = option.rect;
             painter->drawText(rect.x(), rect.y(), text);

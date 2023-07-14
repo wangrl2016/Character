@@ -26,7 +26,17 @@ namespace app {
 
         int TrackSize(Track::TrackType type = Track::kTrackCount) const;
 
+        auto TrackBegin() { return track_vec_.begin(); }
+
+        auto TrackEnd() { return track_vec_.end(); }
+
         void ClearAllTracks();
+
+        void AddClip(Track* track, Clip* clip);
+
+        void RemoveClip(Track* track, Clip* clip);
+
+        int ClipSize(Track* track) const;
 
     protected:
         mutable QReadWriteLock track_mutex_;

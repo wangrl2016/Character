@@ -8,7 +8,7 @@
 #include <QWidget>
 #include <QTableView>
 #include "app/presenter/track_container_view.h"
-#include "track_delegate.h"
+#include "app/gui/widget/track_delegate.h"
 
 // https://doc.qt.io/qt-6/model-view-programming.html
 

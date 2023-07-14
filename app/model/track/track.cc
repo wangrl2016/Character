@@ -52,4 +52,12 @@ namespace app {
 
         return t;
     }
+
+    void Track::AddClip(Clip* clip) {
+
+    }
+
+    void Track::RemoveClip(Clip* clip) {
+
+    }
 }

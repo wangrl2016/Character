@@ -15,6 +15,10 @@ namespace app {
         explicit TrackContainerPresenter(TrackContainerModel* model);
 
         void AddView(TrackContainerView* view);
+
+        int TrackSize(Track::TrackType type = Track::TrackType::kTrackCount) {
+            return track_container_model_->TrackSize(type);
+        }
     private:
         TrackContainerModel* track_container_model_;
 
