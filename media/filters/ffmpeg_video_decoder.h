@@ -9,6 +9,7 @@
 
 extern "C" {
 #include <libavformat/avformat.h>
+#include <libavcodec/avcodec.h>
 };
 
 
@@ -18,10 +19,19 @@ namespace app {
     public:
         bool Open(const std::string& file_path);
 
+        bool Decode();
+
+        void Close();
+
     private:
+        bool OpenCodecContext(int* stream_index,
+                              AVCodecContext** decoder_context,
+                              enum AVMediaType type);
 
         AVFormatContext* format_context_;
-        AVCodecContext* video_decode_context_, * audio_decode_context_;
+        AVCodecContext* video_decoder_context_, * audio_decoder_context_;
+
+        int video_stream_index_, audio_stream_index_;
 
     };
 }

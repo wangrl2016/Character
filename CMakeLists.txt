@@ -29,7 +29,7 @@ add_subdirectory(third_party/portsmf)
 
 add_library(BaseLibrary ${BASE_LIBRARY_SOURCES})
 
-add_library(MediaLibrary ${MEDIA_LIBRARY_SOURCES})
+add_library(MediaLibrary STATIC ${MEDIA_LIBRARY_SOURCES})
 target_link_libraries(MediaLibrary PRIVATE BaseLibrary ${CONAN_LIBS})
 
 # Media library unit test

@@ -3,16 +3,13 @@
 //
 
 #include "app/presenter/play_progress_presenter.h"
-#include "module/audio_graph/audio_bridge.h"
 
 namespace app {
     PlayProgressPresenter::PlayProgressPresenter(PlayProgressModel* model) :
             model_(model) {
     }
 
-    PlayProgressPresenter::~PlayProgressPresenter() {
-
-    }
+    PlayProgressPresenter::~PlayProgressPresenter() = default;
 
     void PlayProgressPresenter::AddView(PlayProgressView* view) {
         view_list_.append(view);

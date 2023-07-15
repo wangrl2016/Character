@@ -9,6 +9,8 @@
 
 namespace app {
     class CurrentStatePresenter {
+    public:
+
 
     private:
         CurrentStateModel* current_state_model_;
