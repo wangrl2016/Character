@@ -28,8 +28,12 @@ namespace app {
                               AVCodecContext** decoder_context,
                               enum AVMediaType type);
 
+        bool DecodePacket(AVCodecContext* decoder);
+
         AVFormatContext* format_context_;
         AVCodecContext* video_decoder_context_, * audio_decoder_context_;
+        AVFrame* frame_;
+        AVPacket* packet_;
 
         int video_stream_index_, audio_stream_index_;
 

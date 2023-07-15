@@ -37,6 +37,22 @@ namespace app {
         return true;
     }
 
+    bool FFmpegVideoDecoder::Decode() {
+        while (av_read_frame(format_context_, packet_) >= 0) {
+            if (packet_->stream_index == video_stream_index_) {
+
+            } else if (packet_->stream_index == audio_stream_index_) {
+
+            }
+        }
+
+        return true;
+    }
+
+    void FFmpegVideoDecoder::Close() {
+
+    }
+
     bool FFmpegVideoDecoder::OpenCodecContext(int* stream_index,
                                               AVCodecContext** decoder_context,
                                               enum AVMediaType type) {
@@ -88,14 +104,52 @@ namespace app {
             }
             *stream_index = index;
         }
+
+        frame_ = av_frame_alloc();
+        if (!frame_) {
+            LOG(ERROR) << "Could not allocate frame";
+            return false;
+        }
+
+        packet_ = av_packet_alloc();
+        if (!packet_) {
+            LOG(ERROR) << "Could not allocate packet";
+            return false;
+        }
         return true;
     }
 
-    bool FFmpegVideoDecoder::Decode() {
+    bool FFmpegVideoDecoder::DecodePacket(AVCodecContext* decoder) {
+        // submit the packet to the decoder
+        int ret = avcodec_send_packet(decoder, packet_);
+        if (ret < 0) {
+            LOG(ERROR) << "Error submitting a packet for decoding";
+            return false;
+        }
+
+        // get all the available frames from the decoder
+        while (ret >= 0) {
+            ret = avcodec_receive_frame(decoder, frame_);
+            if (ret < 0) {
+                // Those two return values are special and mean there is no output
+                // frame available, but there were no errors during decoding.
+                if (ret == AVERROR_EOF || ret == AVERROR(EAGAIN))
+                    return true;
+                LOG(ERROR) << "Error during decoding";
+                return false;
+            }
+
+            // Write the frame data to output file
+            if (decoder->codec->type == AVMEDIA_TYPE_VIDEO) {
+
+            } else if (decoder->codec->type == AVMEDIA_TYPE_AUDIO) {
+
+            }
+
+            av_frame_unref(frame_);
+            if (ret < 0)
+                return false;
+        }
         return true;
-    }
-
-    void FFmpegVideoDecoder::Close() {
-
     }
 }
