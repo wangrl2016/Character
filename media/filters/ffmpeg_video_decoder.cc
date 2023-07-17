@@ -50,7 +50,12 @@ namespace app {
     }
 
     void FFmpegVideoDecoder::Close() {
+        avcodec_free_context(&video_decoder_context_);
+        avcodec_free_context(&audio_decoder_context_);
+        avformat_close_input(&format_context_);
 
+        av_packet_free(&packet_);
+        av_frame_free(&frame_);
     }
 
     bool FFmpegVideoDecoder::OpenCodecContext(int* stream_index,

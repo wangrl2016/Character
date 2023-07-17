@@ -10,7 +10,7 @@
 extern "C" {
 #include <libavformat/avformat.h>
 #include <libavcodec/avcodec.h>
-};
+}
 
 
 namespace app {
