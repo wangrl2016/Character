@@ -4,10 +4,15 @@ import os
 import subprocess
 import sys
 import threading
+import requests
 
 dependencies = {
     'third_party/JUCE': 'https://github.com/juce-framework/JUCE.git@69795dc8e589a9eb5df251b6dd994859bf7b3fab',
     'third_party/portsmf':'https://codeberg.org/tenacityteam/portsmf.git@3c970d64ac77bc291634f7927f7fd22e5c84d649'
+}
+
+media_file_urls = {
+    'https://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4',
 }
 
 
@@ -167,6 +172,17 @@ def multi_thread(function, list_of_arg_lists):
         raise Exception("Thread failure detected")
 
 
+def download_media_file():
+    for media_file_url in media_file_urls:
+        local_file_path = os.path.join('res/media', media_file_url.split('/')[-1])
+        r = requests.get(media_file_url, stream=True)
+        print(local_file_path)
+        with open(local_file_path, 'wb') as f:
+            for chunk in r.iter_content(chunk_size=1024*1024):
+                if chunk:
+                    f.write(chunk)
+
+
 def build_conan_packages():
     pass
 
@@ -175,6 +191,8 @@ def main(args):
     verbose = not bool(os.environ.get('GIT_SYNC_DEPS_QUIET', False))
 
     git_sync_deps(verbose)
+
+    download_media_file()
 
     build_conan_packages()
 

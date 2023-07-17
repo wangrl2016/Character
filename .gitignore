@@ -1,3 +1,8 @@
+*.mp4
+*.mov
+*.avi
+*.ogg
+
 cmake-build-debug/
 cmake-build-release/
 CMakeUserPresets.json
