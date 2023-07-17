@@ -6,6 +6,8 @@ set(MEDIA_LIBRARY_SOURCES
         media/base/audio_parameters.h
         media/base/video_frame.cc
         media/base/video_frame.h
+        media/base/video_frame_pool.cc
+        media/base/video_frame_pool.h
         media/base/video_parameters.cc
         media/base/video_parameters.h
         media/filters/ffmpeg_audio_decoder.cc
@@ -22,6 +24,8 @@ set(MEDIA_LIBRARY_SOURCES
 set(MEDIA_LIBRARY_TEST_SOURCES
         media/base/audio_bus_test.cc
         media/filters/ffmpeg_audio_decoder_test.cc
+        media/filters/ffmpeg_audio_encoder_test.cc
+        media/filters/ffmpeg_video_decoder_test.cc
         media/filters/ffmpeg_video_encoder_test.cc
 
         PARENT_SCOPE
