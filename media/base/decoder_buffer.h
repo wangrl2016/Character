@@ -84,7 +84,7 @@ namespace media {
             return time_info_.duration;
         }
 
-        [[nodiscard]] const uint8_t* data() const {
+        [[nodiscard]] uint8_t* data() {
             DCHECK(!end_of_stream());
             return data_.get();
         }
@@ -123,7 +123,7 @@ namespace media {
         size_t size_;
 
         // Encoded data, if it is stored on the heap.
-        std::unique_ptr<uint8_t> data_;
+        std::unique_ptr<uint8_t[]> data_;
 
         size_t side_data_size_ = 0;
         std::unique_ptr<uint8_t[]> side_data_;

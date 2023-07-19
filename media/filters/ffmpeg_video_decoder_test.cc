@@ -4,6 +4,7 @@
 
 #include <gtest/gtest.h>
 #include "media/base/video_frame.h"
+#include "media/base/decoder_buffer.h"
 
 namespace media {
     class FFmpegVideoDecoderTest : public testing::Test {

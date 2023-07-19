@@ -6,6 +6,8 @@ set(MEDIA_LIBRARY_SOURCES
         media/base/audio_parameters.h
         media/base/decoder_buffer.cc
         media/base/decoder_buffer.h
+        media/base/decoder_buffer_queue.cc
+        media/base/decoder_buffer_queue.h
         media/base/video_frame.cc
         media/base/video_frame.h
         media/base/video_frame_pool.cc
@@ -25,6 +27,8 @@ set(MEDIA_LIBRARY_SOURCES
 
 set(MEDIA_LIBRARY_TEST_SOURCES
         media/base/audio_bus_test.cc
+        media/base/decoder_buffer_test.cc
+        media/base/decoder_buffer_queue_test.cc
         media/filters/ffmpeg_audio_decoder_test.cc
         media/filters/ffmpeg_audio_encoder_test.cc
         media/filters/ffmpeg_video_decoder_test.cc
