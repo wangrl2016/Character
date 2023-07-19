@@ -18,6 +18,11 @@ namespace media {
         // Allocates buffer with |size| >= 0.
         explicit DecoderBuffer(size_t size);
 
+        DecoderBuffer(const uint8_t* data,
+                      size_t size,
+                      const uint8_t* side_data,
+                      size_t side_data_size);
+
         DecoderBuffer(const DecoderBuffer&) = delete;
 
         DecoderBuffer& operator=(const DecoderBuffer&) = delete;
@@ -57,6 +62,9 @@ namespace media {
         std::unique_ptr<uint8_t> data_;
 
     private:
+        // Constructor helper method for memory allocations.
+        void Initialize();
+
         // Size of the encoded data.
         size_t size_;
 
