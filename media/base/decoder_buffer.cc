@@ -5,6 +5,14 @@
 #include "media/base/decoder_buffer.h"
 
 namespace media {
+    DecoderBuffer::TimeInfo::TimeInfo() = default;
+
+    DecoderBuffer::TimeInfo::~TimeInfo() = default;
+
+    DecoderBuffer::TimeInfo::TimeInfo(const TimeInfo&) = default;
+
+    DecoderBuffer::TimeInfo& DecoderBuffer::TimeInfo::operator=(const TimeInfo&) = default;
+
     DecoderBuffer::DecoderBuffer(size_t size) :
             size_(size), side_data_size_(0) {
         Initialize();
@@ -14,8 +22,8 @@ namespace media {
                                  size_t size,
                                  const uint8_t* side_data,
                                  size_t side_data_size) :
-                                 size_(size),
-                                 side_data_size_(side_data_size) {
+            size_(size),
+            side_data_size_(side_data_size) {
         if (!data) {
             CHECK_EQ(size_, 0u);
             CHECK(!side_data);
