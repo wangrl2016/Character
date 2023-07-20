@@ -5,7 +5,7 @@
 #include <glog/logging.h>
 #include "media/filters/ffmpeg_video_decoder.h"
 
-namespace app {
+namespace media {
     bool FFmpegVideoDecoder::Open(const std::string& file_path) {
         // Open input file, and allocate format context.
         if (avformat_open_input(&format_context_, file_path.c_str(), nullptr, nullptr) < 0) {

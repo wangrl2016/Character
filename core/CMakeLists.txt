@@ -1,4 +1,6 @@
 set(CORE_SOURCES
+        core/geometry/size.cc
+        core/geometry/size.h
         core/math/music_constant.h
         core/midi/midi.h
         core/midi/midi_event.h

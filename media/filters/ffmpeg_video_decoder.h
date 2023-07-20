@@ -13,7 +13,7 @@ extern "C" {
 }
 
 
-namespace app {
+namespace media {
     // https://ffmpeg.org/doxygen/trunk/demux_decode_8c-example.html
     class FFmpegVideoDecoder {
     public:
