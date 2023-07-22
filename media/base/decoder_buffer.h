@@ -69,6 +69,12 @@ namespace media {
         static std::shared_ptr<DecoderBuffer> FromArray(std::unique_ptr<uint8_t[]> data,
                                                         size_t size);
 
+        // Create a DecoderBuffer indicating we've reached end of stream.
+        //
+        // Calling any method other than end_of_stream() on the resulting buffer
+        // is disallowed.
+        static std::shared_ptr<DecoderBuffer> CreateEOSBuffer();
+
         [[nodiscard]] const TimeInfo& time_info() const {
             DCHECK(!end_of_stream());
             return time_info_;

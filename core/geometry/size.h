@@ -28,6 +28,8 @@ namespace core {
 
         void set_height(int height) { height_ = std::max(0, height); }
 
+        [[nodiscard]] int GetArea() const { return width_ * height_; }
+
     private:
         int width_;
         int height_;

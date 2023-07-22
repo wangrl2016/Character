@@ -4,6 +4,8 @@
 
 #include "media/base/decoder_buffer.h"
 
+#include <memory>
+
 namespace media {
     DecoderBuffer::TimeInfo::TimeInfo() = default;
 
@@ -74,6 +76,10 @@ namespace media {
                                                             size_t size) {
         CHECK(data);
         return std::make_unique<DecoderBuffer>(std::move(data), size);
+    }
+
+    std::shared_ptr<DecoderBuffer> DecoderBuffer::CreateEOSBuffer() {
+        return std::make_shared<DecoderBuffer>(nullptr, 0, nullptr, 0);
     }
 
     void DecoderBuffer::Initialize() {

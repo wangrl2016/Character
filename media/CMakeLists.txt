@@ -8,6 +8,8 @@ set(MEDIA_LIBRARY_SOURCES
         media/base/decoder_buffer.h
         media/base/decoder_buffer_queue.cc
         media/base/decoder_buffer_queue.h
+        media/base/test_data_util.cc
+        media/base/test_data_util.h
         media/base/video_frame.cc
         media/base/video_frame.h
         media/base/video_frame_pool.cc

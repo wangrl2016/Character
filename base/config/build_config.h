@@ -8,7 +8,9 @@
 #if defined(ANDROID)
 #define OS_ANDROID 1
 #elif defined(__APPLE__)
+
 #include <TargetConditionals.h>
+
 #if defined(TARGET_OS_IPHONE) && TARGET_OS_IPHONE
 #define OS_IOS 1
 #else
@@ -20,6 +22,11 @@
 #define OS_WIN
 #else
 #error Please add support for your platform in build_config.h
+#endif
+
+#if defined(OS_ANDROID) || defined(OS_IOS) || defined(OS_LINUX) || \
+    defined(OS_MAC) || defined(OS_OPENBSD)
+#define OS_POSIX 1
 #endif
 
 // Compiler detection. Note: clang masquerades as GCC on POSIX and
