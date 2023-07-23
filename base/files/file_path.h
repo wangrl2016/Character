@@ -117,7 +117,98 @@ namespace base {
         // std::size(kSeparators), i.e., the number of separators in kSeparators plus
         // one (the null terminator at the end of kSeparators).
         static constexpr size_t kSeparatorsLength = std::size(kSeparators);
+
+        // The spacial path component meaning "this directory".
+        static constexpr CharType kCurrentDirectory[] = FILE_PATH_LITERAL(".");
+
+        // The spacial path component meaning "the parent directory".
+        static constexpr CharType kParentDirectory[] = FILE_PATH_LITERAL("..");
+
+        static constexpr CharType kExtensionSeparator = FILE_PATH_LITERAL('.');
+
+        FilePath();
+
+        FilePath(const FilePath& that);
+
+        explicit FilePath(StringPieceType path);
+
+        ~FilePath();
+
+        FilePath& operator=(const FilePath& that);
+
+        // Constructs FilePath with the contents of |that|, which is left in valid but
+        // unspecified state.
+        FilePath(FilePath&& that) noexcept;
+
+        // Replaces the contents with those of |that|, which is left in valid but
+        // unspecified state.
+        FilePath& operator=(FilePath&& that) noexcept;
+
+        bool operator==(const FilePath& that) const;
+
+        bool operator!=(const FilePath& that) const;
+
+        // Required for some STL containers and operations
+        bool operator<(const FilePath& that) const {
+            return path_ < that.path_;
+        }
+
+        [[nodiscard]] const StringType& value() const { return path_; }
+
+        bool empty() const { return path_.empty(); }
+
+        void clear() { path_.clear(); }
+
+        // Return true if |character| is in kSeparators.
+        static bool IsSeparator(CharType character);
+
+        // Return a vector of all the components of the provided path. It is
+        // equivalent to calling DirName().value on the path's root component,
+        // and BaseName().value() on each child component.
+        //
+        // To make sure this is lossless, so we can differentiate absolute and
+        // relative paths, the root slash will be included even though no other
+        // slashes will be. The precise behavior is:
+        //
+        // POSIX: "/foo/bar"        ->  ["/", "foo", "bar]
+        // Windows: "C:\foo\bar"    ->  ["C", "\\", "foo", "bar"]
+        [[nodiscard]] std::vector<FilePath::StringType> GetComponents() const;
+
+        // Return true is this FilePath is a parent or ancestor of the |child|.
+        // Absolute and relative paths are accepted i.e. /foo is a parent to /foo/bar,
+        // and foo is a parent to foo/bar. Any ancestor is considered a parent i.e. /a
+        // is a parent to both /a/b and /a/b/c. Does not convert paths to absolute,
+        // follow symlinks or directory navigation (e.g. ".."). A path is *NOT* its
+        // own parent.
+        [[nodiscard]] bool IsParent(const FilePath& child) const;
+
+        // If IsParent(child) holds, appends to path (if non-nullptr) the
+        // relative path to child and returns true. For example, if parent
+        // holds "/Users/Library/Application Support", child holds
+        // "/Users/Library/Application Support/Google/Chrome/Default", and
+        // *path holds "/Users/Library/Caches", then after
+        // parent.AppendRelativePath(child, path) is called *path will hold
+        // "/Users/Library/Caches/Google/Chrome/Default". Otherwise,
+        // return false.
+        bool AppendRelativePath(const FilePath& child, FilePath* path) const;
+
+        FilePath DirName() const;
+
+        FilePath BaseName() const;
+
+    private:
+        // Remove trailing separators from this object. If the path is absolute, it
+        // will never be stripped any more than to refer to the absolute root
+        // directory, so "////" will become "/", not "". A leading pair of
+        // separators is never stripped, to support alternate roots. This is used to
+        // support UNC paths on Windows.
+        void StripTrailingSeparatorsInternal();
+
+        StringType path_;
     };
+
+    std::ostream& operator<<(std::ostream& out,
+                             const FilePath& file_path);
 }
 
 #endif //CHARACTER_FILE_PATH_H
