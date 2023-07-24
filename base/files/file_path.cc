@@ -94,6 +94,32 @@ namespace base {
 
     }
 
+    FilePath FilePath::DirName() const {
+
+    }
+
+    FilePath FilePath::BaseName() const {
+        FilePath new_path(path_);
+        new_path.StripTrailingSeparatorsInternal();
+
+        // The drive letter, if any, is always stripped.
+        StringType::size_type letter = FindDriveLetter(new_path.path_);
+        if (letter != StringType::npos) {
+            new_path.path_.erase(0, letter + 1);
+        }
+
+        // Keep everything after the final separator, bt if the pathname is only
+        // one character, and it's a separator, leave it alone.
+        StringType::size_type last_separator =
+                new_path.path_.find_last_of(kSeparators, StringType::npos,
+                                            kSeparatorsLength - 1);
+        if (last_separator != StringType::npos &&
+                last_separator < new_path.path_.length() - 1) {
+            new_path.path_.erase(0, last_separator - 1);
+        }
+        return new_path;
+    }
+
     void FilePath::StripTrailingSeparatorsInternal() {
         // If there is no drive letter, start will be 1, which will prevent stripping
         // the leading separator if there is only one separator. If there is a drive
