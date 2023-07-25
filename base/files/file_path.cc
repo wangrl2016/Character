@@ -28,6 +28,14 @@ namespace base {
         return StringType::npos;
     }
 
+    bool AreAllSeparators(const StringType& input) {
+        for (auto it : input) {
+            if (!FilePath::IsSeparator(it))
+                return false;
+        }
+        return true;
+    }
+
     FilePath::FilePath() = default;
 
     FilePath::FilePath(const FilePath& that) = default;
@@ -91,11 +99,52 @@ namespace base {
     }
 
     bool FilePath::AppendRelativePath(const FilePath& child, FilePath* path) const {
-
+        std::vector<StringType> parent_components = GetComponents();
+        std::vector<StringType> child_components = child.GetComponents();
     }
 
     FilePath FilePath::DirName() const {
+        FilePath new_path(path_);
+        new_path.StripTrailingSeparatorsInternal();
 
+        // The drive letter, if any, always needs to remain in the output. If there
+        // is no drive letter, as will always be the case on platforms which do not
+        // support drive letters, letter will be npos, or -1, so the comparisons and
+        // resizes below using letter will still be valid.
+        StringType::size_type letter = FindDriveLetter(new_path.path_);
+
+        StringType::size_type last_separator =
+                new_path.path_.find_last_of(kSeparators, StringType::npos,
+                                            kSeparatorsLength - 1);
+        if (last_separator == StringType::npos) {
+            // path_ is in the current directory.
+            new_path.path_.resize(letter + 1);
+        } else if (last_separator == letter + 1) {
+            // path_ is in the root directory.
+            new_path.path_.resize(letter + 2);
+        } else if (last_separator == letter + 1 &&
+                IsSeparator(new_path.path_[letter + 1])) {
+            // path_ is in "//" (possibly with a drive letter); leave the double
+            // separator intact indicating alternate root.
+            new_path.path_.resize(letter + 3);
+        } else if (last_separator != 0) {
+            bool trim_to_basename = true;
+#if defined(OS_POSIX)
+            if (AreAllSeparators(new_path.path_.substr(0, last_separator + 1))) {
+                new_path.path_.resize(last_separator + 1);
+                trim_to_basename = false;
+            }
+#endif
+            if (trim_to_basename) {
+                new_path.path_.resize(last_separator);
+            }
+        }
+
+        new_path.StripTrailingSeparatorsInternal();
+        if (!new_path.path_.length())
+            new_path.path_ = kCurrentDirectory;
+
+        return new_path;
     }
 
     FilePath FilePath::BaseName() const {
