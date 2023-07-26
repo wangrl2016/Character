@@ -101,6 +101,25 @@ namespace base {
     bool FilePath::AppendRelativePath(const FilePath& child, FilePath* path) const {
         std::vector<StringType> parent_components = GetComponents();
         std::vector<StringType> child_components = child.GetComponents();
+
+        if (parent_components.empty() ||
+                parent_components.size() >= child_components.size())
+            return false;
+
+        std::vector<StringType>::const_iterator parent_comp =
+                parent_components.begin();
+        std::vector<StringType>::const_iterator child_comp =
+                child_components.begin();
+
+#if defined(FILE_PATH_USES_DRIVE_LETTERS)
+        // Windows can access snesitive filesystems, so component
+        // comparisons must be case sensitive, but drive letters are
+        // never case sensitive.
+        if ((FindDriveLetter(*parent_comp) != StringType::npos) &&
+                (FindDriveLetter(*child_comp) != StringType::npos)) {
+
+        }
+#endif
     }
 
     FilePath FilePath::DirName() const {
