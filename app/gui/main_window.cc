@@ -7,6 +7,8 @@
 #include <QMenuBar>
 #include <QShortcut>
 #include <QVBoxLayout>
+#include <QFileDialog>
+#include <QStandardPaths>
 #include "app/gui/dialog/about_dialog.h"
 #include "app/gui/toolbar/top_tool_bar.h"
 #include "module/audio_graph/audio_bridge.h"
@@ -135,6 +137,23 @@ namespace app {
         // new
         auto* new_action = new QAction(QIcon(), tr("New"), file_menu);
         file_menu->addAction(new_action);
+
+        // open
+        auto* open_action = new QAction(QIcon(), tr("Open"), file_menu);
+        open_action->setShortcut(QKeySequence::Open);
+        connect(open_action, &QAction::triggered, this, [&]() {
+            auto target_path = QFileDialog::getOpenFileName(
+                    this,
+                    QStringLiteral("Open"),
+                    QStandardPaths::writableLocation(QStandardPaths::DesktopLocation));
+
+            LOG(INFO) << "Open file path: " << target_path.toStdString();
+        });
+        file_menu->addAction(open_action);
+
+        // open recent
+        auto* open_recent_action = new QAction(QIcon(), tr("Open Recent"), file_menu);
+        file_menu->addAction(open_recent_action);
     }
 
     void MainWindow::SetupToolBar() {
