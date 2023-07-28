@@ -46,10 +46,14 @@ set(APP_SOURCES
         app/gui/main_window.h
         app/model/animation/animation.cc
         app/model/animation/animation.h
+        app/model/center/project_center.cc
+        app/model/center/project_center.h
         app/model/clip/clip.cc
         app/model/clip/clip.h
         app/model/clip/midi_clip.cc
         app/model/clip/midi_clip.h
+        app/model/database/project_info_provider.cc
+        app/model/database/project_info_provider.h
         app/model/image/layer.cc
         app/model/image/layer.h
         app/model/music/note.cc

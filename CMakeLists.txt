@@ -15,8 +15,8 @@ conan_basic_setup(KEEP_RPATHS)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 configure_file(app/config/user_config.h.in config/user_config.h)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Sql)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql)
 
 add_subdirectory(app)
 add_subdirectory(base)
@@ -82,6 +82,7 @@ target_link_libraries(Character
         PortSMF
         ${CONAN_LIBS}
         Qt${QT_VERSION_MAJOR}::Widgets
+        Qt${QT_VERSION_MAJOR}::Sql
         )
 
 qt_finalize_executable(Character)
