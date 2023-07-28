@@ -102,6 +102,7 @@ set(APP_SOURCES
         app/presenter/track_container_subscriber.h
         app/presenter/track_container_view.cc
         app/presenter/track_container_view.h
-
+        app/util/path_util.cc
+        app/util/path_util.h
         PARENT_SCOPE
         )

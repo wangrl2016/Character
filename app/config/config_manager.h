@@ -29,6 +29,10 @@ namespace app {
     private:
         ConfigManager();
 
+        ConfigManager(const ConfigManager& c);
+
+        ~ConfigManager() override;
+
         static ConfigManager* instance_;
         QString version_;
         QString working_dir_;
