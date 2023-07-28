@@ -13,3 +13,9 @@ set(BASE_LIBRARY_SOURCES
 
         PARENT_SCOPE
         )
+
+set(BASE_LIBRARY_TEST_SOURCES
+        base/files/file_path_test.cc
+
+        PARENT_SCOPE
+        )

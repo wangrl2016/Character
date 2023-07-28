@@ -38,10 +38,14 @@ add_library(ThirdPartyLibrary ${THIRD_PARTY_SOURCES})
 # Media library unit test
 enable_testing()
 
+add_executable(BaseLibraryTest ${BASE_LIBRARY_TEST_SOURCES})
+target_link_libraries(BaseLibraryTest PRIVATE BaseLibrary ThirdPartyLibrary ${CONAN_LIBS})
+
 add_executable(MediaLibraryTest ${MEDIA_LIBRARY_TEST_SOURCES})
 target_link_libraries(MediaLibraryTest PRIVATE BaseLibrary MediaLibrary ThirdPartyLibrary ${CONAN_LIBS})
 
 include(GoogleTest)
+gtest_discover_tests(BaseLibraryTest)
 gtest_discover_tests(MediaLibraryTest)
 # Media library test end
 
