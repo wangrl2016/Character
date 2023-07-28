@@ -23,6 +23,7 @@ add_subdirectory(base)
 add_subdirectory(core)
 add_subdirectory(media)
 add_subdirectory(module)
+add_subdirectory(third_party)
 
 add_subdirectory(third_party/JUCE)
 add_subdirectory(third_party/portsmf)
@@ -32,11 +33,13 @@ add_library(BaseLibrary ${BASE_LIBRARY_SOURCES})
 add_library(MediaLibrary STATIC ${MEDIA_LIBRARY_SOURCES})
 target_link_libraries(MediaLibrary PRIVATE BaseLibrary ${CONAN_LIBS})
 
+add_library(ThirdPartyLibrary ${THIRD_PARTY_SOURCES})
+
 # Media library unit test
 enable_testing()
 
 add_executable(MediaLibraryTest ${MEDIA_LIBRARY_TEST_SOURCES})
-target_link_libraries(MediaLibraryTest PRIVATE BaseLibrary MediaLibrary ${CONAN_LIBS})
+target_link_libraries(MediaLibraryTest PRIVATE BaseLibrary MediaLibrary ThirdPartyLibrary ${CONAN_LIBS})
 
 include(GoogleTest)
 gtest_discover_tests(MediaLibraryTest)
@@ -71,6 +74,7 @@ target_link_libraries(Character
         AudioGraphModule
         BaseLibrary
         MediaLibrary
+        ThirdPartyLibrary
         PortSMF
         ${CONAN_LIBS}
         Qt${QT_VERSION_MAJOR}::Widgets
