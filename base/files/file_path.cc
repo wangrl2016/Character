@@ -2,6 +2,7 @@
 // Created by wangrl2016 on 2023/6/14.
 //
 
+#include <glog/logging.h>
 #include "base/files/file_path.h"
 
 namespace base {
@@ -26,6 +27,22 @@ namespace base {
         }
 #endif
         return StringType::npos;
+    }
+
+    bool IsPathAbsolute(StringPieceType path) {
+#if defined(FILE_PATH_USES_DRIVE_LETTERS)
+        StringType::size_type letter = FindDriveLetter(path);
+        if (letter != StringType::npos) {
+            // Look for a separator right after the drive specification.
+            return path.length() > letter + 1 &&
+                    FilePath::IsSeparator(path[letter + 1]);
+        }
+        // Look for a pair of leading separators.
+        return path.length() > 1 &&
+                FilePath::IsSeparator(path[0]) && FilePath::IsSeparator(path[1]);
+#else
+        return path.length() > 0 && FilePath::IsSeparator(path[0]);
+#endif
     }
 
     bool AreAllSeparators(const StringType& input) {
@@ -90,8 +107,24 @@ namespace base {
         // Capture path components.
         while (current != current.DirName()) {
             base = current.BaseName();
-
+            if (!AreAllSeparators(base.value()))
+                ret_val.push_back(base.value());
+            current = current.DirName();
         }
+
+        // Capture root, if any.
+        base = current.BaseName();
+        if (!base.value().empty() && base.value() != kCurrentDirectory)
+            ret_val.push_back(current.BaseName().value());
+
+        // Capture drive letter, if any.
+        FilePath dir = current.DirName();
+        StringType::size_type letter = FindDriveLetter(dir.value());
+        if (letter != StringType::npos)
+            ret_val.emplace_back(dir.value(), 0, letter + 1);
+
+        std::ranges::reverse(ret_val);
+        return ret_val;
     }
 
     bool FilePath::IsParent(const FilePath& child) const {
@@ -120,6 +153,20 @@ namespace base {
 
         }
 #endif
+
+        while (parent_comp != parent_components.end()) {
+            if (*parent_comp != *child_comp)
+                return false;
+            parent_comp++;
+            child_comp++;
+        }
+
+        if (path != nullptr) {
+            for (; child_comp != child_components.end(); child_comp++) {
+                *path = path->Append(*child_comp);
+            }
+        }
+        return true;
     }
 
     FilePath FilePath::DirName() const {
@@ -183,8 +230,52 @@ namespace base {
                                             kSeparatorsLength - 1);
         if (last_separator != StringType::npos &&
                 last_separator < new_path.path_.length() - 1) {
-            new_path.path_.erase(0, last_separator - 1);
+            new_path.path_.erase(0, last_separator + 1);
         }
+        return new_path;
+    }
+
+    FilePath FilePath::Append(StringPieceType component) const {
+        StringPieceType appended = component;
+        StringType without_nul;
+
+        StringType::size_type nul_pos = component.find(kStringTerminator);
+        if (nul_pos != StringPieceType::npos) {
+            without_nul = StringType(component.substr(0, nul_pos));
+            appended = StringPieceType(without_nul);
+        }
+
+        DCHECK(!IsPathAbsolute(appended));
+
+        if (path_.compare(kCurrentDirectory) == 0 && !appended.empty()) {
+            // Append normally doesn't do any normalization, but as a special case,
+            // when appending to kCurrentDirectory, just return a new path for the
+            // component argument.  Appending component to kCurrentDirectory would
+            // serve no purpose other than needlessly lengthening the path, and
+            // it's likely in practice to wind up with FilePath objects containing
+            // only kCurrentDirectory when calling DirName on a single relative path
+            // component.
+            return FilePath(appended);
+        }
+
+        FilePath new_path(path_);
+        new_path.StripTrailingSeparatorsInternal();
+
+        // Don't append a separator if the path is empty (indicating the current
+        // directory) or if the path component is empty (indicating nothing to
+        // append).
+        if (!appended.empty() && !new_path.path_.empty()) {
+            // Don't append a separator if the path still ends with a trailing
+            // separator after stripping (indicating the root directory).
+            if (!IsSeparator(new_path.path_.back())) {
+                // Don't append a separator if the path is just a drive letter.
+                if (FindDriveLetter(new_path.path_) + 1 != new_path.path_.length()) {
+                    new_path.path_.append(1, kSeparators[0]);
+                }
+            }
+        }
+
+        new_path.path_.append(appended);
         return new_path;
     }
 

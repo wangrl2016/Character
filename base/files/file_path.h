@@ -155,7 +155,7 @@ namespace base {
 
         [[nodiscard]] const StringType& value() const { return path_; }
 
-        bool empty() const { return path_.empty(); }
+        [[nodiscard]] bool empty() const { return path_.empty(); }
 
         void clear() { path_.clear(); }
 
@@ -192,9 +192,19 @@ namespace base {
         // return false.
         bool AppendRelativePath(const FilePath& child, FilePath* path) const;
 
-        FilePath DirName() const;
+        [[nodiscard]] FilePath DirName() const;
 
-        FilePath BaseName() const;
+        [[nodiscard]] FilePath BaseName() const;
+
+        // Return a FilePath by appending a separator and the supplied path
+        // component to this object's path. append takes care to avoid adding
+        // excessive separators if this object's path already ends with a separator.
+        // If this object's path is kCurrentDirectory('.'), a new FilePath
+        // corresponding only to |component| is returned. |component| must be a
+        // relative path; it is an error to pass an absolute path.
+        [[nodiscard]] FilePath Append(StringPieceType component) const;
+
+        FilePath Append(const FilePath& component) const;
 
     private:
         // Remove trailing separators from this object. If the path is absolute, it
