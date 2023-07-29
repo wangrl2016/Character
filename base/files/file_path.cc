@@ -4,6 +4,7 @@
 
 #include <glog/logging.h>
 #include "base/files/file_path.h"
+#include "base/string/string_util.h"
 
 namespace base {
     using StringType = FilePath::StringType;
@@ -277,6 +278,14 @@ namespace base {
 
         new_path.path_.append(appended);
         return new_path;
+    }
+
+    FilePath FilePath::Append(const FilePath& component) const {
+
+    }
+
+    FilePath FilePath::AppendASCII(StringPiece component) const {
+        // DCHECK(base::IsStringASCII(component));
     }
 
     void FilePath::StripTrailingSeparatorsInternal() {

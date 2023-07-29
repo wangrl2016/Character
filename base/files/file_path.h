@@ -7,6 +7,7 @@
 
 #include <string>
 #include "base/config/build_config.h"
+#include "base/string/string_piece.h"
 
 namespace base {
 #if defined(OS_WIN)
@@ -204,7 +205,15 @@ namespace base {
         // relative path; it is an error to pass an absolute path.
         [[nodiscard]] FilePath Append(StringPieceType component) const;
 
-        FilePath Append(const FilePath& component) const;
+        [[nodiscard]] FilePath Append(const FilePath& component) const;
+
+        // Although Windows StingType is std::wstring, since the encoding it uses for
+        // path is well-defined, it can handle ASCII path components as well.
+        // Mac uses UTF8, and since ASCII is a subset of that, it works there as well.
+        // On Linux, although it can use any 8-bit encoding for paths, we assume that
+        // ASCII is a valid subset, regardless of the encoding, since many operating
+        // system paths will always be ASCII.
+        FilePath AppendASCII(StringPiece component) const;
 
     private:
         // Remove trailing separators from this object. If the path is absolute, it

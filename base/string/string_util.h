@@ -29,6 +29,14 @@ namespace base {
         return (c >= 'A' && c <= 'Z') ? (c + ('a' - 'A')) : c;
     }
 
+    bool IsStringASCII(StringPiece str);
+
+    bool IsStringASCII(StringPiece16 str);
+
+#if defined(WCHAR_T_IS_UTF32)
+    bool IsStringASCII(WStringPiece str);
+#endif
+
     // Indicates case sensitivity of comparisons. Only ASCII case insensitivity
     // is supported. Full Unicode case-insensitive conversions would need to go
     // to use ICU.

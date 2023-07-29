@@ -28,7 +28,7 @@ add_subdirectory(third_party)
 add_subdirectory(third_party/JUCE)
 add_subdirectory(third_party/portsmf)
 
-add_library(BaseLibrary ${BASE_LIBRARY_SOURCES})
+add_library(BaseLibrary STATIC ${BASE_LIBRARY_SOURCES})
 target_link_libraries(BaseLibrary ${CONAN_LIBS})
 
 add_library(MediaLibrary STATIC ${MEDIA_LIBRARY_SOURCES})

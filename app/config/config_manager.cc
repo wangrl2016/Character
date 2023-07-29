@@ -14,6 +14,8 @@ namespace app {
         InitInstalledWorkingDir();
     }
 
+    ConfigManager::~ConfigManager() = default;
+
     QString ConfigManager::DefaultVersion() {
         return QString::number(PROJECT_VERSION_MAJOR) + "." +
                QString::number(PROJECT_VERSION_MINOR) + "." +
