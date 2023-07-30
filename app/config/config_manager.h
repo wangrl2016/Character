@@ -8,7 +8,11 @@
 #include <QObject>
 
 namespace app {
+    const QString kProjectPath = "project";
+    const QString kTemplatePath = "template";
+
     class ConfigManager : public QObject {
+    Q_OBJECT
     public:
         static inline ConfigManager* Instance() {
             if (instance_ == nullptr) {
@@ -17,7 +21,19 @@ namespace app {
             return instance_;
         }
 
-        static QString DefaultVersion() ;
+        [[nodiscard]] const QString& working_dir() const {
+            return working_dir_;
+        }
+
+        [[nodiscard]] QString ProjectDir() const {
+            return working_dir() + QDir::separator() + kProjectPath;
+        }
+
+        [[nodiscard]] QString TemplateDir() const {
+            return working_dir() + QDir::separator() + kTemplatePath;
+        }
+
+        static QString DefaultVersion();
 
         static QString ProjectName();
 

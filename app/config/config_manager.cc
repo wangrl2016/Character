@@ -2,6 +2,7 @@
 // Created by wangrl2016 on 2023/6/30.
 //
 
+#include <glog/logging.h>
 #include <QDir>
 #include <QStandardPaths>
 #include "config/user_config.h"
@@ -27,10 +28,14 @@ namespace app {
     }
 
     void ConfigManager::InitInstalledWorkingDir() {
-        working_dir_ = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/character/";
+        working_dir_ = QStandardPaths::writableLocation(
+                QStandardPaths::DocumentsLocation) + QDir::separator() + ProjectName();
+        LOG(INFO) << __FUNCTION__ << " " << working_dir_.toStdString();
     }
 
     void ConfigManager::CreateWorkingDir() {
         QDir().mkpath(working_dir_);
+
+        QDir().mkpath(ProjectDir());
     }
 }
