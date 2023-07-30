@@ -197,6 +197,28 @@ namespace base {
 
         [[nodiscard]] FilePath BaseName() const;
 
+        // Returns the final extension of a file path, or an empty string if the file
+        // path has no extension.  In most cases, the final extension of a file path
+        // refers to the part of the file path from the last dot to the end (including
+        // the dot itself).  For example, this method applied to "/pics/jojo.jpg"
+        // and "/pics/jojo." returns ".jpg" and ".", respectively.  However, if the
+        // base name of the file path is either "." or "..", this method returns an
+        // empty string.
+        StringType FinalExtension() const;
+
+        // Removes the path's file extension, but ignores double extensions.
+        // Returns "C:\pics\jojo" for path "C:\pics\jojo.jpg"
+        FilePath RemoveFinalExtension() const;
+
+        // Inserts |suffix| after the file name portion of |path| but before the
+        // extension. Return "" if BaseName() == "." or "..".
+        // Examples:
+        // path == "C:\pics\jojo.jpg" suffix == " (1)", returns "C:\pics\jojo (1).jpg"
+        // path == "jojo.jpg"         suffix == " (1)", returns "jojo (1).jpg"
+        // path == "C:\pics\jojo"     suffix == " (1)", returns "C:\pics\jojo (1)"
+        // path == "C:\pics.old\jojo" suffix == " (1)", returns "C:\pics.old\jojo (1)"
+        FilePath InsertBeforeExtension(StringPieceType suffix) const;
+
         // Return a FilePath by appending a separator and the supplied path
         // component to this object's path. append takes care to avoid adding
         // excessive separators if this object's path already ends with a separator.
@@ -213,7 +235,83 @@ namespace base {
         // On Linux, although it can use any 8-bit encoding for paths, we assume that
         // ASCII is a valid subset, regardless of the encoding, since many operating
         // system paths will always be ASCII.
-        FilePath AppendASCII(StringPiece component) const;
+        [[nodiscard]] FilePath AppendASCII(StringPiece component) const;
+
+        // Returns true if this FilePath contains an absolute path.  On Windows, an
+        // absolute path begins with either a drive letter specification followed by
+        // a separator character, or with two separator characters.  On POSIX
+        // platforms, an absolute path begins with a separator character.
+        bool IsAbsolute() const;
+
+        // Returns true if this FilePath is a network path which starts with 2 path
+        // separators.
+        bool IsNetwork() const;
+
+        // Returns true if the patch ends with a path separator character.
+        bool EndsWithSeparator() const;
+
+        // Returns a copy of this FilePath that does not end with a trailing
+        // separator.
+        [[nodiscard]] FilePath StripTrailingSeparators() const;
+
+        // Returns true if this FilePath contains an attempt to reference a parent
+        // directory (e.g. has a path component that is "..").
+        bool ReferencesParent() const;
+
+        // Return the path as ASCII, or the empty string if the path is not ASCII.
+        // This should only be used for cases where the FilePath is representing a
+        // known-ASCII filename.
+        std::string MaybeAsASCII() const;
+
+        // Return the path as UTF-8.
+        //
+        // This function is *unsafe* as there is no way to tell what encoding is
+        // used in file names on POSIX systems other than Mac and Chrome OS,
+        // although UTF-8 is practically used everywhere these days. To mitigate
+        // the encoding issue, this function internally calls
+        // SysNativeMBToWide() on POSIX systems other than Mac and Chrome OS,
+        // per assumption that the current locale's encoding is used in file
+        // names, but this isn't a perfect solution.
+        //
+        // Once it becomes safe to stop caring about non-UTF-8 file names,
+        // the SysNativeMBToWide() hack will be removed from the code, along
+        // with "Unsafe" in the function name.
+        std::string AsUTF8Unsafe() const;
+
+        // Similar to AsUTF8Unsafe, but returns UTF-16 instead.
+        std::u16string AsUTF16Unsafe() const;
+
+        // Returns a FilePath object from a path name in ASCII.
+        static FilePath FromASCII(StringPiece ascii);
+
+        // Returns a FilePath object from a path name in UTF-8. This function
+        // should only be used for cases where you are sure that the input
+        // string is UTF-8.
+        //
+        // Like AsUTF8Unsafe(), this function is unsafe. This function
+        // internally calls SysWideToNativeMB() on POSIX systems other than Mac
+        // and Chrome OS, to mitigate the encoding issue. See the comment at
+        // AsUTF8Unsafe() for details.
+        static FilePath FromUTF8Unsafe(StringPiece utf8);
+
+        // Similar to FromUTF8Unsafe, but accepts UTF-16 instead.
+        static FilePath FromUTF16Unsafe(StringPiece16 utf16);
+
+        // Compare two strings in the same way the file system does.
+        // Note that these always ignore case, even on file systems that are
+        // case-sensitive. If case-sensitive comparison is ever needed,
+        // add corresponding methods here.
+        // The methods are written as a static method so that they can also be used
+        // on parts of a file path, e.g., just the extension.
+        // CompareIgnoreCase() returns -1, 0 or 1 for less-than, equal-to and
+        // greater-than respectively.
+        static int CompareIgnoreCase(StringPieceType string1,
+                                     StringPieceType string2);
+
+        static bool CompareEqualIgnoreCase(StringPieceType string1,
+                                           StringPieceType string2) {
+            return CompareIgnoreCase(string1, string2) == 0;
+        }
 
     private:
         // Remove trailing separators from this object. If the path is absolute, it

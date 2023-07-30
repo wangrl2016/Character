@@ -5,6 +5,7 @@
 #include <glog/logging.h>
 #include "base/files/file_path.h"
 #include "base/string/string_util.h"
+#include "base/string/string_concat.h"
 
 namespace base {
     using StringType = FilePath::StringType;
@@ -52,6 +53,28 @@ namespace base {
                 return false;
         }
         return true;
+    }
+
+    // Find the position of the '.' that separates the extension from the rest
+    // of the file name. The position is relative to BaseName(), not value().
+    // Returns npos if it can't find an extension.
+    StringType::size_type FinalExtensionSeparatorPosition(const StringType& path) {
+        // Special case "." and ".."
+        if (path == FilePath::kCurrentDirectory ||
+                path == FilePath::kParentDirectory)
+            return StringType::npos;
+
+        return path.rfind(FilePath::kExtensionSeparator);
+    }
+
+    // Return true if path is "", ".", or "..".
+    bool IsEmptyOrSpecialCase(const StringType& path) {
+        if (path.empty() || path == FilePath::kCurrentDirectory ||
+            path == FilePath::kParentDirectory) {
+            return true;
+        }
+
+        return false;
     }
 
     FilePath::FilePath() = default;
@@ -140,10 +163,8 @@ namespace base {
                 parent_components.size() >= child_components.size())
             return false;
 
-        std::vector<StringType>::const_iterator parent_comp =
-                parent_components.begin();
-        std::vector<StringType>::const_iterator child_comp =
-                child_components.begin();
+        auto parent_comp = parent_components.begin();
+        auto child_comp = child_components.begin();
 
 #if defined(FILE_PATH_USES_DRIVE_LETTERS)
         // Windows can access snesitive filesystems, so component
@@ -236,6 +257,39 @@ namespace base {
         return new_path;
     }
 
+    StringType FilePath::FinalExtension() const {
+        FilePath base(BaseName());
+        const auto dot = FinalExtensionSeparatorPosition(base.path_);
+        if (dot == StringType::npos)
+            return {};
+
+        return base.path_.substr(dot, StringType::npos);
+    }
+
+    FilePath FilePath::RemoveFinalExtension() const {
+        if (FinalExtension().empty())
+            return *this;
+
+        auto dot = FinalExtensionSeparatorPosition(path_);
+        if (dot == StringType::npos)
+            return *this;
+
+        return FilePath(path_.substr(0, dot));
+    }
+
+    FilePath FilePath::InsertBeforeExtension(StringPieceType suffix) const {
+        if (suffix.empty())
+            return FilePath(path_);
+
+        if (IsEmptyOrSpecialCase(BaseName().value()))
+            return {};
+
+        return FilePath(
+                StringConcat({RemoveFinalExtension().value(),
+                              suffix,
+                              FinalExtension()}));
+    }
+
     FilePath FilePath::Append(StringPieceType component) const {
         StringPieceType appended = component;
         StringType without_nul;
@@ -281,11 +335,16 @@ namespace base {
     }
 
     FilePath FilePath::Append(const FilePath& component) const {
-
+        return Append(component.value());
     }
 
     FilePath FilePath::AppendASCII(StringPiece component) const {
-        // DCHECK(base::IsStringASCII(component));
+        DCHECK(base::IsStringASCII(component));
+#if defined(OS_WIN)
+        return Append(UTF8ToWide(component));
+#elif defined(OS_POSIX)
+        return Append(component);
+#endif
     }
 
     void FilePath::StripTrailingSeparatorsInternal() {

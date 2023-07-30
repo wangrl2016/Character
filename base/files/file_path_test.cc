@@ -15,6 +15,11 @@ namespace base {
         FilePath::StringPieceType expected;
     };
 
+    struct BinaryTestData {
+        FilePath::StringPieceType inputs[2];
+        FilePath::StringPieceType expected;
+    };
+
     struct BinaryBooleanTestData {
         FilePath::StringPieceType inputs[2];
         bool expected;
@@ -59,6 +64,49 @@ namespace base {
             EXPECT_EQ(parent.IsParent(child), cases[i].expected) <<
                     "i: " << i << ", parent: " << parent.value() << ", child: " <<
                     child.value();
+        }
+    }
+
+    TEST_F(FilePathTest, AppendRelativePathTest) {
+        const struct BinaryTestData cases[] = {
+#if defined(FILE_PATH_USES_WIN_SEPARATORS)
+
+#else
+                {{FPL("/"), FPL("/foo/bar/baz")}, FPL("foo/bar/baz")},
+#endif
+                { { FPL("/foo/bar"),      FPL("/foo/bar/baz") },      FPL("baz")},
+                { { FPL("/foo/bar/"),     FPL("/foo/bar/baz") },      FPL("baz")},
+                { { FPL("//foo/bar/"),    FPL("//foo/bar/baz") },     FPL("baz")},
+                { { FPL("/foo/bar"),      FPL("/foo2/bar/baz") },     FPL("")},
+                { { FPL("/foo/bar.txt"),  FPL("/foo/bar/baz") },      FPL("")},
+                { { FPL("/foo/bar"),      FPL("/foo/bar2/baz") },     FPL("")},
+                { { FPL("/foo/bar"),      FPL("/foo/bar") },          FPL("")},
+        };
+
+        const FilePath base(FPL("blah"));
+
+        for (size_t i = 0; i < std::size(cases); i++) {
+            FilePath parent(cases[i].inputs[0]);
+            FilePath child(cases[i].inputs[1]);
+            {
+                FilePath result;
+                bool success = parent.AppendRelativePath(child, &result);
+                EXPECT_EQ(!cases[i].expected.empty(), success)
+                        << "i: " << i << ", parent: " << parent.value();
+                EXPECT_EQ(cases[i].expected, result.value())
+                        << "i: " << i << ", parent: " << parent.value()
+                        << ", child: " << child.value();
+            }
+            {
+                FilePath result(base);
+                bool success = parent.AppendRelativePath(child, &result);
+                EXPECT_EQ(!cases[i].expected.empty(), success)
+                        << "i: " << i << ", parent: " << parent.value()
+                        << ", child: " << child.value();
+                EXPECT_EQ(base.Append(cases[i].expected).value(), result.value())
+                        << "i: " << i << ", parent: " << parent.value() << ", child: "
+                        << child.value();
+            }
         }
     }
 
@@ -127,6 +175,33 @@ namespace base {
             FilePath observed = input.BaseName();
             EXPECT_EQ(FilePath::StringType(cases[i].expected), observed.value()) <<
                     "i: " << i << ", input: " << input.value();
+        }
+    }
+
+    TEST_F(FilePathTest, Append) {
+        const struct BinaryTestData cases[] = {
+                {{FPL(""), FPL("cc")}, FPL("cc")},
+        };
+
+        for (size_t i = 0; i < std::size(cases); i++) {
+            FilePath root(cases[i].inputs[0]);
+            FilePath::StringType leaf(cases[i].inputs[1]);
+            FilePath observed_str = root.Append(leaf);
+            EXPECT_EQ(FilePath::StringType(cases[i].expected), observed_str.value())
+                    << "i: " << i << ", root: " << root.value()
+                    << ", leaf: " << leaf;
+            FilePath observed_path = root.Append(FilePath(leaf));
+            EXPECT_EQ(FilePath::StringType(cases[i].expected), observed_path.value())
+                    << "i: " << i << ", root: " << root.value() << ", leaf: " << leaf;
+
+#if defined(OS_WIN)
+            std::string ascii = WidetoUTF8(leaf);
+#elif defined(OS_POSIX)
+            std::string ascii = leaf;
+#endif
+            observed_str = root.AppendASCII(ascii);
+            EXPECT_EQ(FilePath::StringType(cases[i].expected), observed_str.value())
+                    << "i: " << i << ", root: " << root.value() << ", leaf: " << leaf;
         }
     }
 }
