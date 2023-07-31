@@ -5,6 +5,7 @@
 #ifndef CHARACTER_CONFIG_MANAGER_H
 #define CHARACTER_CONFIG_MANAGER_H
 
+#include <QDir>
 #include <QObject>
 
 namespace app {

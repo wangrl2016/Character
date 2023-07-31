@@ -1,0 +1,12 @@
+//
+// Created by wangrl2016 on 2023/7/31.
+//
+
+#ifndef CHARACTER_PROJECT_FILE_MANAGER_H
+#define CHARACTER_PROJECT_FILE_MANAGER_H
+
+namespace app {
+
+}
+
+#endif //CHARACTER_PROJECT_FILE_MANAGER_H
