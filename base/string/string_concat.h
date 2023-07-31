@@ -11,8 +11,8 @@
 namespace base {
     namespace internal {
         template<typename CharT, typename StringT>
-        void StrAppendT(std::basic_string<CharT>& dest,
-                        std::initializer_list<const StringT> pieces) {
+        void StringAppendT(std::basic_string<CharT>& dest,
+                           std::initializer_list<const StringT> pieces) {
             const size_t initial_size = dest.size();
             size_t total_size = initial_size;
             for (const auto& cur: pieces) {
@@ -28,30 +28,30 @@ namespace base {
         }
 
         template<typename StringT>
-        auto StrCatT(std::initializer_list<const StringT> pieces) {
+        auto StringConcatT(std::initializer_list<const StringT> pieces) {
             std::basic_string<typename StringT::value_type> result;
-            StrAppendT(result, pieces);
+            StringAppendT(result, pieces);
             return result;
         }
     }
 
     // Initializer list forwards to the array version.
     inline std::string StringConcat(std::initializer_list<const StringPiece> pieces) {
-        return internal::StrCatT(pieces);
+        return internal::StringConcatT(pieces);
     }
 
-    inline std::u16string StrCat(std::initializer_list<const StringPiece16> pieces) {
-        return internal::StrCatT(pieces);
+    inline std::u16string StringConcat(std::initializer_list<const StringPiece16> pieces) {
+        return internal::StringConcatT(pieces);
     }
 
-    inline void StrAppend(std::string* dest,
-                          std::initializer_list<const StringPiece> pieces) {
-        internal::StrAppendT(*dest, pieces);
+    inline void StringAppend(std::string* dest,
+                             std::initializer_list<const StringPiece> pieces) {
+        internal::StringAppendT(*dest, pieces);
     }
 
-    inline void StrAppend(std::u16string* dest,
-                          std::initializer_list<const StringPiece16> pieces) {
-        internal::StrAppendT(*dest, pieces);
+    inline void StringAppend(std::u16string* dest,
+                             std::initializer_list<const StringPiece16> pieces) {
+        internal::StringAppendT(*dest, pieces);
     }
 }
 
