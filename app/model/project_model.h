@@ -5,8 +5,9 @@
 #ifndef CHARACTER_PROJECT_MODEL_H
 #define CHARACTER_PROJECT_MODEL_H
 
+#include <QVersionNumber>
+#include "app/model/play_progress_model.h"
 #include "app/model/track_container_model.h"
-#include "play_progress_model.h"
 
 namespace app {
     class ProjectModel : public TrackContainerModel {

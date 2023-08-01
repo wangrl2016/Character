@@ -9,9 +9,10 @@
 
 namespace app {
     class ProjectFileManager {
-        std::shared_ptr<ProjectModel> Parse(const QString& file_path);
+    public:
+        static std::shared_ptr<ProjectModel> Parse(const QString& file_path);
 
-        bool Write(const std::shared_ptr<ProjectModel>& model, const QString& file_path);
+        static bool Write(const std::shared_ptr<ProjectModel>& model, const QString& file_path);
     };
 }
 
