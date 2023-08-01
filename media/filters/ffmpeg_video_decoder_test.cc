@@ -4,9 +4,12 @@
 
 #include <gtest/gtest.h>
 #include "core/geometry/size.h"
-#include "media/base/video_frame.h"
+
 #include "media/base/decoder_buffer.h"
+#include "media/base/video_frame.h"
+#include "media/base/test_data_util.h"
 #include "media/filters/ffmpeg_video_decoder.h"
+
 
 namespace media {
     static const core::Size kCodedSize(320, 240);
@@ -21,6 +24,7 @@ namespace media {
             // Initialize various test buffers.
             frame_buffer_ = std::make_unique<uint8_t[]>(kCodedSize.GetArea());
             end_of_stream_buffer_ = DecoderBuffer::CreateEOSBuffer();
+            i_frame_buffer_ = ReadTestDataFile("vp8-i-frame-320x240");
         }
 
 

@@ -6,6 +6,7 @@ set(APP_SOURCES
         app/gui/dialog/export_dialog.cc
         app/gui/dialog/export_dialog.h
         app/gui/style/color_constant.h
+        app/gui/style/default_style.h
         app/gui/tab/bottom_tab_widget.cc
         app/gui/tab/bottom_tab_widget.h
         app/gui/tab/right_tab_widget.cc

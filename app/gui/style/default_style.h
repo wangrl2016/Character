@@ -5,4 +5,8 @@
 #ifndef CHARACTER_DEFAULT_STYLE_H
 #define CHARACTER_DEFAULT_STYLE_H
 
+namespace app{
+
+}
+
 #endif //CHARACTER_DEFAULT_STYLE_H

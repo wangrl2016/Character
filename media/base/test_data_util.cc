@@ -13,4 +13,14 @@ namespace media {
         base::FilePath file_path(FILE_PATH_LITERAL(PROJECT_SOURCE_DIR));
         return file_path.Append(GetTestDataPath()).AppendASCII(name);
     }
+
+    base::FilePath GetTestDataPath() {
+        return base::FilePath(kTestDataPath);
+    }
+
+    std::shared_ptr<DecoderBuffer> ReadTestDataFile(const std::string& name) {
+        base::FilePath file_path = GetTestDataFilePath(name);
+
+        int64_t tmp = 0;
+    }
 }
