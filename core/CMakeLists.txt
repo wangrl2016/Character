@@ -1,4 +1,8 @@
 set(CORE_SOURCES
+        core/geometry/point.cc
+        core/geometry/point.h
+        core/geometry/rect.cc
+        core/geometry/rect.h
         core/geometry/size.cc
         core/geometry/size.h
         core/math/music_constant.h
