@@ -27,6 +27,21 @@ namespace media {
             i_frame_buffer_ = ReadTestDataFile("vp8-i-frame-320x240");
         }
 
+        ~FFmpegVideoDecoderTest() override {
+            Destroy();
+        }
+
+        void Initialize() {
+
+        }
+
+        void Reset() {
+
+        }
+
+        void Destroy() {
+
+        }
 
     private:
 
@@ -40,4 +55,8 @@ namespace media {
 
         OutputFrames output_frames_;
     };
+
+    TEST_F(FFmpegVideoDecoderTest, Initialize_Normal) {
+        Initialize();
+    }
 }

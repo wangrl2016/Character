@@ -4,6 +4,7 @@
 
 #include "config/user_config.h"
 #include "media/base/test_data_util.h"
+#include "base/files/file_util.h"
 
 namespace media {
     const base::FilePath::CharType kTestDataPath[] =
@@ -21,6 +22,15 @@ namespace media {
     std::shared_ptr<DecoderBuffer> ReadTestDataFile(const std::string& name) {
         base::FilePath file_path = GetTestDataFilePath(name);
 
-        int64_t tmp = 0;
+        size_t file_size = 0;
+        CHECK(base::GetFileSize(file_path, &file_size))
+                        << "Failed to get file size for " << name;
+
+        std::shared_ptr<DecoderBuffer> buffer(new DecoderBuffer(file_size));
+        auto* data = reinterpret_cast<char*>(buffer->data());
+        CHECK_EQ(file_size, base::ReadFile(file_path, data, file_size))
+            << "Failed to read " << name;
+
+        return buffer;
     }
 }
