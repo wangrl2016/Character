@@ -15,6 +15,37 @@ conan_basic_setup(KEEP_RPATHS)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 configure_file(app/config/user_config.h.in config/user_config.h)
 
+# Proto file generate
+
+if (WIN32)
+    set(_GRPC_CPP_PLUGIN_EXECUTABLE ${CONAN_BIN_DIRS_GRPC}/grpc_cpp_plugin.exe)
+else ()
+    set(_GRPC_CPP_PLUGIN_EXECUTABLE ${CONAN_BIN_DIRS_GRPC}/grpc_cpp_plugin)
+endif ()
+
+set(_PROTOBUF_PROTOC ${CONAN_BIN_DIRS_PROTOBUF}/protoc)
+set(PROTO_DIR ${CMAKE_CURRENT_SOURCE_DIR}/app/project/proto)
+
+set(OUT_DIR ${PROTO_DIR}/generated)
+if (NOT EXISTS ${OUT_DIR})
+    file(MAKE_DIRECTORY ${OUT_DIR})
+endif ()
+
+FILE(GLOB PROTO_FILES "${PROTO_DIR}/*.proto")
+
+FOREACH (PROTO_FILE_PATH ${PROTO_FILES})
+    execute_process(
+            COMMAND ${_PROTOBUF_PROTOC}
+            --grpc_out=${OUT_DIR}
+            -I=${PROTO_DIR}
+            --cpp_out=${OUT_DIR}
+            --plugin=protoc-gen-grpc=${_GRPC_CPP_PLUGIN_EXECUTABLE}
+            ${PROTO_FILE_PATH}
+    )
+ENDFOREACH ()
+
+# Proto file generate end
+
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Sql)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql)
 

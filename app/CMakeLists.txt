@@ -105,7 +105,12 @@ set(APP_SOURCES
         app/presenter/track_container_view.h
         app/project/file/project_file_manager.cc
         app/project/file/project_file_manager.h
+        app/project/proto/generated/character_model.grpc.pb.cc
+        app/project/proto/generated/character_model.grpc.pb.h
+        app/project/proto/generated/character_model.pb.cc
+        app/project/proto/generated/character_model.pb.h
         app/util/path_util.cc
         app/util/path_util.h
         PARENT_SCOPE
         )
+
