@@ -3,16 +3,19 @@
 //
 
 #include <gtest/gtest.h>
+#include "core/geometry/rect.h"
 #include "core/geometry/size.h"
-
 #include "media/base/decoder_buffer.h"
 #include "media/base/video_frame.h"
 #include "media/base/test_data_util.h"
 #include "media/filters/ffmpeg_video_decoder.h"
 
 
+
 namespace media {
-    static const core::Size kCodedSize(320, 240);
+    static const core::Size kCodedSize(320, 240);       /* NOLINT */
+    static const core::Rect kVisibleRect(320, 240);     /* NOLINT */
+    static const core::Size kNaturalSize(320, 240);     /* NOLINT */
 
     class FFmpegVideoDecoderTest : public testing::Test {
     public:
@@ -27,8 +30,16 @@ namespace media {
             i_frame_buffer_ = ReadTestDataFile("vp8-i-frame-320x240");
         }
 
+        FFmpegVideoDecoderTest(const FFmpegVideoDecoderTest&) = delete;
+
+        FFmpegVideoDecoderTest& operator=(const FFmpegVideoDecoderTest&) = delete;
+
         ~FFmpegVideoDecoderTest() override {
             Destroy();
+        }
+
+        void ReInitialize() {
+
         }
 
         void Initialize() {
