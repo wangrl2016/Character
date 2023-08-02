@@ -1,18 +1,21 @@
 #!/usr/bin/python3
+
 import argparse
 import os
+import requests
 import subprocess
 import sys
 import threading
-import requests
 
-dependencies = {
+DEPENDENCIES = {
     'third_party/JUCE': 'https://github.com/juce-framework/JUCE.git@69795dc8e589a9eb5df251b6dd994859bf7b3fab',
     'third_party/portsmf':'https://codeberg.org/tenacityteam/portsmf.git@3c970d64ac77bc291634f7927f7fd22e5c84d649'
 }
 
-media_file_urls = {
-    'https://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4',
+DOWNLOAD_TRACK_SIZE = 1024
+
+MEDIA_URLS = {
+    # 'https://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4',
 }
 
 
@@ -130,18 +133,18 @@ def git_checkout_to_directory(git, repo, commit_hash, directory, verbose):
 def git_sync_deps(verbose):
     git = git_executable()
 
-    for directory in dependencies:
-        for other_dir in dependencies:
+    for directory in DEPENDENCIES:
+        for other_dir in DEPENDENCIES:
             if directory.startswith(other_dir + '/'):
                 raise Exception('%r is parent of %r' % (other_dir, directory))
     list_of_arg_lists = []
-    for directory in sorted(dependencies):
-        if not isinstance(dependencies[directory], str):
+    for directory in sorted(DEPENDENCIES):
+        if not isinstance(DEPENDENCIES[directory], str):
             if verbose:
                 sys.stdout.write('Skipping "%s".\n' % directory)
             continue
-        if '@' in dependencies[directory]:
-            repo, commit_hash = dependencies[directory].split('@', 1)
+        if '@' in DEPENDENCIES[directory]:
+            repo, commit_hash = DEPENDENCIES[directory].split('@', 1)
         else:
             raise Exception("Please specify commit")
 
@@ -173,18 +176,14 @@ def multi_thread(function, list_of_arg_lists):
 
 
 def download_media_file():
-    for media_file_url in media_file_urls:
+    for media_file_url in MEDIA_URLS:
         local_file_path = os.path.join('res/media', media_file_url.split('/')[-1])
         r = requests.get(media_file_url, stream=True)
         print(local_file_path)
         with open(local_file_path, 'wb') as f:
-            for chunk in r.iter_content(chunk_size=1024*1024):
+            for chunk in r.iter_content(chunk_size=DOWNLOAD_TRACK_SIZE*DOWNLOAD_TRACK_SIZE):
                 if chunk:
                     f.write(chunk)
-
-
-def build_conan_packages():
-    pass
 
 
 def main(args):
@@ -194,10 +193,8 @@ def main(args):
 
     download_media_file()
 
-    build_conan_packages()
-
-    output_folder = '--output-folder=' + args.output_folder
-    build_type = '--settings=build_type=' + args.build_type
+    # output_folder = '--output-folder=' + args.output_folder
+    # build_type = '--settings=build_type=' + args.build_type
     # subprocess.check_call(['conan', 'install', '.', output_folder, '--build=missing', build_type])
 
 

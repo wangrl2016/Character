@@ -25,6 +25,19 @@ namespace core {
                 origin_(origin),
                 size_(size.width(), size.height()) {}
 
+        [[nodiscard]] constexpr int width() const { return size_.width(); }
+
+        void set_width(int width) { size_.set_width( width); }
+
+        [[nodiscard]] constexpr int height() const { return size_.height(); }
+
+        void set_height(int height) { size_.set_height(height); }
+
+        [[nodiscard]] constexpr const Size& size() const { return size_; }
+
+        // Returns true if the area of the rectangle is zero.
+        [[nodiscard]] bool IsEmpty() const { return size_.IsEmpty(); }
+
     private:
         Point origin_;
         Size size_;
