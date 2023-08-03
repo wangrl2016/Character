@@ -9,7 +9,7 @@
 #include "media/base/video_frame.h"
 #include "media/base/test_data_util.h"
 #include "media/filters/ffmpeg_video_decoder.h"
-
+#include "media/base/test_helper.h"
 
 
 namespace media {
@@ -38,19 +38,32 @@ namespace media {
             Destroy();
         }
 
-        void ReInitialize() {
+        void Initialize() {
+            InitializeWithConfig(TestVideoConfig::Normal());
+        }
+
+        void InitializeWithConfigWithResult(const VideoDecoderConfig& config,
+                                            bool success) {
 
         }
 
-        void Initialize() {
+        void InitializeWithConfig(const VideoDecoderConfig& config) {
+            InitializeWithConfigWithResult(config, true);
+        }
 
+        void ReInitialize() {
+            InitializeWithConfig(TestVideoConfig::Normal());
         }
 
         void Reset() {
-
+            decoder_->Reset();
         }
 
         void Destroy() {
+            decoder_.reset();
+        }
+
+        void Decode(std::shared_ptr<DecoderBuffer> buffer) {
 
         }
 

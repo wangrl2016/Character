@@ -10,6 +10,8 @@ set(MEDIA_LIBRARY_SOURCES
         media/base/decoder_buffer_queue.h
         media/base/test_data_util.cc
         media/base/test_data_util.h
+        media/base/test_helper.cc
+        media/base/test_helper.h
         media/base/video_aspect_ratio.cc
         media/base/video_aspect_ratio.h
         media/base/video_decoder_config.cc

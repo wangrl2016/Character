@@ -58,6 +58,10 @@ namespace media {
         av_frame_free(&frame_);
     }
 
+    void FFmpegVideoDecoder::Reset() {
+
+    }
+
     bool FFmpegVideoDecoder::OpenCodecContext(int* stream_index,
                                               AVCodecContext** decoder_context,
                                               enum AVMediaType type) {

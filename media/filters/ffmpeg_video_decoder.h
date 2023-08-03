@@ -23,7 +23,16 @@ namespace media {
 
         void Close();
 
+        void Reset();
+
     private:
+        enum class DecoderState {
+            kUninitialized,
+            kNormal,
+            kDecodedFinished,
+            kError
+        };
+
         bool OpenCodecContext(int* stream_index,
                               AVCodecContext** decoder_context,
                               enum AVMediaType type);
