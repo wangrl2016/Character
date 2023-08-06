@@ -7,6 +7,7 @@
 
 #include <cstdio>
 #include <cstdint>
+#include <memory>
 #include "base/time/time_delta.h"
 
 namespace media {
@@ -25,6 +26,16 @@ namespace media {
             kAPlaneTriPlanar = kVPlane,
             kAPlane = 3,
         };
+
+        VideoFrame() = delete;
+
+        VideoFrame(const VideoFrame&) = delete;
+
+        VideoFrame& operator=(const VideoFrame&) = delete;
+
+        static std::shared_ptr<VideoFrame> CreateFrame(VideoPixelFormat format,
+                                                       base::TimeDelta timestamp);
+
 
         // Array of data pointers to each plane.
         const uint8_t* data_[kMaxPlanes];

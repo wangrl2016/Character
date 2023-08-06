@@ -6,12 +6,12 @@
 #define CHARACTER_FFMPEG_VIDEO_DECODER_H
 
 #include <string>
-
 extern "C" {
 #include <libavformat/avformat.h>
 #include <libavcodec/avcodec.h>
 }
-
+#include "media/base/video_decoder_config.h"
+#include "media/base/decoder_buffer.h"
 
 namespace media {
     // https://ffmpeg.org/doxygen/trunk/demux_decode_8c-example.html
@@ -19,7 +19,9 @@ namespace media {
     public:
         bool Open(const std::string& file_path);
 
-        bool Decode();
+        void Initialize(const VideoDecoderConfig& config);
+
+        bool Decode(std::shared_ptr<DecoderBuffer> buffer);
 
         void Close();
 
