@@ -22,6 +22,8 @@ set(MEDIA_LIBRARY_SOURCES
         media/base/video_frame_pool.h
         media/base/video_parameters.cc
         media/base/video_parameters.h
+        media/base/video_types.cc
+        media/base/video_types.h
         media/filters/ffmpeg_audio_decoder.cc
         media/filters/ffmpeg_audio_decoder.h
         media/filters/ffmpeg_audio_encoder.cc
