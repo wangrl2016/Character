@@ -5,6 +5,8 @@
 #ifndef CHARACTER_VIDEO_TYPES_H
 #define CHARACTER_VIDEO_TYPES_H
 
+#include <cstdio>
+
 namespace media {
     // When a VideoFrame is backed by native textures, VideoPixelFormat describes
     // how those textures should be sampled and combined to produce the final
@@ -15,11 +17,17 @@ namespace media {
         kPixelFormatRGBA = 2,           // 32bpp RGBA (byte-order), 1 plane
     };
 
-    // Returns ture if |format| is an RGB format.
-    bool isRGB(VideoPixelFormat format);
+    // Returns true if |format| is a YUV format with multiple planes.
+    bool IsYuvPlanar(VideoPixelFormat format);
 
+    // Returns true if |format| is an RGB format.
+    bool IsRGB(VideoPixelFormat format);
 
+    // Returns true if |format| has no Alpha channel (hence is always opaque).
     bool IsOpaque(VideoPixelFormat format);
+
+    // Returns the number of significant bits per channel.
+    size_t BitDepth(VideoPixelFormat format);
 }
 
 
