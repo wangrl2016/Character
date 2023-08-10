@@ -43,6 +43,7 @@ set(MEDIA_LIBRARY_TEST_SOURCES
         media/base/audio_bus_test.cc
         media/base/decoder_buffer_test.cc
         media/base/decoder_buffer_queue_test.cc
+        media/base/video_frame_layout_test.cc
         media/base/video_frame_pool_test.cc
         media/base/video_frame_test.cc
         media/filters/ffmpeg_audio_decoder_test.cc
