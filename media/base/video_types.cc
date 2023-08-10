@@ -30,10 +30,25 @@ namespace media {
     }
 
     bool IsOpaque(VideoPixelFormat format) {
+        switch (format) {
+            case kPixelFormatI420:
+                return true;
+            case kPixelFormatRGBA:
+                return false;
+            default:
+                break;
+        }
         return false;
     }
 
     size_t BitDepth(VideoPixelFormat format) {
+        switch (format) {
+            case kPixelFormatI420:
+            case kPixelFormatRGBA:
+                return 8;
+            default:
+                break;
+        }
         return 0;
     }
 }

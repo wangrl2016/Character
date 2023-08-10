@@ -9,6 +9,7 @@
 #include <cstdint>
 #include <memory>
 #include "base/time/time_delta.h"
+#include "media/base/video_types.h"
 
 namespace media {
     class VideoFrame {
