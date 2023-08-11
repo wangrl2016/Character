@@ -35,17 +35,32 @@ namespace media {
 
         VideoFrameLayout() = delete;
 
-        VideoFrameLayout(const VideoFrameLayout&);
+        VideoFrameLayout(const VideoFrameLayout&) = default;
 
-        VideoFrameLayout(VideoFrameLayout&&);
+        VideoFrameLayout(VideoFrameLayout&&) = default;
 
-        VideoFrameLayout& operator=(const VideoFrameLayout&);
+        VideoFrameLayout& operator=(const VideoFrameLayout&) = default;
 
-        ~VideoFrameLayout();
+        ~VideoFrameLayout() = default;
+
+        static size_t NumPlanes(VideoPixelFormat format);
+
+        VideoPixelFormat format() const { return format_; }
+
+        const core::Size& coded_size() const { return coded_size_; }
+
+        const std::vector<ColorPlaneLayout>& planes() const { return planes_; }
+
+        bool operator==(const VideoFrameLayout& rhs) const;
+
+        bool operator!=(const VideoFrameLayout& rhs) const;
+
+        // Returns the required memory alignment for buffers.
+        [[nodiscard]] size_t buffer_addr_align() const { return buffer_addr_align_; }
 
     private:
         VideoFrameLayout(VideoPixelFormat format,
-                         const core::Size coded_size,
+                         const core::Size& coded_size,
                          std::vector<ColorPlaneLayout> planes,
                          size_t buffer_addr_align);
 
@@ -64,7 +79,6 @@ namespace media {
         // Memory address alignment of the buffers. This is only relevant when
         // allocating physical memory for the buffer.
         size_t buffer_addr_align_;
-
     };
 }
 
