@@ -5,6 +5,15 @@
 #include "media/base/video_frame_layout.h"
 
 namespace media {
+    std::vector<ColorPlaneLayout> PlanesFromStrides(
+            const std::vector<int32_t>& strides) {
+        std::vector<ColorPlaneLayout> planes(strides.size());
+        for (size_t i = 0; i < strides.size(); i++) {
+            planes[i].stride = strides[i];
+        }
+        return planes;
+    }
+
     std::shared_ptr<VideoFrameLayout> VideoFrameLayout::Create(
             VideoPixelFormat format,
             const core::Size& coded_size) {
@@ -15,9 +24,24 @@ namespace media {
     std::shared_ptr<VideoFrameLayout> VideoFrameLayout::CreateWithStrides(
             VideoPixelFormat format,
             const core::Size& coded_size,
-            std::vector<int32_t> strides,
+            const std::vector<int32_t>& strides,
             size_t buffer_addr_align) {
+        return CreateWithPlanes(format,
+                                coded_size,
+                                PlanesFromStrides(strides),
+                                buffer_addr_align);
+    }
 
+    std::shared_ptr<VideoFrameLayout> VideoFrameLayout::CreateWithPlanes(
+            VideoPixelFormat format,
+            const core::Size& coded_size,
+            std::vector<ColorPlaneLayout> planes,
+            size_t buffer_addr_align) {
+        return std::make_shared<VideoFrameLayout>(VideoFrameLayout(
+                format,
+                coded_size,
+                std::move(planes),
+                buffer_addr_align));
     }
 
     size_t VideoFrameLayout::NumPlanes(VideoPixelFormat format) {

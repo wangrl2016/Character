@@ -37,17 +37,17 @@ namespace media {
         return true;
     }
 
-    bool FFmpegVideoDecoder::Decode() {
-        while (av_read_frame(format_context_, packet_) >= 0) {
-            if (packet_->stream_index == video_stream_index_) {
-
-            } else if (packet_->stream_index == audio_stream_index_) {
-
-            }
-        }
-
-        return true;
-    }
+//    bool FFmpegVideoDecoder::Decode() {
+//        while (av_read_frame(format_context_, packet_) >= 0) {
+//            if (packet_->stream_index == video_stream_index_) {
+//
+//            } else if (packet_->stream_index == audio_stream_index_) {
+//
+//            }
+//        }
+//
+//        return true;
+//    }
 
     void FFmpegVideoDecoder::Close() {
         avcodec_free_context(&video_decoder_context_);

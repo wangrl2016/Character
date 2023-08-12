@@ -30,7 +30,13 @@ namespace media {
         static std::shared_ptr<VideoFrameLayout> CreateWithStrides(
                 VideoPixelFormat format,
                 const core::Size& coded_size,
-                std::vector<int32_t> strides,
+                const std::vector<int32_t>& strides,
+                size_t buffer_addr_align = kBufferAddressAlignment);
+
+        static std::shared_ptr<VideoFrameLayout> CreateWithPlanes(
+                VideoPixelFormat format,
+                const core::Size& coded_size,
+                std::vector<ColorPlaneLayout> planes,
                 size_t buffer_addr_align = kBufferAddressAlignment);
 
         VideoFrameLayout() = delete;
@@ -48,6 +54,9 @@ namespace media {
         VideoPixelFormat format() const { return format_; }
 
         const core::Size& coded_size() const { return coded_size_; }
+
+        // Returns number of planes. Note that num_planes >= num_buffers.
+        size_t num_planes() const { return planes_.size(); }
 
         const std::vector<ColorPlaneLayout>& planes() const { return planes_; }
 

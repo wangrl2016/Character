@@ -15,6 +15,6 @@ namespace media {
 
         // Create a YV12 Video frame.
         core::Size size(kWidth, kHeight);
-        std::shared_ptr<VideoFrame> frame = VideoFrame::CreateFrame();
+        // std::shared_ptr<VideoFrame> frame = VideoFrame::CreateFrame();
     }
 }

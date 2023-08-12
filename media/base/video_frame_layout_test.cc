@@ -8,6 +8,7 @@
 #include "media/base/color_plane_layout.h"
 #include "media/base/video_frame_layout.h"
 #include "media/base/video_types.h"
+#include "media/base/video_frame.h"
 
 namespace media {
    std::vector<ColorPlaneLayout> CreatePlanes(const std::vector<int32_t>& strides,
@@ -26,5 +27,9 @@ namespace media {
    TEST(VideoFrameLayout, CreateI420) {
        core::Size coded_size = core::Size(320, 180);
        auto layout = VideoFrameLayout::Create(kPixelFormatI420, coded_size);
+
+       auto num_of_planes = VideoFrame::NumPlanes(kPixelFormatI420);
+        EXPECT_EQ(layout->format(), kPixelFormatI420);
+        EXPECT_EQ(layout->coded_size(), coded_size);
    }
 }

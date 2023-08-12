@@ -37,6 +37,8 @@ namespace media {
         static std::shared_ptr<VideoFrame> CreateFrame(VideoPixelFormat format,
                                                        base::TimeDelta timestamp);
 
+        static size_t NumPlanes(VideoPixelFormat format);
+
 
         // Array of data pointers to each plane.
         const uint8_t* data_[kMaxPlanes];
