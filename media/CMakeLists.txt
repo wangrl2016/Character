@@ -6,6 +6,7 @@ set(MEDIA_LIBRARY_SOURCES
         media/base/audio_parameters.h
         media/base/color_plane_layout.cc
         media/base/color_plane_layout.h
+        media/base/decoder.h
         media/base/decoder_buffer.cc
         media/base/decoder_buffer.h
         media/base/decoder_buffer_queue.cc
@@ -16,6 +17,8 @@ set(MEDIA_LIBRARY_SOURCES
         media/base/test_helper.h
         media/base/video_aspect_ratio.cc
         media/base/video_aspect_ratio.h
+        media/base/video_decoder.cc
+        media/base/video_decoder.h
         media/base/video_decoder_config.cc
         media/base/video_decoder_config.h
         media/base/video_frame.cc

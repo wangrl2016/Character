@@ -4,6 +4,7 @@ set(BASE_LIBRARY_SOURCES
         base/files/file_path.h
         base/files/file_util.cc
         base/files/file_util.h
+        base/functional/bind.h
         base/memory/aligned_memory.cc
         base/memory/aligned_memory.h
         base/string/string_concat.h
