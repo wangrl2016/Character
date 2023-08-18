@@ -5,6 +5,7 @@
 #ifndef CHARACTER_STRING_UTIL_H
 #define CHARACTER_STRING_UTIL_H
 
+#include "base/config/build_config.h"
 #include "base/string/string_piece.h"
 
 namespace base {

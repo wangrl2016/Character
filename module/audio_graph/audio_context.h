@@ -8,6 +8,7 @@
 #include <juce_core/juce_core.h>
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_audio_utils/juce_audio_utils.h>
+#include "module/audio_graph/track.h"
 
 namespace audio_graph {
     constexpr int kInvalidIndex = -1;
@@ -57,6 +58,10 @@ namespace audio_graph {
         void StopBeat();
 
         void Clear();
+
+        int AddTrack(Track::TrackType type);
+
+        bool RemoveTrack(int track_id);
 
         std::vector<std::string> DeviceTypes(int* default_index = nullptr);
 

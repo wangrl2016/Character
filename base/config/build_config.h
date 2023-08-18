@@ -39,4 +39,20 @@
 #error Please add support for your compiler in build_config.h
 #endif
 
+// Type detection for wchar_t
+
+#if defined(OS_WIN)
+#define WCHAR_T_IS_UTF16
+#elif defined(OS_FUCHSIA)
+#define WCHAR_TIS_UTF32
+#elif defined(OS_POSIX) && defined(COMPILER_GCC) && defined(__WCHAR_MAX__) && \
+    (__WCHAR_MAX__ == 0x7fffffff || __WCHAR_MAX__ == 0xffffffff)
+#define WCHAR_T_IS_UTF32
+#elif defined(OS_POSIX) && defined(COMPILER_GCC) && defined(__WCHAR__MAX__) && \
+    (__WCHAR_MAX__ == 0x7fff || __WCHAR_MAX__ == 0xffff)
+#define WCHAR_T_IS_UTF16
+#else
+#error Please add support for your compiler in build/build_config.h
+#endif
+
 #endif //CHARACTER_BUILD_CONFIG_H

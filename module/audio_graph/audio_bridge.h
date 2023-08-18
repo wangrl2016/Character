@@ -7,6 +7,7 @@
 
 #include <future>
 #include <vector>
+#include "module/audio_graph/track.h"
 
 namespace audio_graph {
     using PlayProgressHandler = std::function<void(double sec)>;
@@ -32,6 +33,11 @@ namespace audio_graph {
         static void StopBeat();
 
         static bool Clear();
+
+        // @return track id
+        static int AddTrack(Track::TrackType type);
+
+        static bool RemoveTrack(int track_id);
 
         static std::vector<std::string> DeviceTypes(int* default_index = nullptr);
 

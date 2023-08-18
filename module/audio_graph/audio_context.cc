@@ -160,6 +160,21 @@ namespace audio_graph {
 
     }
 
+    int AudioContext::AddTrack(Track::TrackType type) {
+        if (type == Track::TrackType::kPatternTrack) {
+
+        }
+    }
+
+    bool AudioContext::RemoveTrack(int track_id) {
+        auto remove_id = juce::AudioProcessorGraph::NodeID(juce::uint32(track_id));
+        auto remove_ptr = audio_processor_graph_->getNodeForId(remove_id);
+        if (remove_ptr == nullptr) {
+            LOG(ERROR) << "Can not found node " << track_id << " in audio graph";
+            return false;
+        }
+    }
+
     std::vector<std::string> AudioContext::DeviceTypes(int* default_index) {
         const juce::OwnedArray<juce::AudioIODeviceType>& types =
                 audio_device_manager_->getAvailableDeviceTypes();
@@ -466,10 +481,6 @@ namespace audio_graph {
             audio_processor_graph_->addConnection(
                     {{gain_node_->nodeID,         channel},
                      {audio_output_node_->nodeID, channel}});
-
-            // audio_processor_graph_->addConnection(
-            //         {{audio_input_node_->nodeID,  channel},
-            //          {audio_output_node_->nodeID, channel}});
         }
     }
 

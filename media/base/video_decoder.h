@@ -6,8 +6,9 @@
 #define CHARACTER_VIDEO_DECODER_H
 
 namespace media {
-    class VideoDecoder :
-}
+    class VideoDecoder {
 
+    };
+}
 
 #endif //CHARACTER_VIDEO_DECODER_H

@@ -42,6 +42,14 @@ namespace audio_graph {
         return true;
     }
 
+    int AudioBridge::AddTrack(Track::TrackType type) {
+        return AudioContext::Instance()->AddTrack(type);
+    }
+
+    bool AudioBridge::RemoveTrack(int track_id) {
+        return AudioContext::Instance()->RemoveTrack(track_id);
+    }
+
     std::vector<std::string> AudioBridge::DeviceTypes(int* default_index) {
         return AudioContext::Instance()->DeviceTypes(default_index);
     }

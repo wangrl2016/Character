@@ -13,6 +13,9 @@ set(BASE_LIBRARY_SOURCES
         base/string/string_util.cc
         base/string/string_util.h
         base/string/string_util_impl_helper.h
+        base/string/utf_string_conversion.cc
+        base/string/utf_string_conversion.h
+        base/string/utf_string_conversion_util.h
         base/time/time_delta.cc
         base/time/time_delta.h
 
@@ -22,5 +25,6 @@ set(BASE_LIBRARY_SOURCES
 set(BASE_LIBRARY_TEST_SOURCES
         base/files/file_path_test.cc
         base/string/string_concat_test.cc
+        base/string/utf_string_conversion_test.cc
         PARENT_SCOPE
         )

@@ -7,11 +7,11 @@
 
 namespace audio_graph {
     struct TrackID {
-        explicit constexpr TrackID(int id) : track_id(id) {};
+        explicit constexpr TrackID(int id) : track_id(id) {}
         int track_id;
     };
 
-     constexpr TrackID kInvalidTrackID = TrackID(-1);
+    constexpr TrackID kInvalidTrackID = TrackID(-1);
 
     class Track {
     public:

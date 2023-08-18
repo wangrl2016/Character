@@ -256,7 +256,7 @@ namespace base {
 
         // Returns true if this FilePath contains an attempt to reference a parent
         // directory (e.g. has a path component that is "..").
-        bool ReferencesParent() const;
+        [[nodiscard]] bool ReferencesParent() const;
 
         // Return the path as ASCII, or the empty string if the path is not ASCII.
         // This should only be used for cases where the FilePath is representing a

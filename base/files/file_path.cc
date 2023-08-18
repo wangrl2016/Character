@@ -6,6 +6,7 @@
 #include "base/files/file_path.h"
 #include "base/string/string_util.h"
 #include "base/string/string_concat.h"
+#include "base/string/utf_string_conversion.h"
 
 namespace base {
     using StringType = FilePath::StringType;
@@ -346,6 +347,113 @@ namespace base {
         return Append(component);
 #endif
     }
+
+    bool FilePath::IsAbsolute() const {
+        return IsPathAbsolute(path_);
+    }
+
+    bool FilePath::IsNetwork() const {
+        return path_.length() > 1 && FilePath::IsSeparator(path_[0]) &&
+                FilePath::IsSeparator(path_[1]);
+    }
+
+    bool FilePath::EndsWithSeparator() const {
+        if (empty())
+            return false;
+        return IsSeparator(path_.back());
+    }
+
+    FilePath FilePath::StripTrailingSeparators() const {
+        FilePath new_path(path_);
+        new_path.StripTrailingSeparatorsInternal();
+
+        return new_path;
+    }
+
+    bool FilePath::ReferencesParent() const {
+        if (path_.find(kParentDirectory) == StringType::npos) {
+            // GetComponents is quite expensive, so avoid calling it in the majority
+            // of cases where there isn't a kParentDirectory anywhere in the path.
+            return false;
+        }
+
+        std::vector<StringType> components = GetComponents();
+        std::vector<StringType>::const_iterator it = components.begin();
+        for (; it != components.end(); ++it) {
+            const StringType& component = *it;
+            // Windows has odd, undocumented behavior with path components containing
+            // only whitespace and . characters. So, if all we see is . and
+            // whitespace, then we treat any .. sequence as referencing parent.
+            // For simplicity, we enforce this on all platforms.
+            if (component.find_first_not_of(FILE_PATH_LITERAL(". \n\r\t")) ==
+                std::string::npos &&
+                component.find(kParentDirectory) != std::string::npos) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+#if defined(OS_WIN)
+
+    std::string FilePath::MaybeAsASCII() const {
+        return base::IsStringASCII(path_) ? WideToASCII(path_) : std::string();
+    }
+
+    std::string FilePath::AsUTF8Unsafe() const {
+        return WideToUTF8(value());
+    }
+
+    std::u16string FilePath::AsUTF16Unsafe() const {
+        return WideToUTF16(value());
+    }
+
+    // static
+    FilePath FilePath::FromASCII(StringPiece ascii) {
+        DCHECK(base::IsStringASCII(ascii));
+        return FilePath(ASCIIToWide(ascii));
+    }
+
+    // static
+    FilePath FilePath::FromUTF8Unsafe(StringPiece utf8) {
+        return FilePath(UTF8ToWide(utf8));
+    }
+
+    // static
+    FilePath FilePath::FromUTF16Unsafe(StringPiece16 utf16) {
+        return FilePath(AsWStringPiece(utf16));
+    }
+
+#elif defined(OS_POSIX)
+
+    std::string FilePath::MaybeAsASCII() const {
+        if (base::IsStringASCII(path_))
+            return path_;
+        return std::string();
+    }
+
+    std::string FilePath::AsUTF8Unsafe() const {
+        return value();
+    }
+
+    std::u16string FilePath::AsUTF16Unsafe() const {
+        return UTF8ToUTF16(value());
+    }
+
+    FilePath FilePath::FromASCII(StringPiece ascii) {
+        DCHECK(base::IsStringASCII(ascii));
+        return FilePath(ascii);
+    }
+
+    FilePath FilePath::FromUTF8Unsafe(StringPiece utf8) {
+        return FilePath(utf8);
+    }
+
+    FilePath FilePath::FromUTF16Unsafe(StringPiece16 utf16) {
+        return FilePath(UTF16ToUTF8(utf16));
+    }
+
+#endif
 
     void FilePath::StripTrailingSeparatorsInternal() {
         // If there is no drive letter, start will be 1, which will prevent stripping
