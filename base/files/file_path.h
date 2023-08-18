@@ -204,11 +204,11 @@ namespace base {
         // and "/pics/jojo." returns ".jpg" and ".", respectively.  However, if the
         // base name of the file path is either "." or "..", this method returns an
         // empty string.
-        StringType FinalExtension() const;
+        [[nodiscard]] StringType FinalExtension() const;
 
         // Removes the path's file extension, but ignores double extensions.
         // Returns "C:\pics\jojo" for path "C:\pics\jojo.jpg"
-        FilePath RemoveFinalExtension() const;
+        [[nodiscard]] FilePath RemoveFinalExtension() const;
 
         // Inserts |suffix| after the file name portion of |path| but before the
         // extension. Return "" if BaseName() == "." or "..".

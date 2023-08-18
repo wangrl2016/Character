@@ -12,18 +12,22 @@ extern "C" {
 #include <libswresample/swresample.h>
 #include <libavutil/audio_fifo.h>
 }
+
+#include "base/files/file_path.h"
 #include "media/base/audio_parameters.h"
 
 namespace media {
     class FFmpegAudioEncoder {
     public:
-        FFmpegAudioEncoder(const std::string& file_path,
+        FFmpegAudioEncoder() = default;
+
+        FFmpegAudioEncoder(base::FilePath& file_path,
                            AudioParameters& src_parameters,
                            AudioParameters& dest_parameters);
 
         ~FFmpegAudioEncoder();
 
-        bool Open(const std::string& file_path,
+        bool Open(base::FilePath& file_path,
                   AudioParameters& src_parameters,
                   AudioParameters& dest_parameters);
 
@@ -32,8 +36,9 @@ namespace media {
         AVCodecContext* output_codec_context_ = nullptr;
         SwrContext* resampler_context_ = nullptr;
         AVAudioFifo* fifo_ = nullptr;
+        AVStream* stream_ = nullptr;
 
-        bool open_succeed;
+        bool open_succeed_;
     };
 }
 

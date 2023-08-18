@@ -178,6 +178,21 @@ namespace base {
         }
     }
 
+    TEST_F(FilePathTest, FinalExtension) {
+        const struct UnaryTestData cases[] = {
+                { FPL("/foo/bar/baz.EXT"),       FPL(".EXT") },
+                { FPL("/foo/bar/baz.Ext"),       FPL(".Ext") },
+                { FPL("/foo/bar/baz.ext"),       FPL(".ext") },
+        };
+
+        for (size_t i = 0; i < std::size(cases); i++) {
+            FilePath path(cases[i].input);
+            FilePath::StringType extension = path.FinalExtension();
+            EXPECT_EQ(cases[i].expected, extension)
+                    << "i: " << i << ", path: " << path.value();
+        }
+    }
+
     TEST_F(FilePathTest, Append) {
         const struct BinaryTestData cases[] = {
                 {{FPL(""), FPL("cc")}, FPL("cc")},
