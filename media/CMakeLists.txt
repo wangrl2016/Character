@@ -33,6 +33,8 @@ set(MEDIA_LIBRARY_SOURCES
         media/base/video_types.h
         media/filters/ffmpeg_audio_decoder.cc
         media/filters/ffmpeg_audio_decoder.h
+        media/filters/ffmpeg_glue.cc
+        media/filters/ffmpeg_glue.h
         media/filters/ffmpeg_audio_encoder.cc
         media/filters/ffmpeg_audio_encoder.h
         media/filters/ffmpeg_video_decoder.cc
