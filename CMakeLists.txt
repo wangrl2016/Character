@@ -118,3 +118,18 @@ target_link_libraries(Character
         )
 
 qt_finalize_executable(Character)
+
+# Image processing tool
+qt_add_executable(ImageProcess
+        MANUAL_FINALIZATION
+        tools/image/main.cc
+        )
+
+target_link_libraries(ImageProcess
+        PRIVATE
+        BaseLibrary
+        MediaLibrary
+        ThirdPartyLibrary
+        ${CONAN_LIBS}
+        Qt${QT_VERSION_MAJOR}::Widgets
+        )
