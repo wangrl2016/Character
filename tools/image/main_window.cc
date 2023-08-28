@@ -5,5 +5,15 @@
 #include "tools/image/main_window.h"
 
 namespace app {
+    MainWindow::MainWindow() : QMainWindow() {
+        setAcceptDrops(true);
+    }
 
+    void MainWindow::dragEnterEvent(QDragEnterEvent* event) {
+
+    }
+
+    void MainWindow::dropEvent(QDropEvent* event) {
+
+    }
 }

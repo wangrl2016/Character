@@ -6,10 +6,18 @@
 #define CHARACTER_MAIN_WINDOW_H
 
 #include <QMainWindow>
+#include <QDragEnterEvent>
+#include <QDropEvent>
 
 namespace app {
     class MainWindow : public QMainWindow {
+    Q_OBJECT
+    public:
+        MainWindow();
 
+        void dragEnterEvent(QDragEnterEvent* event) override;
+
+        void dropEvent(QDropEvent* event);
     };
 }
 
