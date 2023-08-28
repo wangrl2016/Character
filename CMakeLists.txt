@@ -120,16 +120,19 @@ target_link_libraries(Character
 qt_finalize_executable(Character)
 
 # Image processing tool
-qt_add_executable(ImageProcess
+qt_add_executable(CoverEditor
         MANUAL_FINALIZATION
-        tools/image/main.cc
+        tools/image/cover_editor.cc
+        tools/image/main_window.cc
+        tools/image/main_window.h
         )
 
-target_link_libraries(ImageProcess
+target_link_libraries(CoverEditor
         PRIVATE
         BaseLibrary
         MediaLibrary
         ThirdPartyLibrary
         ${CONAN_LIBS}
         Qt${QT_VERSION_MAJOR}::Widgets
+        Qt${QT_VERSION_MAJOR}::Gui
         )
