@@ -18,6 +18,9 @@ namespace app {
         void dragEnterEvent(QDragEnterEvent* event) override;
 
         void dropEvent(QDropEvent* event);
+
+    private:
+        void SetupMenuBar();
     };
 }
 

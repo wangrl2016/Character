@@ -122,9 +122,12 @@ qt_finalize_executable(Character)
 # Image processing tool
 qt_add_executable(CoverEditor
         MANUAL_FINALIZATION
+        tools/image/action_new_dialog.cc
+        tools/image/action_new_dialog.h
         tools/image/cover_editor.cc
         tools/image/main_window.cc
         tools/image/main_window.h
+        tools/image/size_style.h
         )
 
 target_link_libraries(CoverEditor
