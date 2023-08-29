@@ -4,11 +4,10 @@
 
 #include <QApplication>
 #include <QGuiApplication>
-#include <QScreen>
 #include "tools/image/main_window.h"
+#include "tools/image/size_style.h"
 
-constexpr int kDefaultWidth = 1280;
-constexpr int kDefaultHeight = 720;
+using namespace app;
 
 int main(int argc, char* argv[]) {
     QApplication app(argc, argv);
@@ -16,7 +15,7 @@ int main(int argc, char* argv[]) {
     int width = QGuiApplication::primaryScreen()->geometry().width();
     int height = QGuiApplication::primaryScreen()->geometry().height();
 
-    app::MainWindow main_window;
+    MainWindow main_window;
     main_window.setGeometry((width - kDefaultWidth) / 2,
                             (height - kDefaultHeight) / 2,
                             kDefaultWidth,

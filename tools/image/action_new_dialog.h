@@ -7,6 +7,7 @@
 
 #include <QDialog>
 #include <QLabel>
+#include <QTextEdit>
 
 namespace app {
     class ActionNewDialog : public QDialog {
@@ -16,7 +17,9 @@ namespace app {
 
     private:
         QLabel* width_label_;
+        QTextEdit* width_edit_;
         QLabel* height_label_;
+        QTextEdit* height_edit_;
     };
 }
 
