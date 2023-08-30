@@ -5,14 +5,38 @@
 #include <QAction>
 #include <QMenu>
 #include <QMenuBar>
+#include <QHBoxLayout>
 #include "tools/image/action_new_dialog.h"
 #include "tools/image/main_window.h"
+#include "tools/image/size_style.h"
 
 namespace app {
     MainWindow::MainWindow() : QMainWindow() {
         setAcceptDrops(true);
 
         SetupMenuBar();
+
+        // scene
+        scene_ = new QGraphicsScene(this);
+        scene_->setSceneRect(0, 0, kProjectDefaultWidth, kProjectProjectHeight);
+
+        // view
+        view_ = new QGraphicsView(scene_);
+        view_->setFixedSize(kProjectDefaultWidth, kProjectProjectHeight);
+        view_->setStyleSheet("QWidget {"
+                             "    border: none;"
+                             "}");
+
+        // layout
+        auto* layout = new QHBoxLayout;
+        layout->addWidget(view_);
+
+        auto* widget = new QWidget;
+        widget->setLayout(layout);
+
+        setCentralWidget(widget);
+
+        setUnifiedTitleAndToolBarOnMac(true);
     }
 
     void MainWindow::dragEnterEvent(QDragEnterEvent* event) {
@@ -20,6 +44,18 @@ namespace app {
     }
 
     void MainWindow::dropEvent(QDropEvent* event) {
+
+    }
+
+    void MainWindow::mousePressEvent(QMouseEvent* event) {
+
+    }
+
+    void MainWindow::mouseMoveEvent(QMouseEvent* event) {
+
+    }
+
+    void MainWindow::mouseReleaseEvent(QMouseEvent* event) {
 
     }
 

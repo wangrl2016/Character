@@ -5,9 +5,12 @@
 #ifndef CHARACTER_MAIN_WINDOW_H
 #define CHARACTER_MAIN_WINDOW_H
 
-#include <QMainWindow>
 #include <QDragEnterEvent>
 #include <QDropEvent>
+#include <QMainWindow>
+#include <QMouseEvent>
+#include <QGraphicsScene>
+#include <QGraphicsView>
 
 namespace app {
     class MainWindow : public QMainWindow {
@@ -17,10 +20,19 @@ namespace app {
 
         void dragEnterEvent(QDragEnterEvent* event) override;
 
-        void dropEvent(QDropEvent* event);
+        void dropEvent(QDropEvent* event) override;
+
+        void mousePressEvent(QMouseEvent* event) override;
+
+        void mouseMoveEvent(QMouseEvent* event) override;
+
+        void mouseReleaseEvent(QMouseEvent* event) override;
 
     private:
         void SetupMenuBar();
+
+        QGraphicsScene* scene_;
+        QGraphicsView* view_;
     };
 }
 
