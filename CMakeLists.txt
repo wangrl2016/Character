@@ -122,6 +122,8 @@ qt_finalize_executable(Character)
 # Image processing tool
 qt_add_executable(CoverEditor
         MANUAL_FINALIZATION
+        tools/image/shape/polygon.cc
+        tools/image/shape/polygon.h
         tools/image/action_new_dialog.cc
         tools/image/action_new_dialog.h
         tools/image/cover_editor.cc

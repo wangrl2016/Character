@@ -4,6 +4,7 @@
 
 #include <glog/logging.h>
 #include <QGraphicsPolygonItem>
+#include "tools/image/shape/polygon.h"
 #include "tools/image/cover_graphics_scene.h"
 
 namespace app {
@@ -16,7 +17,7 @@ namespace app {
         LOG(INFO) << __FUNCTION__;
 
 
-        auto* item = new QGraphicsPolygonItem(QPolygonF({QPointF(0, 0), QPointF(10, 10), QPointF(0, 10)}));
+        auto* item = Polygon::CreateDefaultPolygon();
 
         addItem(item);
 
