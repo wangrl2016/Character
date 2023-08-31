@@ -3,6 +3,7 @@
 //
 
 #include <QAction>
+#include <QImage>
 #include <QMenu>
 #include <QMenuBar>
 #include <QHBoxLayout>
@@ -21,11 +22,11 @@ namespace app {
 
         // scene
         scene_ = new CoverGraphicsScene(this);
-        scene_->setSceneRect(0, 0, kProjectDefaultWidth, kProjectProjectHeight);
+        scene_->setSceneRect(0, 0, kProjectDefaultWidth, kProjectDefaultHeight);
 
         // view
         view_ = new CoverGraphicsView(scene_);
-        view_->setFixedSize(kProjectDefaultWidth, kProjectProjectHeight);
+        view_->setFixedSize(kProjectDefaultWidth, kProjectDefaultHeight);
         view_->setStyleSheet("QWidget {"
                              "    border: none;"
                              "}");
@@ -43,6 +44,20 @@ namespace app {
         setCentralWidget(widget);
 
         setUnifiedTitleAndToolBarOnMac(true);
+    }
+
+    MainWindow::~MainWindow() {
+        QImage image(kProjectDefaultWidth, kProjectDefaultHeight, QImage::Format_ARGB32);
+        for (int i = 0; i < kProjectDefaultHeight; i++) {
+            for (int j = 0; j < kProjectDefaultWidth; j++) {
+                image.setPixel(j, i, 0xFFFFFFFF);
+            }
+        }
+        QString path = "out.png";
+        QPainter painter(&image);
+        painter.setRenderHint(QPainter::Antialiasing);
+        scene_->render(&painter);
+        image.save(path);
     }
 
     void MainWindow::dragEnterEvent(QDragEnterEvent* event) {

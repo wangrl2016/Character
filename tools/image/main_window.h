@@ -22,6 +22,8 @@ namespace app {
     public:
         MainWindow();
 
+        ~MainWindow();
+
         void dragEnterEvent(QDragEnterEvent* event) override;
 
         void dropEvent(QDropEvent* event) override;

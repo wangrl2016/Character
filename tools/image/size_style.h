@@ -10,7 +10,7 @@ namespace app {
     constexpr int kDefaultHeight = 720;
 
     constexpr int kProjectDefaultWidth = 540;
-    constexpr int kProjectProjectHeight = 360;
+    constexpr int kProjectDefaultHeight = 360;
 
     constexpr int kTinyMargin = 4;
     constexpr int kSmallMargin = 8;
