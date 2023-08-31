@@ -6,6 +6,7 @@
 #define CHARACTER_POLYGON_H
 
 #include <QGraphicsPolygonItem>
+#include <Qpainter>
 
 namespace app {
 
@@ -18,6 +19,8 @@ namespace app {
                          QGraphicsItem* parent = nullptr);
 
         static Polygon* CreateDefaultPolygon(QGraphicsItem* parent = nullptr);
+
+        void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
     };
 }
 
