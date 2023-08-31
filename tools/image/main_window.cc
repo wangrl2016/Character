@@ -16,12 +16,15 @@ namespace app {
 
         SetupMenuBar();
 
+        left_widget_ = new LeftWidget(this);
+        right_widget_ = new RightWidget(this);
+
         // scene
-        scene_ = new QGraphicsScene(this);
+        scene_ = new CoverGraphicsScene(this);
         scene_->setSceneRect(0, 0, kProjectDefaultWidth, kProjectProjectHeight);
 
         // view
-        view_ = new QGraphicsView(scene_);
+        view_ = new CoverGraphicsView(scene_);
         view_->setFixedSize(kProjectDefaultWidth, kProjectProjectHeight);
         view_->setStyleSheet("QWidget {"
                              "    border: none;"
@@ -29,7 +32,10 @@ namespace app {
 
         // layout
         auto* layout = new QHBoxLayout;
+        layout->setContentsMargins(0, 0, 0, 0);
+        layout->addWidget(left_widget_);
         layout->addWidget(view_);
+        layout->addWidget(right_widget_);
 
         auto* widget = new QWidget;
         widget->setLayout(layout);

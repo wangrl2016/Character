@@ -11,6 +11,10 @@
 #include <QMouseEvent>
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include "tools/image/cover_graphics_scene.h"
+#include "tools/image/cover_graphics_view.h"
+#include "tools/image/left_widget.h"
+#include "tools/image/right_widget.h"
 
 namespace app {
     class MainWindow : public QMainWindow {
@@ -31,8 +35,11 @@ namespace app {
     private:
         void SetupMenuBar();
 
-        QGraphicsScene* scene_;
-        QGraphicsView* view_;
+        LeftWidget* left_widget_;
+        RightWidget* right_widget_;
+
+        CoverGraphicsScene* scene_;
+        CoverGraphicsView* view_;
     };
 }
 

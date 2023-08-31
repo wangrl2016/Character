@@ -125,8 +125,16 @@ qt_add_executable(CoverEditor
         tools/image/action_new_dialog.cc
         tools/image/action_new_dialog.h
         tools/image/cover_editor.cc
+        tools/image/cover_graphics_scene.cc
+        tools/image/cover_graphics_scene.h
+        tools/image/cover_graphics_view.cc
+        tools/image/cover_graphics_view.h
+        tools/image/left_widget.cc
+        tools/image/left_widget.h
         tools/image/main_window.cc
         tools/image/main_window.h
+        tools/image/right_widget.cc
+        tools/image/right_widget.h
         tools/image/size_style.h
         )
 
