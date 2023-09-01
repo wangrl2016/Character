@@ -1,12 +1,14 @@
 set(COVER_EDITOR_SOURCES
+        tools/image/dialog/action_export_dialog.cc
+        tools/image/dialog/action_export_dialog.h
+        tools/image/dialog/action_new_dialog.cc
+        tools/image/dialog/action_new_dialog.h
         tools/image/item/pixmap.cc
         tools/image/item/pixmap.h
         tools/image/item/polygon.cc
         tools/image/item/polygon.h
         tools/image/item/text.cc
         tools/image/item/text.h
-        tools/image/action_new_dialog.cc
-        tools/image/action_new_dialog.h
         tools/image/cover_editor.cc
         tools/image/cover_graphics_scene.cc
         tools/image/cover_graphics_scene.h

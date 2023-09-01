@@ -7,7 +7,7 @@
 #include <QMenu>
 #include <QMenuBar>
 #include <QHBoxLayout>
-#include "tools/image/action_new_dialog.h"
+#include "tools/image/dialog/action_new_dialog.h"
 #include "tools/image/main_window.h"
 #include "tools/image/size_style.h"
 
@@ -98,5 +98,15 @@ namespace app {
         auto* open_action = new QAction(QIcon(), tr("Open"), file_menu);
         open_action->setShortcut(QKeySequence::Open);
         file_menu->addAction(open_action);
+
+        file_menu->addSeparator();
+
+        // export action
+        auto* export_action = new QAction(QIcon(), tr("Export"), file_menu);
+        file_menu->addAction(export_action);
+        connect(export_action, &QAction::triggered, this, [&]() {
+            auto* dialog = new ActionNewDialog(this);
+            dialog->show();
+        });
     }
 }
