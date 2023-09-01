@@ -9,8 +9,6 @@
 #include <Qpainter>
 
 namespace app {
-
-
     class Polygon : public QGraphicsPolygonItem {
     public:
         explicit Polygon(QGraphicsItem* parent = nullptr);

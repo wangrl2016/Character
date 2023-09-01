@@ -8,7 +8,7 @@
 namespace app {
     RightWidget::RightWidget(QWidget* parent) :
             QWidget(parent) {
-        setFixedWidth(kDefaultWidth / 4);
+        setFixedWidth(kRightWidgetWidth);
         setAutoFillBackground(true);
     }
 }

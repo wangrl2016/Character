@@ -21,6 +21,8 @@ namespace app {
         QPen pen;
         pen.setWidth(2);
         setPen(pen);
+        setFlags(Polygon::GraphicsItemFlag::ItemIsSelectable |
+                 Polygon::GraphicsItemFlag::ItemIsMovable);
     }
 
     Polygon* Polygon::CreateDefaultPolygon(QGraphicsItem* parent) {

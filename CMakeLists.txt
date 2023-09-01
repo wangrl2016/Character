@@ -124,6 +124,8 @@ qt_add_executable(CoverEditor
         MANUAL_FINALIZATION
         tools/image/shape/polygon.cc
         tools/image/shape/polygon.h
+        tools/image/text/text.cc
+        tools/image/text/text.h
         tools/image/action_new_dialog.cc
         tools/image/action_new_dialog.h
         tools/image/cover_editor.cc

@@ -6,15 +6,17 @@
 #include <QGraphicsPolygonItem>
 #include <QGraphicsSceneMouseEvent>
 #include "tools/image/shape/polygon.h"
+#include "tools/image/text/text.h"
 #include "tools/image/cover_graphics_scene.h"
 
 namespace app {
     CoverGraphicsScene::CoverGraphicsScene(QObject* parent) :
             QGraphicsScene(parent) {
-        auto* item = Polygon::CreateDefaultPolygon();
-        item->setFlags(Polygon::GraphicsItemFlag::ItemIsSelectable |
-                Polygon::GraphicsItemFlag::ItemIsMovable);
-        addItem(item);
+        auto* shape_item = Polygon::CreateDefaultPolygon();
+        addItem(shape_item);
+
+        auto* text_item = new Text("Hello World!");
+        addItem(text_item);
     }
 
     void CoverGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event) {
