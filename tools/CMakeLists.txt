@@ -1,0 +1,26 @@
+set(COVER_EDITOR_SOURCES
+        tools/image/item/pixmap.cc
+        tools/image/item/pixmap.h
+        tools/image/item/polygon.cc
+        tools/image/item/polygon.h
+        tools/image/item/text.cc
+        tools/image/item/text.h
+        tools/image/action_new_dialog.cc
+        tools/image/action_new_dialog.h
+        tools/image/cover_editor.cc
+        tools/image/cover_graphics_scene.cc
+        tools/image/cover_graphics_scene.h
+        tools/image/cover_graphics_view.cc
+        tools/image/cover_graphics_view.h
+        tools/image/layer.cc
+        tools/image/layer.h
+        tools/image/left_widget.cc
+        tools/image/left_widget.h
+        tools/image/main_window.cc
+        tools/image/main_window.h
+        tools/image/right_widget.cc
+        tools/image/right_widget.h
+        tools/image/size_style.h
+
+        PARENT_SCOPE
+        )

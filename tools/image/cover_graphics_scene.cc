@@ -5,8 +5,8 @@
 #include <glog/logging.h>
 #include <QGraphicsPolygonItem>
 #include <QGraphicsSceneMouseEvent>
-#include "tools/image/shape/polygon.h"
-#include "tools/image/text/text.h"
+#include "tools/image/item/polygon.h"
+#include "tools/image/item/text.h"
 #include "tools/image/cover_graphics_scene.h"
 
 namespace app {

@@ -18,7 +18,7 @@ namespace app {
 
         static Polygon* CreateDefaultPolygon(QGraphicsItem* parent = nullptr);
 
-        void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
+        void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
     };
 }
 

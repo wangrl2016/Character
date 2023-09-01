@@ -2,7 +2,7 @@
 // Created by wangrl2016 on 2023/8/31.
 //
 
-#include "tools/image/shape/polygon.h"
+#include "tools/image/item/polygon.h"
 
 namespace app {
     constexpr int kDefaultWidth = 80;
@@ -35,5 +35,9 @@ namespace app {
 
     void Polygon::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
         QGraphicsPolygonItem::paint(painter, option, widget);
+
+        if (isSelected()) {
+
+        }
     }
 }

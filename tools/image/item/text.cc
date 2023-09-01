@@ -3,7 +3,7 @@
 //
 
 #include <QGraphicsItem>
-#include "tools/image/text/text.h"
+#include "tools/image/item/text.h"
 
 namespace app {
     Text::Text(QGraphicsItem* parent) :

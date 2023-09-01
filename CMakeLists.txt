@@ -120,26 +120,11 @@ target_link_libraries(Character
 qt_finalize_executable(Character)
 
 # Image processing tool
+add_subdirectory(tools)
+
 qt_add_executable(CoverEditor
         MANUAL_FINALIZATION
-        tools/image/shape/polygon.cc
-        tools/image/shape/polygon.h
-        tools/image/text/text.cc
-        tools/image/text/text.h
-        tools/image/action_new_dialog.cc
-        tools/image/action_new_dialog.h
-        tools/image/cover_editor.cc
-        tools/image/cover_graphics_scene.cc
-        tools/image/cover_graphics_scene.h
-        tools/image/cover_graphics_view.cc
-        tools/image/cover_graphics_view.h
-        tools/image/left_widget.cc
-        tools/image/left_widget.h
-        tools/image/main_window.cc
-        tools/image/main_window.h
-        tools/image/right_widget.cc
-        tools/image/right_widget.h
-        tools/image/size_style.h
+        ${COVER_EDITOR_SOURCES}
         )
 
 target_link_libraries(CoverEditor
