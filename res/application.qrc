@@ -4,6 +4,10 @@
         <file alias="setting">icon/settings_fill1_wght400_grad0_opsz48.svg</file>
     </qresource>
 
+    <qresource prefix="img">
+        <file alias="first_image_from_webb">img/first_image_from_webb.jpg</file>
+    </qresource>
+
     <qresource prefix="tab">
         <file alias="track_detail">tab/art_track_fill1_wght400_grad0_opsz48.svg</file>
         <file alias="instrument">tab/piano_fill1_wght400_grad0_opsz48.svg</file>
