@@ -27,6 +27,7 @@ namespace app {
         // view
         view_ = new CoverGraphicsView(scene_);
         view_->setFixedSize(kProjectDefaultWidth, kProjectDefaultHeight);
+        view_->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
         view_->setStyleSheet("QWidget {"
                              "    border: none;"
                              "}");

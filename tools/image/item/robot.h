@@ -8,6 +8,7 @@
 #include <QGraphicsSceneDragDropEvent>
 #include <QGraphicsObject>
 #include <QMimeData>
+#include <QPainter>
 
 namespace app {
     class RobotPart : public QGraphicsObject {
@@ -46,6 +47,19 @@ namespace app {
 
     class RobotTorso : public RobotPart {
     public:
+        using RobotPart::RobotPart;
+
+        QRectF boundingRect() const override;
+
+        void paint(QPainter* painter,
+                   const QStyleOptionGraphicsItem* option,
+                   QWidget* widget = nullptr) override;
+    };
+
+    class RobotLimb : public RobotPart {
+    public:
+        RobotLimb(QGraphicsItem* parent = nullptr);
+
         QRectF boundingRect() const override;
 
         void paint(QPainter* painter,

@@ -12,6 +12,7 @@
 #include "tools/image/cover_graphics_scene.h"
 #include "tools/image/item/pixmap.h"
 #include "tools/image/item/color_item.h"
+#include "tools/image/item/robot.h"
 
 namespace app {
     CoverGraphicsScene::CoverGraphicsScene(QObject* parent) :
@@ -22,6 +23,11 @@ namespace app {
                          150 + ::cos((i * 6.28) / 10.0) * 150);
             addItem(item);
         }
+
+        auto* robot = new Robot;
+        robot->setTransform(QTransform::fromScale(1.2, 1.2), true);
+        robot->setPos(100, 100);
+        addItem(robot);
     }
 
     void CoverGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event) {
