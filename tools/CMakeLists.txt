@@ -3,14 +3,10 @@ set(COVER_EDITOR_SOURCES
         tools/image/dialog/action_export_dialog.h
         tools/image/dialog/action_new_dialog.cc
         tools/image/dialog/action_new_dialog.h
-        tools/image/item/color_item.cc
-        tools/image/item/color_item.h
         tools/image/item/pixmap.cc
         tools/image/item/pixmap.h
         tools/image/item/polygon.cc
         tools/image/item/polygon.h
-        tools/image/item/robot.cc
-        tools/image/item/robot.h
         tools/image/item/text.cc
         tools/image/item/text.h
         tools/image/cover_editor.cc
