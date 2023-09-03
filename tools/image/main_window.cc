@@ -17,26 +17,26 @@ namespace app {
 
         SetupMenuBar();
 
-        left_widget_ = new LeftWidget(this);
+        template_widget_ = new TemplateWidget(this);
         right_widget_ = new RightWidget(this);
 
         // scene
-        scene_ = new CoverGraphicsScene(this);
-        scene_->setSceneRect(0, 0, kProjectDefaultWidth, kProjectDefaultHeight);
+        cover_scene_ = new CoverGraphicsScene(this);
+        cover_scene_->setSceneRect(0, 0, kProjectDefaultWidth, kProjectDefaultHeight);
 
         // view
-        view_ = new CoverGraphicsView(scene_);
-        view_->setFixedSize(kProjectDefaultWidth, kProjectDefaultHeight);
-        view_->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
-        view_->setStyleSheet("QWidget {"
+        cover_view_ = new CoverGraphicsView(cover_scene_);
+        cover_view_->setFixedSize(kProjectDefaultWidth, kProjectDefaultHeight);
+        cover_view_->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+        cover_view_->setStyleSheet("QWidget {"
                              "    border: none;"
                              "}");
 
         // layout
         auto* layout = new QHBoxLayout;
         layout->setContentsMargins(0, 0, 0, 0);
-        layout->addWidget(left_widget_);
-        layout->addWidget(view_);
+        layout->addWidget(template_widget_);
+        layout->addWidget(cover_view_);
         layout->addWidget(right_widget_);
 
         auto* widget = new QWidget;
@@ -57,7 +57,7 @@ namespace app {
         QString path = "out.png";
         QPainter painter(&image);
         painter.setRenderHint(QPainter::Antialiasing);
-        scene_->render(&painter);
+        cover_scene_->render(&painter);
         image.save(path);
     }
 

@@ -6,38 +6,35 @@
 
 namespace app {
     constexpr int kDefaultWidth = 80;
+    constexpr int kDefaultPenWidth = 2;
     constexpr int kDefaultHeight = 60;
     constexpr int kDefaultMargin = 10;
 
     Polygon::Polygon(QGraphicsItem* parent) :
             QGraphicsPolygonItem(parent) {
-        QPen pen;
-        pen.setWidth(2);
-        setPen(pen);
+        Initialize();
     }
 
     Polygon::Polygon(const QPolygonF& polygon, QGraphicsItem* parent) :
             QGraphicsPolygonItem(polygon, parent) {
-        QPen pen;
-        pen.setWidth(2);
-        setPen(pen);
-        setFlags(Polygon::GraphicsItemFlag::ItemIsSelectable |
-                 Polygon::GraphicsItemFlag::ItemIsMovable);
+        Initialize();
     }
 
-    Polygon* Polygon::CreateDefaultPolygon(QGraphicsItem* parent) {
-        QPolygonF polygon({QPointF(kDefaultMargin, kDefaultMargin),
-                           QPointF(kDefaultWidth, kDefaultMargin),
-                           QPointF(kDefaultWidth, kDefaultHeight),
-                           QPointF(kDefaultMargin, kDefaultHeight)});
-        return new Polygon(polygon, parent);
-    }
-
-    void Polygon::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
+    void Polygon::paint(QPainter* painter,
+                        const QStyleOptionGraphicsItem* option,
+                        QWidget* widget) {
         QGraphicsPolygonItem::paint(painter, option, widget);
 
         if (isSelected()) {
 
         }
+    }
+
+    void Polygon::Initialize() {
+        QPen pen;
+        pen.setWidth(kDefaultPenWidth);
+        setPen(pen);
+        setFlags(Polygon::GraphicsItemFlag::ItemIsSelectable |
+                 Polygon::GraphicsItemFlag::ItemIsMovable);
     }
 }

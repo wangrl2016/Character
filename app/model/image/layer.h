@@ -2,7 +2,7 @@
 // Created by wangrl2016 on 2023/7/7.
 //
 
-#ifndef CHARACTER_LAYER_H
+#ifndef CHARACTER_LAYER_WIDGET_H
 #define CHARACTER_LAYER_H
 
 namespace app {
@@ -11,4 +11,4 @@ namespace app {
     };
 }
 
-#endif //CHARACTER_LAYER_H
+#endif //CHARACTER_LAYER_WIDGET_H

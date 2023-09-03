@@ -14,15 +14,17 @@ set(COVER_EDITOR_SOURCES
         tools/image/cover_graphics_scene.h
         tools/image/cover_graphics_view.cc
         tools/image/cover_graphics_view.h
-        tools/image/layer.cc
-        tools/image/layer.h
-        tools/image/left_widget.cc
-        tools/image/left_widget.h
+        tools/image/layer_widget.cc
+        tools/image/layer_widget.h
         tools/image/main_window.cc
         tools/image/main_window.h
+        tools/image/property_widget.cc
+        tools/image/property_widget.h
         tools/image/right_widget.cc
         tools/image/right_widget.h
         tools/image/size_style.h
+        tools/image/template_widget.cc
+        tools/image/template_widget.h
 
         PARENT_SCOPE
         )

@@ -13,7 +13,7 @@
 #include <QGraphicsView>
 #include "tools/image/cover_graphics_scene.h"
 #include "tools/image/cover_graphics_view.h"
-#include "tools/image/left_widget.h"
+#include "tools/image/template_widget.h"
 #include "tools/image/right_widget.h"
 
 namespace app {
@@ -37,11 +37,11 @@ namespace app {
     private:
         void SetupMenuBar();
 
-        LeftWidget* left_widget_;
+        TemplateWidget* template_widget_;
         RightWidget* right_widget_;
 
-        CoverGraphicsScene* scene_;
-        CoverGraphicsView* view_;
+        CoverGraphicsScene* cover_scene_;
+        CoverGraphicsView* cover_view_;
     };
 }
 
