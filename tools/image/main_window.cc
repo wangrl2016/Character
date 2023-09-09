@@ -7,6 +7,7 @@
 #include <QMenu>
 #include <QMenuBar>
 #include <QHBoxLayout>
+#include <QToolBar>
 #include "tools/image/dialog/action_new_dialog.h"
 #include "tools/image/main_window.h"
 #include "tools/image/size_style.h"
@@ -16,6 +17,8 @@ namespace app {
         setAcceptDrops(true);
 
         SetupMenuBar();
+
+        SetupToolBar();
 
         template_widget_ = new TemplateWidget(this);
         right_widget_ = new RightWidget(this);
@@ -34,6 +37,7 @@ namespace app {
 
         // layout
         auto* layout = new QHBoxLayout;
+        layout->setSpacing(0);
         layout->setContentsMargins(0, 0, 0, 0);
         layout->addWidget(template_widget_);
         layout->addWidget(cover_view_);
@@ -109,5 +113,14 @@ namespace app {
             auto* dialog = new ActionNewDialog(this);
             dialog->show();
         });
+    }
+
+    void MainWindow::SetupToolBar() {
+#ifdef Q_OS_MACOS
+        setUnifiedTitleAndToolBarOnMac(true);
+#endif
+        auto* tool_bar = new QToolBar(this);
+        tool_bar->setFixedHeight(32);
+        addToolBar(tool_bar);
     }
 }

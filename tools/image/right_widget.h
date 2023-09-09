@@ -8,6 +8,7 @@
 #include <QWidget>
 #include "tools/image/layer_widget.h"
 #include "tools/image/property_widget.h"
+#include "tools/image/layer_label.h"
 
 namespace app {
     class RightWidget : public QWidget {
@@ -16,6 +17,7 @@ namespace app {
         RightWidget(QWidget* parent = nullptr);
 
     private:
+        LayerLabel* layer_label_;
         LayerWidget* layer_widget_;
         PropertyWidget* property_widget_;
     };

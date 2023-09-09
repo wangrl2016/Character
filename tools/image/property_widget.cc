@@ -9,6 +9,12 @@ namespace app {
     PropertyWidget::PropertyWidget(QWidget* parent) :
             QWidget(parent) {
         setFixedWidth(kRightWidgetWidth);
+        setFixedHeight(50);
+        // setAutoFillBackground(true);
+
+        setStyleSheet("QWidget {"
+                      "    background-color: black;"
+                      "}");
         setAutoFillBackground(true);
     }
 }

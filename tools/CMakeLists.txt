@@ -14,6 +14,8 @@ set(COVER_EDITOR_SOURCES
         tools/image/cover_graphics_scene.h
         tools/image/cover_graphics_view.cc
         tools/image/cover_graphics_view.h
+        tools/image/layer_label.cc
+        tools/image/layer_label.h
         tools/image/layer_widget.cc
         tools/image/layer_widget.h
         tools/image/main_window.cc

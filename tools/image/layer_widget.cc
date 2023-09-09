@@ -12,16 +12,19 @@ namespace app {
     LayerWidget::LayerWidget(QWidget* parent) :
             QListWidget(parent) {
         setFixedWidth(kRightWidgetWidth);
-        setAutoFillBackground(true);
+        // setAutoFillBackground(true);
+        setStyleSheet("QWidget {"
+                      "    border: none;"
+                      "}");
 
-        QListWidgetItem* item = new QListWidgetItem;
+        auto* item = new QListWidgetItem;
         item->setSizeHint(QSize(10, 100));
         addItem(item);
 
-        QWidget* w = new QWidget;
-        QHBoxLayout* layout = new QHBoxLayout;
-        QPushButton* push_button = new QPushButton(w);
-        QCheckBox* check_box = new QCheckBox(w);
+        auto* w = new QWidget;
+        auto* layout = new QHBoxLayout;
+        auto* push_button = new QPushButton(w);
+        auto* check_box = new QCheckBox(w);
         layout->addWidget(check_box);
         layout->addWidget(push_button);
         w->setLayout(layout);

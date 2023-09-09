@@ -124,6 +124,7 @@ add_subdirectory(tools)
 
 qt_add_executable(CoverEditor
         MANUAL_FINALIZATION
+        res/application.qrc
         ${COVER_EDITOR_SOURCES}
         )
 

@@ -6,13 +6,13 @@
 #define CHARACTER_SIZE_STYLE_H
 
 namespace app {
-    constexpr int kDefaultWidth = 1440;
+    constexpr int kDefaultWidth = 1520;
     constexpr int kDefaultHeight = 960;
 
     constexpr int kLeftWidgetWidth = 180;
-    constexpr int kRightWidgetWidth = 180;
+    constexpr int kRightWidgetWidth = 360;
 
-    constexpr int kProjectDefaultWidth = 1000;
+    constexpr int kProjectDefaultWidth = 720;
     constexpr int kProjectDefaultHeight = 640;
 
     constexpr int kTinyMargin = 4;

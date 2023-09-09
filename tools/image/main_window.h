@@ -37,6 +37,8 @@ namespace app {
     private:
         void SetupMenuBar();
 
+        void SetupToolBar();
+
         TemplateWidget* template_widget_;
         RightWidget* right_widget_;
 
