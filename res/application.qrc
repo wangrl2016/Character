@@ -8,6 +8,12 @@
         <file alias="first_image_from_webb">img/first_image_from_webb.jpg</file>
     </qresource>
 
+    <qresource prefix="layer">
+        <file alias="add_layer">layer/add_box_fill0_wght400_gard0_opsz24.svg</file>
+        <file alias="adjust_layer">layer/tune_fill0_wght400_grad0_opsz24.svg</file>
+        <file alias="layer_effect">layer/filter_fill0_wght400_grad0_opsz24.svg</file>
+    </qresource>
+
     <qresource prefix="tab">
         <file alias="track_detail">tab/art_track_fill1_wght400_grad0_opsz48.svg</file>
         <file alias="instrument">tab/piano_fill1_wght400_grad0_opsz48.svg</file>

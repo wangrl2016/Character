@@ -26,9 +26,12 @@ namespace app {
         layer_label_->setFont(font);
         layer_label_->setText(tr("图层"));
 
+        layer_tool_ = new LayerTool(this);
+
         auto* layout = new QVBoxLayout(this);
         layout->setAlignment(Qt::AlignLeft | Qt::AlignTop);
         layout->addWidget(layer_label_);
+        layout->addWidget(layer_tool_);
 
         setLayout(layout);
     }

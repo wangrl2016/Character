@@ -7,6 +7,8 @@
 
 #include <QWidget>
 #include <QLabel>
+#include <QPushButton>
+#include "layer_tool.h"
 
 namespace app {
     class LayerLabel : public QWidget {
@@ -16,6 +18,8 @@ namespace app {
 
     private:
         QLabel* layer_label_;
+        LayerTool* layer_tool_;
+
     };
 }
 
