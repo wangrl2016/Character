@@ -1,3 +1,11 @@
+# CoverEditor
+
+Make a beautiful cover for your video or notes
+
+CoverEditor is a simple but practical editor that can create more charming
+covers like photoshop. It provides many graphic templates, background images,
+geometric shapes, and rich font rendering.
+
 # Character
 
 Creative AI Beings software for next generation
