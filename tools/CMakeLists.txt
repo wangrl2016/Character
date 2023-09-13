@@ -16,6 +16,8 @@ set(COVER_EDITOR_SOURCES
         tools/image/cover_graphics_view.h
         tools/image/layer_button.cc
         tools/image/layer_button.h
+        tools/image/layer_choice.cc
+        tools/image/layer_choice.h
         tools/image/layer_label.cc
         tools/image/layer_label.h
         tools/image/layer_tool.cc

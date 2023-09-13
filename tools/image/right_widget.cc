@@ -14,6 +14,7 @@ namespace app {
 
         layer_label_ = new LayerLabel(this);
         layer_widget_ = new LayerWidget(this);
+        layer_choice_ = new LayerChoice(this);
         property_widget_ = new PropertyWidget(this);
 
         auto* layout = new QVBoxLayout(this);
@@ -21,6 +22,7 @@ namespace app {
         layout->setSpacing(0);
         layout->addWidget(layer_label_);
         layout->addWidget(layer_widget_);
+        layout->addWidget(layer_choice_);
         layout->addWidget(property_widget_);
 
         setLayout(layout);

@@ -9,6 +9,7 @@
 #include "tools/image/layer_widget.h"
 #include "tools/image/property_widget.h"
 #include "tools/image/layer_label.h"
+#include "tools/image/layer_choice.h"
 
 namespace app {
     class RightWidget : public QWidget {
@@ -19,6 +20,7 @@ namespace app {
     private:
         LayerLabel* layer_label_;
         LayerWidget* layer_widget_;
+        LayerChoice* layer_choice_;
         PropertyWidget* property_widget_;
     };
 }
