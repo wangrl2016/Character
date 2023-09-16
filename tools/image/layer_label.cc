@@ -7,11 +7,10 @@
 #include "tools/image/size_style.h"
 
 namespace app {
-    constexpr int kDefaultLabelHeight = 120;
+    constexpr int kDefaultLabelHeight = 160;
 
     LayerLabel::LayerLabel(QWidget* parent) :
             QWidget(parent) {
-        // setFixedWidth(kRightWidgetWidth);
         setFixedWidth(kRightWidgetWidth);
         setFixedHeight(kDefaultLabelHeight);
         setStyleSheet("QWidget {"
@@ -28,10 +27,13 @@ namespace app {
 
         layer_tool_ = new LayerTool(this);
 
+        layer_choice_ = new LayerChoice(this);
+
         auto* layout = new QVBoxLayout(this);
         layout->setAlignment(Qt::AlignLeft | Qt::AlignTop);
         layout->addWidget(layer_label_);
         layout->addWidget(layer_tool_);
+        layout->addWidget(layer_choice_);
 
         setLayout(layout);
     }

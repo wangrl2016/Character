@@ -9,6 +9,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include "layer_tool.h"
+#include "layer_choice.h"
 
 namespace app {
     class LayerLabel : public QWidget {
@@ -19,7 +20,7 @@ namespace app {
     private:
         QLabel* layer_label_;
         LayerTool* layer_tool_;
-
+        LayerChoice* layer_choice_;
     };
 }
 

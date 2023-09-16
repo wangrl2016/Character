@@ -9,7 +9,7 @@ namespace app {
             QPushButton(parent) {
         setFixedSize(32, 32);
         setIconSize({24, 24});
-        setToolTip(tr("添加新图层"));
+        // setToolTip(tr("添加新图层"));
         setStyleSheet("QPushButton {"
                       "    border: none;"
                       // "    background-color: yellow;"

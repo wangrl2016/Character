@@ -12,6 +12,10 @@
         <file alias="add_layer">layer/add_box_fill0_wght400_gard0_opsz24.svg</file>
         <file alias="adjust_layer">layer/tune_fill0_wght400_grad0_opsz24.svg</file>
         <file alias="layer_effect">layer/filter_fill0_wght400_grad0_opsz24.svg</file>
+        <file alias="layer_mask">layer/domino_mask_fill0_wght400_grad0_opsz24.svg</file>
+        <file alias="layer_copy">layer/file_copy_fill0_wght400_grad0_opsz24.svg</file>
+        <file alias="layer_arrange">layer/layers_fill0_wght400_grad0_opsz24.svg</file>
+        <file alias="layer_delete">layer/delete_fill0_wght400_grad0_opsz24.svg</file>
     </qresource>
 
     <qresource prefix="tab">

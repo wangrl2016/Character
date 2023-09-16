@@ -16,9 +16,13 @@ namespace app {
         effect_layer_btn_ = new LayerButton(this);
         effect_layer_btn_->setIcon(QIcon(":layer/layer_effect"));
         mask_layer_btn_ = new LayerButton(this);
+        mask_layer_btn_->setIcon(QIcon(":layer/layer_mask"));
         cut_mask_layer_btn_ = new LayerButton(this);
+        cut_mask_layer_btn_->setIcon(QIcon(":layer/layer_copy"));
         arrange_layer_btn_ = new LayerButton(this);
+        arrange_layer_btn_->setIcon(QIcon(":layer/layer_arrange"));
         delete_layer_btn_ = new LayerButton(this);
+        delete_layer_btn_->setIcon(QIcon(":layer/layer_delete"));
 
         auto* layout = new QHBoxLayout(this);
         layout->setContentsMargins(0, 10, 0, 0);
