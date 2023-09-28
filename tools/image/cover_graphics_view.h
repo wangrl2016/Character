@@ -20,6 +20,11 @@ namespace app {
         void mouseMoveEvent(QMouseEvent* event) override;
 
         void mouseReleaseEvent(QMouseEvent* event) override;
+
+        void dragEnterEvent(QDragEnterEvent* event) override;
+
+    private:
+        QGraphicsPixmapItem* item_;
     };
 }
 

@@ -15,6 +15,7 @@
 #include "tools/image/cover_graphics_view.h"
 #include "tools/image/template_widget.h"
 #include "tools/image/right_widget.h"
+#include "tools/image/size_style.h"
 
 namespace app {
     class MainWindow : public QMainWindow {
@@ -24,9 +25,9 @@ namespace app {
 
         ~MainWindow();
 
-        void dragEnterEvent(QDragEnterEvent* event) override;
-
-        void dropEvent(QDropEvent* event) override;
+//        void dragEnterEvent(QDragEnterEvent* event) override;
+//
+//        void dropEvent(QDropEvent* event) override;
 
         void mousePressEvent(QMouseEvent* event) override;
 
@@ -44,6 +45,11 @@ namespace app {
 
         CoverGraphicsScene* cover_scene_;
         CoverGraphicsView* cover_view_;
+
+        int view_width_ = kProjectDefaultWidth;
+        int view_height_ = kProjectDefaultHeight;
+
+
     };
 }
 

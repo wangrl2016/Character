@@ -7,14 +7,16 @@
 #include <QMenu>
 #include <QMenuBar>
 #include <QHBoxLayout>
+
 #include <QToolBar>
+#include <glog/logging.h>
 #include "tools/image/dialog/action_new_dialog.h"
 #include "tools/image/main_window.h"
 #include "tools/image/size_style.h"
 
 namespace app {
     MainWindow::MainWindow() : QMainWindow() {
-        setAcceptDrops(true);
+        // setAcceptDrops(true);
 
         SetupMenuBar();
 
@@ -29,7 +31,7 @@ namespace app {
 
         // view
         cover_view_ = new CoverGraphicsView(cover_scene_);
-        cover_view_->setFixedSize(kProjectDefaultWidth, kProjectDefaultHeight);
+        cover_view_->setFixedSize(view_width_, view_height_);
         cover_view_->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
         cover_view_->setStyleSheet("QWidget {"
                              "    border: none;"
@@ -65,13 +67,13 @@ namespace app {
         image.save(path);
     }
 
-    void MainWindow::dragEnterEvent(QDragEnterEvent* event) {
-
-    }
-
-    void MainWindow::dropEvent(QDropEvent* event) {
-
-    }
+//    void MainWindow::dragEnterEvent(QDragEnterEvent* event) {
+//
+//    }
+//
+//    void MainWindow::dropEvent(QDropEvent* event) {
+//
+//    }
 
     void MainWindow::mousePressEvent(QMouseEvent* event) {
 

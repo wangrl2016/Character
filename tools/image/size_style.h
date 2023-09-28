@@ -12,8 +12,8 @@ namespace app {
     constexpr int kLeftWidgetWidth = 180;
     constexpr int kRightWidgetWidth = 360;
 
-    constexpr int kProjectDefaultWidth = 720;
-    constexpr int kProjectDefaultHeight = 640;
+    constexpr int kProjectDefaultWidth = 640;
+    constexpr int kProjectDefaultHeight = 480;
 
     constexpr int kTinyMargin = 4;
     constexpr int kSmallMargin = 8;
